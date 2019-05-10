@@ -1,4 +1,6 @@
 class Api::V1::UsersController < ApplicationController
+  skip_before_action :authorized, only: [:create]
+
   # http://api.rubyonrails.org/classes/ActionController/ParamsWrapper.html
   # Don't know why: with rails --api, json format - cannot receive params user 'password' because it is not an attribute/column in User model (User has password_digest). Need to add this wrap_parameters to fix the issue.
   wrap_parameters :user, include: %i[username password email firstname lastname bio avatar]
