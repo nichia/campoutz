@@ -22,9 +22,9 @@
 # Ignore master key for decrypting credentials and more.
 /config/master.key
 
-# Ignore dotenv file to keep environment variables (secret keys) safe
-.env
-
 # Ignore public as this will be populated by the front end
 # Place files for /public in /client/public
 /public
+
+# Ignore application configuration to keep environment variables (secret keys) safe
+/config/application.yml
