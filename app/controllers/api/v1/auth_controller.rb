@@ -2,9 +2,10 @@ class Api::V1::AuthController < ApplicationController
   skip_before_action :authorized, only: [:create]
 
   def create
-    @user = User.find_by(username: params[:username])
+    # byebug
+    @user = User.find_by(username: auth_params[:username])
     # User#authenticate comes from BCrypt
-    if @user && @user.authenticate(params[:password])
+    if @user && @user.authenticate(auth_params[:password])
       # encode token comes from ApplicationController
       payload = { user_id: @user.id }
       @token = encode_token(payload)
@@ -12,5 +13,14 @@ class Api::V1::AuthController < ApplicationController
     else
       render json: { message: 'Invalid username or password' }, status: :unauthorized
     end
+  end
+
+  private
+
+  def auth_params
+    params.require(:auth).permit(
+      :username,
+      :password
+    )
   end
 end
