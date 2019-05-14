@@ -18,7 +18,7 @@ class Api::V1::AuthController < ApplicationController
   private
 
   def auth_params
-    params.require(:auth).permit(
+    params.require(:user).permit(
       :username,
       :password
     )
