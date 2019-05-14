@@ -14,10 +14,10 @@ const Navbar = ({ user: { loggedIn }, location: { pathname } }) => {
             name='Profile'
             active={pathname === '/profile'}
           />
-          <Menu.Menu position='right'>
-            {/* TODO: logout */}
-            {/* <Menu.Item to="/logout" name="Logout" onClick={logout} /> */}
-          </Menu.Menu>
+          {/* <Menu.Menu position='right'> */}
+          {/* TODO: logout */}
+          {/* <Menu.Item to='/logout' name='Logout' onClick={logout} /> */}
+          {/* </Menu.Menu> */}
         </Fragment>
       ) : (
         <Menu.Item

@@ -1,8 +1,10 @@
+import * as actionTypes from './actionTypes';
+
 export const /*FUNCTION*/ loginUser = (username, password) => {
     return /*FUNCTION*/ dispatch => {
       //thunk
       console.log(process.env.REACT_APP_API_ENDPOINT);
-      dispatch({ type: 'AUTHENTICATING_USER' });
+      dispatch({ type: actionTypes.AUTHENTICATING_USER });
       // dispatch(authenticatingUser())
       // fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/login`)
       // adapter.loginUser(username, password)
@@ -35,13 +37,18 @@ export const /*FUNCTION*/ loginUser = (username, password) => {
         .then(JSONResponse => {
           console.log('%c INSIDE YE OLDE .THEN', 'color: navy');
           localStorage.setItem('jwt', JSONResponse.jwt);
-          dispatch({ type: 'SET_CURRENT_USER', payload: JSONResponse.user });
+          dispatch({
+            type: actionTypes.SET_CURRENT_USER,
+            payload: JSONResponse.user
+          });
           // dispatch(setCurrentUser(JSONResponse.user))
         })
         .catch(r =>
           r
             .json()
-            .then(e => dispatch({ type: 'FAILED_LOGIN', payload: e.message }))
+            .then(e =>
+              dispatch({ type: actionTypes.FAILED_LOGIN, payload: e.message })
+            )
         );
       // .then((jsonResponse) => {
       //   localStorage.setItem('jwt', jsonResponse.jwt)
@@ -66,17 +73,19 @@ export const fetchCurrentUser = () => {
 };
 
 export const setCurrentUser = userData => ({
-  type: 'SET_CURRENT_USER',
+  type: actionTypes.SET_CURRENT_USER,
   payload: userData
 });
 
 export const failedLogin = errorMsg => ({
-  type: 'FAILED_LOGIN',
+  type: actionTypes.FAILED_LOGIN,
   payload: errorMsg
 });
 
 // tell our app we're currently fetching
-export const authenticatingUser = () => ({ type: 'AUTHENTICATING_USER' });
+export const authenticatingUser = () => ({
+  type: actionTypes.AUTHENTICATING_USER
+});
 // export const authenticatingUser = () => {
 //   return { type: 'AUTHENTICATING_USER' }
 // }
