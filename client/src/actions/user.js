@@ -1,9 +1,11 @@
 import * as actionTypes from './actionTypes';
 
+// async action createors
+
 export const /*FUNCTION*/ loginUser = (username, password) => {
     return /*FUNCTION*/ dispatch => {
       //thunk
-      console.log(process.env.REACT_APP_API_ENDPOINT);
+      console.log('DISPATCH AU: ', process.env.REACT_APP_API_ENDPOINT);
       dispatch({ type: actionTypes.AUTHENTICATING_USER });
       // dispatch(authenticatingUser())
       // fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/login`)
@@ -60,6 +62,7 @@ export const /*FUNCTION*/ loginUser = (username, password) => {
 export const fetchCurrentUser = () => {
   // takes the token in localStorage and finds out who it belongs to
   return dispatch => {
+    console.log('DISPATCH-AU: ', process.env.REACT_APP_API_ENDPOINT);
     dispatch(authenticatingUser()); //tells the app we are fetching
     fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/profile`, {
       method: 'GET',
@@ -72,6 +75,8 @@ export const fetchCurrentUser = () => {
   };
 };
 
+// action creators
+
 export const setCurrentUser = userData => ({
   type: actionTypes.SET_CURRENT_USER,
   payload: userData
@@ -83,9 +88,17 @@ export const failedLogin = errorMsg => ({
 });
 
 // tell our app we're currently fetching
-export const authenticatingUser = () => ({
-  type: actionTypes.AUTHENTICATING_USER
-});
-// export const authenticatingUser = () => {
-//   return { type: 'AUTHENTICATING_USER' }
-// }
+// export const authenticatingUser = () => ({
+//   type: actionTypes.AUTHENTICATING_USER
+// });
+export const authenticatingUser = () => {
+  console.log('%c INSIDE authenticatingUser action/user', 'color: navy');
+  return { type: actionTypes.AUTHENTICATING_USER };
+};
+
+export const logoutUser = () => {
+  console.log('%c INSIDE LOGOUT action/user', 'color: pink');
+  return {
+    type: actionTypes.LOGOUT
+  };
+};

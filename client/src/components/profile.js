@@ -40,4 +40,5 @@ const mapStateToProps = ({
 //
 // export default withAuthProfile
 
+// to gain access to the redux store
 export default withAuth(connect(mapStateToProps)(Profile));

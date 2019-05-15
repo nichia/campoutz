@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { NavLink, withRouter } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
+import { logoutUser } from '../actions/user';
 
 const Navbar = ({ user: { loggedIn }, location: { pathname } }) => {
   return (
@@ -14,10 +15,15 @@ const Navbar = ({ user: { loggedIn }, location: { pathname } }) => {
             name='Profile'
             active={pathname === '/profile'}
           />
-          {/* <Menu.Menu position='right'> */}
-          {/* TODO: logout */}
-          {/* <Menu.Item to='/logout' name='Logout' onClick={logout} /> */}
-          {/* </Menu.Menu> */}
+          <Menu.Menu position='right'>
+            <Menu.Item
+              to='/'
+              name='Logout'
+              onClick={() => {
+                logoutUser();
+              }}
+            />
+          </Menu.Menu>
         </Fragment>
       ) : (
         <Menu.Item
@@ -33,4 +39,21 @@ const Navbar = ({ user: { loggedIn }, location: { pathname } }) => {
 
 const mapStateToProps = ({ user }) => ({ user });
 
-export default withRouter(connect(mapStateToProps)(Navbar));
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     logoutUser: () => dispatch({ type: actionTypes.LOGOUT })
+//   };
+// };
+
+// const connectedToReduxHOC = connect(mapStateToProps, mapDispatchToProps)
+// const connectedToReduxNavbar = connectedToReduxHOC(Navbar)
+// const connectedToReduxHOCWithRouterNavbar = withRouter(connectedToReduxNavbar)
+//
+// export default connectedToReduxHOCWithRouterNavbar
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { logoutUser }
+  )(Navbar)
+);
