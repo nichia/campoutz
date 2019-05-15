@@ -39,8 +39,7 @@ const usersReducer = (state = initialState, action) => {
       };
     case actionTypes.LOGOUT:
       // localStorage.setItem('jwt', JSONResponse.jwt);
-      console.log('%c INSIDE LOGOUT REDUCER', 'color: pink');
-      localStorage.removeItem('jwt');
+      console.log('Logout: %s', state.user);
       return { ...state, initialState };
     default:
       console.log('Initial user: %s', state.user);

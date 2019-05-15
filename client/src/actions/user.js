@@ -2,10 +2,69 @@ import * as actionTypes from './actionTypes';
 
 // async action createors
 
+export const /*FUNCTION*/ signupUser = (username, email, password) => {
+    return /*FUNCTION*/ dispatch => {
+      //thunk
+      console.log('signupUser: ', process.env.REACT_APP_API_ENDPOINT);
+      // })
+      dispatch({ type: actionTypes.AUTHENTICATING_USER });
+      // dispatch(authenticatingUser())
+      // fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/users`)
+      // adapter.signupUser(username, password)
+      // http://localhost:3000
+      fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/users`, {
+        //TODO: move this to an adapter
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json'
+        },
+        body: JSON.stringify({
+          user: {
+            username: username,
+            email: email,
+            password: password
+          }
+        })
+      })
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw response;
+          }
+        })
+        /* { user:
+          { username: 'chandler bing', bio: '', avatar: ''},
+          jwt: 'aaaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbb.ccccccccccccccccccc'
+      } */
+        .then(JSONResponse => {
+          console.log('%c INSIDE YE OLDE .THEN', 'color: navy');
+          localStorage.setItem('jwt', JSONResponse.jwt);
+          dispatch({
+            type: actionTypes.SET_CURRENT_USER,
+            payload: JSONResponse.user
+          });
+          // dispatch(setCurrentUser(JSONResponse.user))
+        })
+        .catch(r =>
+          r
+            .json()
+            .then(e =>
+              dispatch({ type: actionTypes.FAILED_LOGIN, payload: e.message })
+            )
+        );
+      // .then((jsonResponse) => {
+      //   localStorage.setItem('jwt', jsonResponse.jwt)
+      //   dispatch(setCurrentUser(jsonResponse.user))
+      // })
+    };
+  };
+
 export const /*FUNCTION*/ loginUser = (username, password) => {
     return /*FUNCTION*/ dispatch => {
       //thunk
-      console.log('DISPATCH AU: ', process.env.REACT_APP_API_ENDPOINT);
+      console.log('loginUser: ', process.env.REACT_APP_API_ENDPOINT);
       dispatch({ type: actionTypes.AUTHENTICATING_USER });
       // dispatch(authenticatingUser())
       // fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/login`)
@@ -33,9 +92,9 @@ export const /*FUNCTION*/ loginUser = (username, password) => {
           }
         })
         /* { user:
-        { username: 'chandler bing', bio: '', avatar: ''},
-        jwt: 'aaaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbb.ccccccccccccccccccc'
-      } */
+    { username: 'chandler bing', bio: '', avatar: ''},
+    jwt: 'aaaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbb.ccccccccccccccccccc'
+  } */
         .then(JSONResponse => {
           console.log('%c INSIDE YE OLDE .THEN', 'color: navy');
           localStorage.setItem('jwt', JSONResponse.jwt);
@@ -62,7 +121,7 @@ export const /*FUNCTION*/ loginUser = (username, password) => {
 export const fetchCurrentUser = () => {
   // takes the token in localStorage and finds out who it belongs to
   return dispatch => {
-    console.log('DISPATCH-AU: ', process.env.REACT_APP_API_ENDPOINT);
+    console.log('fetchCurrentUser: ', process.env.REACT_APP_API_ENDPOINT);
     dispatch(authenticatingUser()); //tells the app we are fetching
     fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/profile`, {
       method: 'GET',
@@ -98,7 +157,6 @@ export const authenticatingUser = () => {
 
 export const logoutUser = () => {
   console.log('%c INSIDE LOGOUT action/user', 'color: pink');
-  return {
-    type: actionTypes.LOGOUT
-  };
+  localStorage.removeItem('jwt');
+  return { type: actionTypes.LOGOUT };
 };
