@@ -11,7 +11,7 @@ const initialState = {
 const usersReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SET_CURRENT_USER:
-      console.log('Set_current_user: %s', state.user);
+      console.log('%c Set_current_user: %s', 'color: red', state.user);
 
       //action.payload { username: 'Chandler Bing', bio: 'my user bio', avatar: 'some image url' }
       return {
@@ -21,15 +21,15 @@ const usersReducer = (state = initialState, action) => {
         authenticatingUser: false
       };
     case actionTypes.AUTHENTICATING_USER: //tells the app we're fetching
-      console.log('Authenticating_user: %s', state.user);
+      console.log('%c Authenticating_user: %s', 'color: red', state.user);
 
       return { ...state, authenticatingUser: true };
     case actionTypes.AUTHENTICATED_USER:
-      console.log('Authenticated_user: %s', state.user);
+      console.log('%c Authenticated_user: %s', 'color: red', state.user);
 
       return { ...state, authenticatingUser: false };
     case actionTypes.FAILED_LOGIN: //for error handling
-      console.log('Failed_login: %s', state.user);
+      console.log('%c Failed_login: %s', 'color: red', state.user);
 
       return {
         ...state,
@@ -38,12 +38,11 @@ const usersReducer = (state = initialState, action) => {
         authenticatingUser: false
       };
     case actionTypes.LOGOUT:
-      // localStorage.setItem('jwt', JSONResponse.jwt);
-      console.log('Logout: %s', state.user);
+      console.log('%c Logout: %s', 'color: red', state.user);
 
-      return { ...state, initialState };
+      return initialState;
     default:
-      console.log('Initial user: %s', state.user);
+      console.log('%c Initial user: %s', 'color: red', state.user);
       return state;
   }
 };

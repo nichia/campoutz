@@ -4,8 +4,9 @@ import { NavLink, withRouter } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 import { logoutUser } from '../actions/user';
 // import { bindActionCreators } from 'redux';
+// import * as actionTypes from '../actions/actionTypes';
 
-const Navbar = ({ user: { loggedIn }, location: { pathname } }) => {
+const Navbar = ({ logoutUser, user: { loggedIn }, location: { pathname } }) => {
   return (
     <Menu pointing secondary>
       {loggedIn ? (
@@ -22,7 +23,7 @@ const Navbar = ({ user: { loggedIn }, location: { pathname } }) => {
               name='Logout'
               onClick={logoutUser} //comes from mapDispatchToProps
               // onClick={() => {
-              //   logoutUser();
+              //   logoutUser(); //comes from mapDispatchToProps
               // }}
             />
           </Menu.Menu>
@@ -41,11 +42,11 @@ const Navbar = ({ user: { loggedIn }, location: { pathname } }) => {
 
 const mapStateToProps = ({ user }) => ({ user });
 
-const mapDispatchToProps = dispatch => {
-  return {
-    logoutUser: () => dispatch({ logoutUser }) // comes from action creators
-  };
-};
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     logoutUser: () => dispatch(logoutUser()) // comes from user actions
+//   };
+// };
 // const mapDispatchToProps = dispatch => {
 //   return {
 //     logoutUser: () => dispatch({ type: actionTypes.LOGOUT })
@@ -54,7 +55,7 @@ const mapDispatchToProps = dispatch => {
 // const mapDispatchToProps = dispatch => {
 //   return bindActionCreators(
 //     {
-//       logoutUser: logoutUser
+//       logoutUser: logoutUser  // comes from user actions
 //     },
 //     dispatch
 //   );
@@ -69,7 +70,7 @@ const mapDispatchToProps = dispatch => {
 export default withRouter(
   connect(
     mapStateToProps,
-    mapDispatchToProps
-    // { logoutUser }
+    // mapDispatchToProps
+    { logoutUser }
   )(Navbar)
 );

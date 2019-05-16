@@ -5,7 +5,11 @@ import * as actionTypes from './actionTypes';
 export const /*FUNCTION*/ signupUser = (username, email, password) => {
     return /*FUNCTION*/ dispatch => {
       //thunk
-      console.log('signupUser: ', process.env.REACT_APP_API_ENDPOINT);
+      console.log(
+        '%c signupUser: ',
+        'color: navy',
+        process.env.REACT_APP_API_ENDPOINT
+      );
       // })
       dispatch({ type: actionTypes.AUTHENTICATING_USER });
       // dispatch(authenticatingUser())
@@ -64,7 +68,11 @@ export const /*FUNCTION*/ signupUser = (username, email, password) => {
 export const /*FUNCTION*/ loginUser = (username, password) => {
     return /*FUNCTION*/ dispatch => {
       //thunk
-      console.log('loginUser: ', process.env.REACT_APP_API_ENDPOINT);
+      console.log(
+        '%c loginUser: ',
+        'color: navy',
+        process.env.REACT_APP_API_ENDPOINT
+      );
       dispatch({ type: actionTypes.AUTHENTICATING_USER });
       // dispatch(authenticatingUser())
       // fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/login`)
@@ -121,7 +129,11 @@ export const /*FUNCTION*/ loginUser = (username, password) => {
 export const fetchCurrentUser = () => {
   // takes the token in localStorage and finds out who it belongs to
   return dispatch => {
-    console.log('fetchCurrentUser: ', process.env.REACT_APP_API_ENDPOINT);
+    console.log(
+      '%c fetchCurrentUser: ',
+      'color: navy',
+      process.env.REACT_APP_API_ENDPOINT
+    );
     dispatch(authenticatingUser()); //tells the app we are fetching
     fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/profile`, {
       method: 'GET',
@@ -156,7 +168,7 @@ export const authenticatingUser = () => {
 };
 
 export const logoutUser = () => {
-  console.log('%c INSIDE LOGOUT action/user', 'color: pink');
+  console.log('%c INSIDE LOGOUT action/user', 'color: navy');
   localStorage.removeItem('jwt');
   return { type: actionTypes.LOGOUT };
 };
