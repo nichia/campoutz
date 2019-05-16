@@ -75,15 +75,26 @@ class LoginForm extends Component {
 //   }
 // }
 
+// es6 shortcut: object destructuring - from redux store state, pull out user: object
+// from this object, pull out authenticatingUser, failedLogin, error, loggedIn.
+// arror function => without curly brackets, just wrapped in parentheses - implicit return
 const mapStateToProps = ({
   user: { authenticatingUser, failedLogin, error, loggedIn }
 }) => ({
+  // es6 shortcut: keys and values match up as (authenticatingUser: authenticatingUser),
+  // can condense as below
   authenticatingUser,
   failedLogin,
   error,
   loggedIn
 });
 
+const mapDispatchToProps = dispatch => ({
+  // implicit return when wrapped in parentheses
+  loginUser: (username, password) => dispatch(loginUser(username, password))
+});
+
+// arror function => with curly brackets, must have explicit 'return'
 // const mapDispatchToProps = (dispatch) => {
 //   return {
 //     loginUser: (username, password) => dispatch(loginUser(username, password))
@@ -99,6 +110,7 @@ const mapStateToProps = ({
 export default withRouter(
   connect(
     mapStateToProps,
-    { loginUser }
+    mapDispatchToProps
+    // { loginUser }  // implicit
   )(LoginForm)
 );
