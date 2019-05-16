@@ -120,9 +120,10 @@ const mapStateToProps = ({
 //
 // export default connectedToReduxHOCWithRouterSignupForm
 
+// to gain access to redux store
 export default withRouter(
   connect(
     mapStateToProps,
-    { signupUser }
+    { signupUser } // from user actions store
   )(SignupForm)
 );

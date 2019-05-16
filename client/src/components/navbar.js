@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { NavLink, withRouter } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 import { logoutUser } from '../actions/user';
+// import { bindActionCreators } from 'redux';
 
 const Navbar = ({ user: { loggedIn }, location: { pathname } }) => {
   return (
@@ -17,11 +18,12 @@ const Navbar = ({ user: { loggedIn }, location: { pathname } }) => {
           />
           <Menu.Menu position='right'>
             <Menu.Item
-              to='/'
+              // to='/'
               name='Logout'
-              onClick={() => {
-                logoutUser();
-              }}
+              onClick={logoutUser} //comes from mapDispatchToProps
+              // onClick={() => {
+              //   logoutUser();
+              // }}
             />
           </Menu.Menu>
         </Fragment>
@@ -39,10 +41,23 @@ const Navbar = ({ user: { loggedIn }, location: { pathname } }) => {
 
 const mapStateToProps = ({ user }) => ({ user });
 
+const mapDispatchToProps = dispatch => {
+  return {
+    logoutUser: () => dispatch({ logoutUser }) // comes from action creators
+  };
+};
 // const mapDispatchToProps = dispatch => {
 //   return {
 //     logoutUser: () => dispatch({ type: actionTypes.LOGOUT })
 //   };
+// };
+// const mapDispatchToProps = dispatch => {
+//   return bindActionCreators(
+//     {
+//       logoutUser: logoutUser
+//     },
+//     dispatch
+//   );
 // };
 
 // const connectedToReduxHOC = connect(mapStateToProps, mapDispatchToProps)
@@ -54,6 +69,7 @@ const mapStateToProps = ({ user }) => ({ user });
 export default withRouter(
   connect(
     mapStateToProps,
-    { logoutUser }
+    mapDispatchToProps
+    // { logoutUser }
   )(Navbar)
 );

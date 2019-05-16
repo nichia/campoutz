@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
 // import * as actions from '../actions'
@@ -6,7 +6,7 @@ import { fetchCurrentUser } from '../actions/user';
 import { Loader } from 'semantic-ui-react';
 
 const withAuth = /*FUNCTION*/ WrappedComponent => {
-  class AuthorizedComponent extends React.Component {
+  class AuthorizedComponent extends Component {
     componentDidMount() {
       console.log(
         '%c INSIDE COMPONENT DID MOUNT FOR AUTH HOC',

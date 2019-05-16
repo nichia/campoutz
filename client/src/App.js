@@ -6,7 +6,7 @@ import SignupForm from './components/signupForm';
 import NoMatch from './components/noMatch';
 import Profile from './components/profile';
 
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 
 function App() {
@@ -20,7 +20,8 @@ function App() {
         <Route exact path='/signup' component={SignupForm} />
         <Route component={NoMatch} />
       </Switch>
-      <div className='App'>App Container</div>
+
+      {/* <div className='App'>App Container</div>
       <div className='App'>
         <header className='App-header'>
           <img src={logo} className='App-logo' alt='logo' />
@@ -36,7 +37,7 @@ function App() {
             Learn React
           </a>
         </header>
-      </div>
+      </div> */}
     </Fragment>
   );
 }
