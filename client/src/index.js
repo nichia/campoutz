@@ -3,21 +3,11 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 import './index.css';
 import App from './App';
+import store from './store';
 import * as serviceWorker from './serviceWorker';
 
 import { Provider } from 'react-redux';
-import { createStore, applyMiddleware, compose } from 'redux';
-import thunk from 'redux-thunk';
-import rootReducer from './reducers/index';
-
 import 'semantic-ui-css/semantic.min.css';
-
-const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-
-// Setting up redux store, middleware thunk and compose to include redux devtools
-const store = createStore(rootReducer, composeEnhancer(applyMiddleware(thunk)));
-
-console.log(`%c INITIAL REDUX STORE`, 'color: purple', store.getState());
 
 ReactDOM.render(
   <Provider store={store}>
