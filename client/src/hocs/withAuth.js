@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-// import * as actions from '../actions'
 import { fetchCurrentUser } from '../actions/user';
 import { Loader } from 'semantic-ui-react';
 

@@ -26,7 +26,7 @@ class LoginForm extends Component {
   };
 
   render() {
-    console.log('%c LOGIN FORM PROPS: ', 'color: red', this.props);
+    console.log('%c LOGIN FORM PROPS: ', 'color: purple', this.props);
     return this.props.loggedIn ? (
       <Redirect to='/profile' />
     ) : (

@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Card, Image } from 'semantic-ui-react';
 import withAuth from '../hocs/withAuth';
 
-// props: { user: { avatar: 'url', username: 'Chandler Bing', bio: 'bio' } }
+// props: { currentUser: { avatar: 'url', username: 'Chandler Bing', bio: 'bio' } }
 // const Profile = ({ avatar, username, bio }) => (
 const Profile = ({ avatar, username, bio }) => (
   <Card>
@@ -26,7 +26,7 @@ const Profile = ({ avatar, username, bio }) => (
 
 const mapStateToProps = ({
   user: {
-    user: { avatar, username, bio }
+    currentUser: { avatar, username, bio }
   }
 }) => ({
   avatar,

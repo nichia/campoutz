@@ -43,7 +43,7 @@ class SignupForm extends Component {
   };
 
   render() {
-    console.log('%c SIGNUP FORM PROPS: ', 'color: red', this.props);
+    console.log('%c SIGNUP FORM PROPS: ', 'color: purple', this.props);
     return this.props.loggedIn ? (
       <Redirect to='/profile' />
     ) : (
