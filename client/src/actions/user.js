@@ -11,8 +11,8 @@ export const /*FUNCTION*/ signupUser = (username, email, password) => {
         process.env.REACT_APP_API_ENDPOINT
       );
       // })
-      dispatch({ type: actionTypes.AUTHENTICATING_USER });
-      // dispatch(authenticatingUser())
+      // dispatch({ type: actionTypes.AUTHENTICATING_USER });
+      dispatch(authenticatingUser());
       // fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/users`)
       // adapter.signupUser(username, password)
       // http://localhost:3000
@@ -73,7 +73,7 @@ export const /*FUNCTION*/ loginUser = (username, password) => {
         'color: navy',
         process.env.REACT_APP_API_ENDPOINT
       );
-      dispatch({ type: actionTypes.AUTHENTICATING_USER });
+      // dispatch({ type: actionTypes.AUTHENTICATING_USER });
       // dispatch(authenticatingUser())
       // fetch(`${process.env.REACT_APP_API_ENDPOINT}/api/v1/login`)
       // adapter.loginUser(username, password)
@@ -159,9 +159,6 @@ export const failedLogin = errorMsg => ({
 });
 
 // tell our app we're currently fetching
-// export const authenticatingUser = () => ({
-//   type: actionTypes.AUTHENTICATING_USER
-// });
 export const authenticatingUser = () => {
   console.log('%c INSIDE authenticatingUser action/user', 'color: navy');
   return { type: actionTypes.AUTHENTICATING_USER };

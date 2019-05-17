@@ -42,11 +42,11 @@ const Navbar = ({ logoutUser, user: { loggedIn }, location: { pathname } }) => {
 
 const mapStateToProps = ({ user }) => ({ user });
 
-// const mapDispatchToProps = dispatch => {
-//   return {
-//     logoutUser: () => dispatch(logoutUser()) // comes from user actions
-//   };
-// };
+const mapDispatchToProps = dispatch => {
+  return {
+    logoutUser: () => dispatch(logoutUser()) // comes from user actions
+  };
+};
 // const mapDispatchToProps = dispatch => {
 //   return {
 //     logoutUser: () => dispatch({ type: actionTypes.LOGOUT })
@@ -70,7 +70,7 @@ const mapStateToProps = ({ user }) => ({ user });
 export default withRouter(
   connect(
     mapStateToProps,
-    // mapDispatchToProps
-    { logoutUser }
+    mapDispatchToProps
+    // { logoutUser }
   )(Navbar)
 );

@@ -124,6 +124,6 @@ const mapStateToProps = ({
 export default withRouter(
   connect(
     mapStateToProps,
-    { signupUser } // from user actions store
+    { signupUser } // comes from user actions
   )(SignupForm)
 );
