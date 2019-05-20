@@ -28,7 +28,17 @@ export const logoutUser = () => {
 
 // async action createors //
 
-export const /*FUNCTION*/ signupUser = (username, email, password) => {
+export const /*FUNCTION*/ signupUser = props => {
+    const {
+      username,
+      email,
+      password,
+      firstname,
+      lastname,
+      bio,
+      avatar
+    } = props;
+
     const data = {
       //TODO: move this to an adapter
       method: 'POST',
@@ -40,7 +50,11 @@ export const /*FUNCTION*/ signupUser = (username, email, password) => {
         user: {
           username: username,
           email: email,
-          password: password
+          password: password,
+          firstname: firstname,
+          lastname: lastname,
+          bio: bio,
+          avatar: avatar
         }
       })
     };
@@ -82,7 +96,8 @@ export const /*FUNCTION*/ signupUser = (username, email, password) => {
     };
   };
 
-export const /*FUNCTION*/ loginUser = (username, password) => {
+export const /*FUNCTION*/ loginUser = props => {
+    const { username, password } = props;
     const data = {
       //TODO: move this to an adapter
       method: 'POST',

@@ -37,16 +37,7 @@ class SignupForm extends Component {
   handleLoginSubmit = e => {
     //semantic forms preventDefault for you
     // e.preventDefault()
-    this.props.signupUser(
-      this.state.username,
-      this.state.email,
-      this.state.password,
-      this.state.passwordConfirm,
-      this.state.firstname,
-      this.state.lastname,
-      this.state.bio,
-      this.state.avatar
-    ); //comes from mapDispatchToProps
+    this.props.signupUser(this.state); //comes from mapDispatchToProps
     this.setState({
       username: '',
       email: '',

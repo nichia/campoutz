@@ -21,7 +21,7 @@ class LoginForm extends Component {
   handleLoginSubmit = e => {
     //semantic forms preventDefault for you
     // e.preventDefault()
-    this.props.loginUser(this.state.username, this.state.password); //comes from mapDispatchToProps
+    this.props.loginUser(this.state); //comes from mapDispatchToProps
     this.setState({ username: '', password: '' }); //reset form to initial state
   };
 
