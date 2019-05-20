@@ -58,29 +58,27 @@ export const /*FUNCTION*/ signupUser = (username, email, password) => {
       // http://localhost:3000
 
       fetch(`${baseUrl}/users`, data)
-        .then(response => {
-          if (response.ok) {
-            return response.json();
+        .then(response => response.json())
+        .then(JSONResponse => {
+          if (JSONResponse.jwt) {
+            console.log('%c INSIDE YE OLDE .THEN', 'color: navy', JSONResponse);
+            /* { user: { username: 'chandler bing', bio: '', avatar: ''}, jwt: 'aaaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbb.ccccccccccccccccccc'} */
+            localStorage.setItem('jwt', JSONResponse.jwt);
+            dispatch(setCurrentUser(JSONResponse.user));
+            // dispatch({
+            //   type: actionTypes.SET_CURRENT_USER,
+            //   payload: JSONResponse.user
+            // });
           } else {
-            throw response;
+            console.log('%c signUP JWT RESP: ', 'color: navy', JSONResponse);
+            dispatch(failedLogin(JSONResponse.errors));
           }
         })
-        /* { user: { username: 'chandler bing', bio: '', avatar: ''}, jwt: 'aaaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbb.ccccccccccccccccccc'} */
-        .then(JSONResponse => {
-          console.log('%c INSIDE YE OLDE .THEN', 'color: navy');
-          localStorage.setItem('jwt', JSONResponse.jwt);
-          dispatch(setCurrentUser(JSONResponse.user));
-          // dispatch({
-          //   type: actionTypes.SET_CURRENT_USER,
-          //   payload: JSONResponse.user
-          // });
-        })
-        .catch(res =>
-          res.json().then(
-            err => dispatch(failedLogin(err.message))
-            // dispatch({ type: actionTypes.FAILED_LOGIN, payload: err.message })
-          )
-        );
+        .catch(err => {
+          console.log('%c signUP ERR RESP: ', 'color: navy', err);
+          dispatch(failedLogin(err.message));
+          // dispatch({ type: actionTypes.FAILED_LOGIN, payload: err.message })
+        });
     };
   };
 
@@ -114,29 +112,37 @@ export const /*FUNCTION*/ loginUser = (username, password) => {
       // adapter.loginUser(username, password)
       // http://localhost:3000
       fetch(`${baseUrl}/login`, data)
-        .then(response => {
-          if (response.ok) {
-            return response.json();
+        .then(response => response.json())
+
+        //   {
+        //   console.log('%c loginUser RESP: ', 'color: navy', response);
+        //   if (response.ok) {
+        //     return response.json();
+        //   } else {
+        //     throw response;
+        //   }
+        // })
+
+        .then(JSONResponse => {
+          if (JSONResponse.jwt) {
+            console.log('%c INSIDE YE OLDE .THEN', 'color: navy', JSONResponse);
+            /* { user: { username: 'chandler bing', bio: '', avatar: ''}, jwt: 'aaaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbb.ccccccccccccccccccc'} */
+            localStorage.setItem('jwt', JSONResponse.jwt);
+            dispatch(setCurrentUser(JSONResponse.user));
+            // dispatch({
+            //   type: actionTypes.SET_CURRENT_USER,
+            //   payload: JSONResponse.user
+            // });
           } else {
-            throw response;
+            console.log('%c loginUser JWT RESP: ', 'color: navy', JSONResponse);
+            dispatch(failedLogin(JSONResponse.errors));
           }
         })
-        .then(JSONResponse => {
-          console.log('%c INSIDE YE OLDE .THEN', 'color: navy');
-          /* { user: { username: 'chandler bing', bio: '', avatar: ''}, jwt: 'aaaaaaaaaaaaaaa.bbbbbbbbbbbbbbbbbbbbb.ccccccccccccccccccc'} */
-          localStorage.setItem('jwt', JSONResponse.jwt);
-          dispatch(setCurrentUser(JSONResponse.user));
-          // dispatch({
-          //   type: actionTypes.SET_CURRENT_USER,
-          //   payload: JSONResponse.user
-          // });
-        })
-        .catch(res =>
-          res.json().then(
-            err => dispatch(failedLogin(err.message))
-            // dispatch({ type: actionTypes.FAILED_LOGIN, payload: err.message })
-          )
-        );
+        .catch(err => {
+          console.log('%c loginUser ERR RESP: ', 'color: navy', err);
+          dispatch(failedLogin(err.message));
+          // dispatch({ type: actionTypes.FAILED_LOGIN, payload: err.message })
+        });
     };
   };
 

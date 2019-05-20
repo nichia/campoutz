@@ -11,7 +11,7 @@ const initialState = {
 const usersReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.SET_CURRENT_USER:
-      console.log('%c Set_current_user: %s', 'color: red', state.currentUser);
+      console.log('%c Set_current_user: %s', 'color: red', action.payload);
 
       //action.payload { username: 'Chandler Bing', bio: 'my user bio', avatar: 'some image url' }
       return {
@@ -21,19 +21,15 @@ const usersReducer = (state = initialState, action) => {
         authenticatingUser: false
       };
     case actionTypes.AUTHENTICATING_USER: //tells the app we're fetching
-      console.log(
-        '%c Authenticating_user: %s',
-        'color: red',
-        state.currentUser
-      );
+      console.log('%c Authenticating_user...', 'color: red');
 
       return { ...state, authenticatingUser: true };
     case actionTypes.AUTHENTICATED_USER:
-      console.log('%c Authenticated_user: %s', 'color: red', state.currentUser);
+      console.log('%c Authenticated_user: ', 'color: red');
 
       return { ...state, authenticatingUser: false };
     case actionTypes.FAILED_LOGIN: //for error handling
-      console.log('%c Failed_login: %s', 'color: red', state.currentUser);
+      console.log('%c Failed_login: %s', 'color: red', action.payload);
 
       return {
         ...state,
