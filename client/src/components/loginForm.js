@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux'
-import { withRouter, Redirect } from 'react-router';
+import { withRouter, Redirect, NavLink } from 'react-router-dom';
 import { loginUser } from '../actions/user';
 import { Button, Form, Segment, Message } from 'semantic-ui-react';
 
@@ -60,6 +60,8 @@ class LoginForm extends Component {
             />
           </Form.Group>
           <Button type='submit'>Login</Button>
+          <br />
+          <NavLink to='/signup'>Not on Campoutz yet? Sign up</NavLink>
         </Form>
       </Segment>
     );

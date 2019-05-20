@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Redirect } from 'react-router';
+import { withRouter, Redirect, NavLink } from 'react-router-dom';
 import { signupUser } from '../actions/user';
 import { Button, Form, Segment, Message } from 'semantic-ui-react';
 
@@ -12,16 +12,19 @@ class SignupForm extends Component {
   //     email: '',
   //     firstname: '',
   //     lastname: '',
+  //     bio: '',
   //     avatar: ''
   //   }
   // }
   state = {
     username: '',
     email: '',
-    password: ''
-    // firstname: '',
-    // lastname: '',
-    // avatar: ''
+    password: '',
+    passwordConfirm: '',
+    firstname: '',
+    lastname: '',
+    bio: '',
+    avatar: ''
   };
 
   // handleChange = (e, { name, value }) => this.setState({ [name]: value })
@@ -37,9 +40,23 @@ class SignupForm extends Component {
     this.props.signupUser(
       this.state.username,
       this.state.email,
-      this.state.password
+      this.state.password,
+      this.state.passwordConfirm,
+      this.state.firstname,
+      this.state.lastname,
+      this.state.bio,
+      this.state.avatar
     ); //comes from mapDispatchToProps
-    this.setState({ username: '', email: '', password: '' }); //reset form to initial state
+    this.setState({
+      username: '',
+      email: '',
+      password: '',
+      passwordConfirm: '',
+      firstname: '',
+      lastname: '',
+      bio: '',
+      avatar: ''
+    }); //reset form to initial state
   };
 
   render() {
@@ -61,29 +78,90 @@ class SignupForm extends Component {
           />
           <Form.Group widths='equal'>
             <Form.Input
-              label='username'
-              placeholder='username'
+              required='true'
+              icon='user'
+              iconPosition='left'
+              // label='username'
+              placeholder='Username'
               name='username'
+              type='minLength[3]'
               onChange={this.handleChange}
               value={this.state.username}
             />
             <Form.Input
-              label='Email'
+              required='true'
+              icon='envelope'
+              iconPosition='left'
+              // label='Email'
               placeholder='Email'
               name='email'
+              type='email'
               onChange={this.handleChange}
               value={this.state.email}
             />
             <Form.Input
-              type='password'
-              label='password'
-              placeholder='password'
+              required='true'
+              icon='lock'
+              iconPosition='left'
+              // label='password'
+              placeholder='Create a password'
               name='password'
+              type='password'
               onChange={this.handleChange}
               value={this.state.password}
             />
+            <Form.Input
+              required='true'
+              icon='lock'
+              iconPosition='left'
+              // label='password confirmation'
+              placeholder='Re-type password to confirm'
+              name='passwordConfirm'
+              type='match[password]'
+              onChange={this.handleChange}
+              value={this.state.passwordConfirm}
+            />
+            <Form.Input
+              // label='avatar'
+              required='true'
+              // icon='linkify'
+              icon='image'
+              iconPosition='left'
+              placeholder='Avatar url'
+              name='avatar'
+              type='url'
+              onChange={this.handleChange}
+              value={this.state.avatar}
+            />
+            <Form.Input
+              // label='firstname'
+              icon='user'
+              iconPosition='left'
+              placeholder='First name'
+              name='firstname'
+              onChange={this.handleChange}
+              value={this.state.firstname}
+            />
+            <Form.Input
+              // label='lastname'
+              icon='user'
+              iconPosition='left'
+              placeholder='Last name'
+              name='lastname'
+              onChange={this.handleChange}
+              value={this.state.lastname}
+            />
+            <Form.TextArea
+              // label='bio'
+              placeholder='Tell us more about you...'
+              name='bio'
+              onChange={this.handleChange}
+              value={this.state.bio}
+            />
           </Form.Group>
           <Button type='submit'>Signup</Button>
+          <br />
+          <NavLink to='/login'>Already a member? Log in</NavLink>
         </Form>
       </Segment>
     );

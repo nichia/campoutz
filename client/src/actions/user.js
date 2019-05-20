@@ -164,6 +164,9 @@ export const fetchCurrentUser = () => {
     dispatch(authenticatingUser()); //tells the app we are fetching
     fetch(`${baseUrl}/profile`, data)
       .then(response => response.json())
-      .then(JSONResponse => dispatch(setCurrentUser(JSONResponse.user)));
+      .then(JSONResponse => {
+        console.log('%c fetCurrentUser: ', 'color: navy', JSONResponse.user);
+        dispatch(setCurrentUser(JSONResponse.user));
+      });
   };
 };
