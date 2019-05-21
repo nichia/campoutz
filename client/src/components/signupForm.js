@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Redirect, NavLink } from 'react-router-dom';
-import { signupUser } from '../actions/user';
+import { signupUser, failedLogin } from '../actions/user';
 import { Button, Form, Segment, Message } from 'semantic-ui-react';
 
 class SignupForm extends Component {
@@ -17,14 +17,22 @@ class SignupForm extends Component {
   //   }
   // }
   state = {
-    username: '',
-    email: '',
-    password: '',
-    passwordConfirm: '',
-    firstname: '',
-    lastname: '',
-    bio: '',
-    avatar: ''
+    user: {
+      username: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      firstname: '',
+      lastname: '',
+      bio: '',
+      avatar: ''
+    },
+    ErrorLog: {
+      usernameError: 'false',
+      passwordError: 'false',
+      confirmPasswordError: 'false',
+      formError: 'false'
+    }
   };
 
   // handleChange = (e, { name, value }) => this.setState({ [name]: value })
@@ -37,17 +45,54 @@ class SignupForm extends Component {
   handleLoginSubmit = e => {
     //semantic forms preventDefault for you
     // e.preventDefault()
-    this.props.signupUser(this.state); //comes from mapDispatchToProps
-    this.setState({
-      username: '',
-      email: '',
-      password: '',
-      passwordConfirm: '',
-      firstname: '',
-      lastname: '',
-      bio: '',
-      avatar: ''
-    }); //reset form to initial state
+
+    let errorMsg = [];
+
+    if (this.state.username.length < 3) {
+      this.setState({ usernameError: 'true' });
+      errorMsg.push('Username must be at least 3 characters');
+    } else {
+      this.setState({ usernameError: 'false' });
+    }
+
+    if (this.state.password.length < 8) {
+      this.setState({ passwordError: 'true' });
+      errorMsg.push('Password must be at least 8 characters');
+    } else {
+      this.setState({ passwordError: 'false' });
+    }
+
+    if (this.state.confirmPassword !== this.state.password) {
+      this.setState({ confirmPasswordError: 'true' });
+      errorMsg.push('The password provided does not match');
+    } else {
+      this.setState({ confirmPasswordError: 'false' });
+    }
+
+    if (errorMsg.length !== 0) {
+      this.setState({ formError: 'true' });
+      this.props.failedLogin(errorMsg); //comes from mapDispatchToProps
+    } else {
+      this.props.signupUser(this.state.user); //comes from mapDispatchToProps
+      this.setState({
+        user: {
+          username: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
+          firstname: '',
+          lastname: '',
+          bio: '',
+          avatar: ''
+        },
+        ErrorLog: {
+          usernameError: 'false',
+          passwordError: 'false',
+          confirmPasswordError: 'false',
+          formError: 'false'
+        }
+      }); //reset form to initial state
+    }
   };
 
   render() {
@@ -61,7 +106,7 @@ class SignupForm extends Component {
           size='mini'
           key='mini'
           loading={this.props.authenticatingUser}
-          error={this.props.failedLogin}
+          error={this.props.failedLogin || this.state.formError}
         >
           <Message
             error
@@ -75,9 +120,10 @@ class SignupForm extends Component {
               // label='username'
               placeholder='Username'
               name='username'
-              type='minLength[3]'
+              type={{ length: 'minLength[3]' }}
               onChange={this.handleChange}
               value={this.state.username}
+              error={this.state.usernameError}
             />
             <Form.Input
               required='true'
@@ -100,17 +146,19 @@ class SignupForm extends Component {
               type='password'
               onChange={this.handleChange}
               value={this.state.password}
+              error={this.state.passwordError}
             />
             <Form.Input
               required='true'
               icon='lock'
               iconPosition='left'
               // label='password confirmation'
-              placeholder='Re-type password to confirm'
-              name='passwordConfirm'
-              type='match[password]'
+              placeholder='Confirm password'
+              name='confirmPassword'
+              type='password'
               onChange={this.handleChange}
-              value={this.state.passwordConfirm}
+              value={this.state.confirmPassword}
+              error={this.state.confirmPasswordError}
             />
             <Form.Input
               // label='avatar'
@@ -193,6 +241,6 @@ const mapStateToProps = ({
 export default withRouter(
   connect(
     mapStateToProps,
-    { signupUser } // comes from user actions
+    { signupUser, failedLogin } // comes from user actions
   )(SignupForm)
 );
