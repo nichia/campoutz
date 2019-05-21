@@ -44,15 +44,20 @@ class LoginForm extends Component {
           />
           <Form.Group widths='equal'>
             <Form.Input
-              label='username'
+              required='true'
+              icon='user'
+              iconPosition='left'
+              label='Username:'
               placeholder='username'
               name='username'
               onChange={this.handleChange}
               value={this.state.username}
             />
             <Form.Input
-              type='password'
-              label='password'
+              required='true'
+              icon='lock'
+              iconPosition='left'
+              label='Password:'
               placeholder='password'
               name='password'
               onChange={this.handleChange}

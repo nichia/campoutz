@@ -7,6 +7,7 @@ import { logoutUser } from '../actions/user';
 // import * as actionTypes from '../actions/actionTypes';
 
 const Navbar = ({ logoutUser, user: { loggedIn }, location: { pathname } }) => {
+  debugger;
   return (
     <Menu pointing secondary>
       {loggedIn ? (
@@ -19,22 +20,22 @@ const Navbar = ({ logoutUser, user: { loggedIn }, location: { pathname } }) => {
           />
           <Menu.Menu position='right'>
             <Menu.Item
-              // to='/'
               name='Logout'
-              onClick={logoutUser} //comes from mapDispatchToProps
-              // onClick={() => {
-              //   logoutUser(); //comes from mapDispatchToProps
-              // }}
+              // onClick={logoutUser} //comes from mapDispatchToProps
+              onClick={() => {
+                logoutUser(); //comes from mapDispatchToProps
+              }}
             />
           </Menu.Menu>
         </Fragment>
       ) : (
-        <Menu.Item
-          as={NavLink}
-          to='/login'
-          name='Login'
-          active={pathname === '/login'}
-        />
+        <Menu.Menu position='right'>
+          {pathname === '/login' ? (
+            <Menu.Item as={NavLink} to='/signup' name='Signup' />
+          ) : (
+            <Menu.Item as={NavLink} to='/login' name='Login' />
+          )}
+        </Menu.Menu>
       )}
     </Menu>
   );

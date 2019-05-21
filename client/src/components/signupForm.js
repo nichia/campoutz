@@ -28,10 +28,9 @@ class SignupForm extends Component {
       avatar: ''
     },
     ErrorLog: {
-      usernameError: 'false',
-      passwordError: 'false',
-      confirmPasswordError: 'false',
-      formError: 'false'
+      usernameError: false,
+      passwordError: false,
+      confirmPasswordError: false
     }
   };
 
@@ -49,28 +48,27 @@ class SignupForm extends Component {
     let errorMsg = [];
 
     if (this.state.username.length < 3) {
-      this.setState({ usernameError: 'true' });
+      this.setState({ usernameError: true });
       errorMsg.push('Username must be at least 3 characters');
     } else {
-      this.setState({ usernameError: 'false' });
+      this.setState({ usernameError: false });
     }
 
     if (this.state.password.length < 8) {
-      this.setState({ passwordError: 'true' });
+      this.setState({ passwordError: true });
       errorMsg.push('Password must be at least 8 characters');
     } else {
-      this.setState({ passwordError: 'false' });
+      this.setState({ passwordError: false });
     }
 
     if (this.state.confirmPassword !== this.state.password) {
-      this.setState({ confirmPasswordError: 'true' });
+      this.setState({ confirmPasswordError: true });
       errorMsg.push('The password provided does not match');
     } else {
-      this.setState({ confirmPasswordError: 'false' });
+      this.setState({ confirmPasswordError: false });
     }
 
     if (errorMsg.length !== 0) {
-      this.setState({ formError: 'true' });
       this.props.failedLogin(errorMsg); //comes from mapDispatchToProps
     } else {
       this.props.signupUser(this.state.user); //comes from mapDispatchToProps
@@ -86,10 +84,9 @@ class SignupForm extends Component {
           avatar: ''
         },
         ErrorLog: {
-          usernameError: 'false',
-          passwordError: 'false',
-          confirmPasswordError: 'false',
-          formError: 'false'
+          usernameError: false,
+          passwordError: false,
+          confirmPasswordError: false
         }
       }); //reset form to initial state
     }
@@ -106,7 +103,7 @@ class SignupForm extends Component {
           size='mini'
           key='mini'
           loading={this.props.authenticatingUser}
-          error={this.props.failedLogin || this.state.formError}
+          error={this.props.failedLogin}
         >
           <Message
             error
@@ -117,10 +114,9 @@ class SignupForm extends Component {
               required='true'
               icon='user'
               iconPosition='left'
-              // label='username'
+              label='Username:'
               placeholder='Username'
               name='username'
-              type={{ length: 'minLength[3]' }}
               onChange={this.handleChange}
               value={this.state.username}
               error={this.state.usernameError}
@@ -129,7 +125,7 @@ class SignupForm extends Component {
               required='true'
               icon='envelope'
               iconPosition='left'
-              // label='Email'
+              label='Email:'
               placeholder='Email'
               name='email'
               type='email'
@@ -140,7 +136,7 @@ class SignupForm extends Component {
               required='true'
               icon='lock'
               iconPosition='left'
-              // label='password'
+              label='Password:'
               placeholder='Create a password'
               name='password'
               type='password'
@@ -152,7 +148,7 @@ class SignupForm extends Component {
               required='true'
               icon='lock'
               iconPosition='left'
-              // label='password confirmation'
+              label='Confirm Password:'
               placeholder='Confirm password'
               name='confirmPassword'
               type='password'
@@ -161,7 +157,7 @@ class SignupForm extends Component {
               error={this.state.confirmPasswordError}
             />
             <Form.Input
-              // label='avatar'
+              label='Avatar:'
               required='true'
               // icon='linkify'
               icon='image'
@@ -173,7 +169,7 @@ class SignupForm extends Component {
               value={this.state.avatar}
             />
             <Form.Input
-              // label='firstname'
+              label='First Name:'
               icon='user'
               iconPosition='left'
               placeholder='First name'
@@ -182,7 +178,7 @@ class SignupForm extends Component {
               value={this.state.firstname}
             />
             <Form.Input
-              // label='lastname'
+              label='Last Name:'
               icon='user'
               iconPosition='left'
               placeholder='Last name'
@@ -191,7 +187,7 @@ class SignupForm extends Component {
               value={this.state.lastname}
             />
             <Form.TextArea
-              // label='bio'
+              label='About:'
               placeholder='Tell us more about you...'
               name='bio'
               onChange={this.handleChange}
