@@ -85,7 +85,7 @@ export const /*FUNCTION*/ signupUser = props => {
             // });
           } else {
             console.log('%c signUP JWT RESP: ', 'color: navy', JSONResponse);
-            dispatch(failedLogin(JSONResponse.errors));
+            dispatch(failedLogin(JSONResponse.error));
           }
         })
         .catch(err => {
@@ -150,7 +150,7 @@ export const /*FUNCTION*/ loginUser = props => {
             // });
           } else {
             console.log('%c loginUser JWT RESP: ', 'color: navy', JSONResponse);
-            dispatch(failedLogin(JSONResponse.errors));
+            dispatch(failedLogin(JSONResponse.error));
           }
         })
         .catch(err => {

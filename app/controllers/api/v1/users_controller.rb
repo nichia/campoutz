@@ -13,13 +13,13 @@ class Api::V1::UsersController < ApplicationController
   def create
     # raise params.inspect
     @user = User.create(user_params)
-    byebug
+    # byebug
     if @user.valid?
       @token = encode_token(user_id: @user.id)
       render json: { user: UserSerializer.new(@user), jwt: @token }, status: :created
     else
       errors = @user.errors.full_messages
-      render json: {errors: errors}, status: :not_acceptable
+      render json: {error: errors}, status: :not_acceptable
     end
   end
 

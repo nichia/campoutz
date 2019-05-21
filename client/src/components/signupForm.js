@@ -94,6 +94,8 @@ class SignupForm extends Component {
 
   render() {
     console.log('%c SIGNUP FORM PROPS: ', 'color: purple', this.props);
+    const propsError = this.props.error ? this.props.error.join(', ') : null;
+
     return this.props.loggedIn ? (
       <Redirect to='/profile' />
     ) : (
@@ -105,10 +107,7 @@ class SignupForm extends Component {
           loading={this.props.authenticatingUser}
           error={this.props.failedLogin}
         >
-          <Message
-            error
-            header={this.props.failedLogin ? this.props.error : null}
-          />
+          <Message error header={this.props.failedLogin ? propsError : null} />
           <Form.Group widths='equal'>
             <Form.Input
               required='true'

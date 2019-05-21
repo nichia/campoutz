@@ -7,7 +7,6 @@ import { logoutUser } from '../actions/user';
 // import * as actionTypes from '../actions/actionTypes';
 
 const Navbar = ({ logoutUser, user: { loggedIn }, location: { pathname } }) => {
-  debugger;
   return (
     <Menu pointing secondary>
       {loggedIn ? (
