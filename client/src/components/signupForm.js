@@ -94,7 +94,12 @@ class SignupForm extends Component {
 
   render() {
     console.log('%c SIGNUP FORM PROPS: ', 'color: purple', this.props);
-    const propsError = this.props.error ? this.props.error.join(', ') : null;
+
+    const propsError = this.props.error
+      ? Array.isArray(this.props.error)
+        ? this.props.error.join(', ')
+        : this.props.error
+      : null;
 
     return this.props.loggedIn ? (
       <Redirect to='/profile' />

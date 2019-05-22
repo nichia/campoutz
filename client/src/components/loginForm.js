@@ -27,7 +27,14 @@ class LoginForm extends Component {
 
   render() {
     console.log('%c LOGIN FORM PROPS: ', 'color: purple', this.props);
-    const propsError = this.props.error ? this.props.error.join(', ') : null;
+
+    // if this.props.error is null (not true), propsError = null
+    // Else, if this.props.error is an array, join the error messages by ','
+    const propsError = this.props.error
+      ? Array.isArray(this.props.error)
+        ? this.props.error.join(', ')
+        : this.props.error
+      : null;
 
     return this.props.loggedIn ? (
       <Redirect to='/profile' />
