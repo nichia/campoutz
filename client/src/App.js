@@ -15,7 +15,7 @@ import './App.css';
 class App extends Component {
   componentDidMount() {
     if (localStorage.getItem('jwt') && !this.props.loggedIn) {
-      console.log('%c componentDidMount: ', 'color: pink');
+      console.log('%c APP componentDidMount: ', 'color: green');
 
       this.props.fetchCurrentUser();
     }

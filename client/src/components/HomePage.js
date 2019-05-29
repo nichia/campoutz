@@ -13,9 +13,21 @@ export class HomePage extends Component {
     this.state = {
       searchQuery: 'FL'
     };
+
+    // use bind to explicitly bind 'this' to the class: this.onSearchQuery is context-bound to 'this'
+    this.onSearchQuery = this.onSearchQuery.bind(this);
   }
 
   componentDidMount() {
+    console.log('%c HOMEPAGE componentDidMount: ', 'color: green');
+
+    this.props.fetchCampgrounds(this.state.searchQuery);
+  }
+
+  onSearchQuery(query) {
+    // console.log(event.target.value);
+    debugger;
+    this.setState({ ...this.state, searchQurey: query['value'] });
     this.props.fetchCampgrounds(this.state.searchQuery);
   }
 
@@ -23,7 +35,7 @@ export class HomePage extends Component {
     return (
       <Fragment>
         <div>
-          <SearchBar />
+          <SearchBar onSearchQuery={this.onSearchQuery} />
         </div>
         <div>
           <CampgroundsList />

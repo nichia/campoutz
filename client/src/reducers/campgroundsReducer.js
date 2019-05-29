@@ -2,7 +2,20 @@ import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from './utility';
 
 const initialState = {
-  campgrounds: [],
+  campgrounds: {
+    metadata: {
+      results: {
+        currentCount: 0,
+        totalCount: 0
+      },
+      searchParams: {
+        searchParamsLimit: 50,
+        searchParamsOffset: 0,
+        searchParamsQuery: ''
+      }
+    },
+    recdata: []
+  },
   currentCampground: {},
   error: null,
   loading: false

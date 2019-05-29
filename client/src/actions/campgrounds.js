@@ -15,6 +15,8 @@ const getCampgroundsFail = error => {
 export const fetchCampgrounds = query => {
   const RIDB_URL = `${process.env.REACT_APP_API_RIDB_ENDPOINT}/api/v1`;
   const RIDB_API_KEY = process.env.REACT_APP_RIDB_API_KEY;
+  const limit = 20;
+  const offset = 0;
 
   const options = {
     method: 'GET',
@@ -25,7 +27,7 @@ export const fetchCampgrounds = query => {
   };
 
   const proxyurl = 'https://cors-anywhere.herokuapp.com/';
-  const url = `${RIDB_URL}/facilities?limit=50&offset=0&full=false&state=${query}&activity=CAMPING&lastupdated=10-01-20181-2018`; // site that doesn’t send Access-Control-*
+  const url = `${RIDB_URL}/facilities?limit=${limit}&offset=${offset}&full=false&state=${query}&activity=CAMPING&lastupdated=10-01-20181-2018`; // site that doesn’t send Access-Control-*
 
   return dispatch => {
     console.log(
