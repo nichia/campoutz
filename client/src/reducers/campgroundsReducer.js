@@ -2,20 +2,15 @@ import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from './utility';
 
 const initialState = {
-  campgrounds: {
-    metadata: {
-      results: {
-        currentCount: 0,
-        totalCount: 0
-      },
-      searchParams: {
-        searchParamsLimit: 50,
-        searchParamsOffset: 0,
-        searchParamsQuery: ''
-      }
-    },
-    recdata: []
+  campgroundsData: {
+    currentCount: 0,
+    totalCount: 0,
+    searchParamsLimit: 20,
+    searchParamsOffset: 0,
+    searchParamsQuery: '',
+    allCampgrounds: []
   },
+
   currentCampground: {},
   error: null,
   loading: false
@@ -28,8 +23,25 @@ const getCampgroundsStart = (state, action) => {
 
 const getCampgroundsSuccess = (state, action) => {
   console.log('%c GetCampground_SUCCESS...', 'color: red', action.payload);
+
+  const data = {
+    currentCount: 0,
+    totalCount: 0,
+    searchParamsLimit: 20,
+    searchParamsOffset: 0,
+    searchParamsQuery: '',
+    allCampgrounds: []
+  };
+
+  data.currentCount = action.payload.METADATA.RESULTS.CURRENT_COUNT;
+  data.totalCount = action.payload.METADATA.RESULTS.TOTAL_COUNT;
+  data.searchParamsLimit = action.payload.METADATA.SEARCH_PARAMETERS.LIMIT;
+  data.searchParamsOffset = action.payload.METADATA.SEARCH_PARAMETERS.OFFSET;
+  data.searchParamsQuery = action.payload.METADATA.SEARCH_PARAMETERS.QUERY;
+  data.allCampgrounds = action.payload.RECDATA;
+
   return updateObject(state, {
-    campgrounds: action.payload,
+    campgroundsData: data,
     loading: false
   });
 };
@@ -42,6 +54,11 @@ const getCampgroundsFail = (state, action) => {
   });
 };
 
+const getCampground = (state, action) => {
+  console.log('%c Loading_campgrounds...', 'color: red');
+  return updateObject(state, { currentCampground: action.payload });
+};
+
 const campgroundsReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.GET_CAMPGROUNDS_START:
@@ -50,6 +67,8 @@ const campgroundsReducer = (state = initialState, action) => {
       return getCampgroundsSuccess(state, action);
     case actionTypes.GET_CAMPGROUNDS_FAIL:
       return getCampgroundsFail(state, action);
+    case actionTypes.GET_CAMPGROUND:
+      return getCampground(state, action);
     default:
       console.log(
         '%c Default campgrounds: %s',

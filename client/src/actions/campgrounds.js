@@ -5,11 +5,20 @@ const getCampgroundsStart = () => {
 };
 
 const getCampgroundsSuccess = campgrounds => {
-  return { type: actionTypes.GET_CAMPGROUNDS_SUCCESS, payload: campgrounds };
+  return {
+    type: actionTypes.GET_CAMPGROUNDS_SUCCESS,
+    payload: campgrounds
+  };
 };
 
 const getCampgroundsFail = error => {
   return { type: actionTypes.GET_CAMPGROUNDS_FAIL, payload: error };
+};
+
+export const getCampground = campground => {
+  return dispatch => {
+    dispatch({ type: actionTypes.GET_CAMPGROUND, payload: campground });
+  };
 };
 
 export const fetchCampgrounds = query => {
@@ -17,6 +26,7 @@ export const fetchCampgrounds = query => {
   const RIDB_API_KEY = process.env.REACT_APP_RIDB_API_KEY;
   const limit = 20;
   const offset = 0;
+  const fullDetails = 'true';
 
   const options = {
     method: 'GET',
@@ -27,7 +37,7 @@ export const fetchCampgrounds = query => {
   };
 
   const proxyurl = 'https://cors-anywhere.herokuapp.com/';
-  const url = `${RIDB_URL}/facilities?limit=${limit}&offset=${offset}&full=false&state=${query}&activity=CAMPING&lastupdated=10-01-20181-2018`; // site that doesn’t send Access-Control-*
+  const url = `${RIDB_URL}/facilities?limit=${limit}&offset=${offset}&full=${fullDetails}&state=${query}&activity=CAMPING&lastupdated=10-01-20181-2018`; // site that doesn’t send Access-Control-*
 
   return dispatch => {
     console.log(
