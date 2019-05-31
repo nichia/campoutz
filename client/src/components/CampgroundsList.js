@@ -9,24 +9,39 @@ class CampgroundsList extends Component {
   render() {
     console.log('%c campgroundsList ', 'color: green', this.props);
     if (this.props.campgroundsData.allCampgrounds.length > 0) {
+      console.log(
+        this.props.campgroundsData.allCampgrounds[0].FacilityDescription
+      );
       return (
         <Fragment>
           <Card.Group>
-            {this.props.campgroundsData.allCampgrounds.map(
-              (campground, index) => (
-                <Card key={campground.FacilityID}>
-                  <Card.Content header={campground.FacilityName} />
-                  <Card.Content
+            {this.props.campgroundsData.allCampgrounds.map(campground => (
+              <Card
+                key={campground.FacilityID}
+                onClick={() => this.props.getCampground(campground)}
+              >
+                <Card.Content header={campground.FacilityName} />
+                {/* <Card.Content
+                    Style='word-wrap: break-word;'
                     description={
-                      campground.FacilityDescription.substring(0, 100) + '...'
+                      // campground.FacilityDescription.substring(0, 100) + '...'
+                      `${campground.FacilityDescription.substring(0, 100)}...`
                     }
-                  />
-                  <Card.Content extra>
-                    <Icon name='user' />4 Friends
-                  </Card.Content>
-                </Card>
-              )
-            )}
+                  /> */}
+                <Card.Content>
+                  {/* fix(card): word-wrap overflowing card container with long
+                    strings */}
+                  <div className='description' Style='word-wrap: break-word;'>
+                    <Card.Description>
+                      <div> {campground.FacilityDescription}</div>
+                    </Card.Description>
+                  </div>
+                </Card.Content>
+                <Card.Content extra>
+                  <Icon name='user' />4 Friends
+                </Card.Content>
+              </Card>
+            ))}
             ;
           </Card.Group>
         </Fragment>

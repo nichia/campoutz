@@ -55,7 +55,10 @@ const getCampgroundsFail = (state, action) => {
 };
 
 const getCampground = (state, action) => {
-  console.log('%c Loading_campgrounds...', 'color: red');
+  console.log(
+    '%c getCampground set currentCampground Reducer...',
+    'color: red'
+  );
   return updateObject(state, { currentCampground: action.payload });
 };
 
