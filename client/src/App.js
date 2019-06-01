@@ -8,6 +8,7 @@ import SignupForm from './components/signupForm';
 import NoMatch from './components/noMatch';
 import Profile from './components/profile';
 import HomePage from './components/HomePage';
+import Campground from './containers/CampgroundContainer';
 import { fetchCurrentUser } from './actions/user';
 
 import './App.css';
@@ -31,6 +32,7 @@ class App extends Component {
           <Route exact path='/profile' component={Profile} />
           <Route exact path='/login' component={LoginForm} />
           <Route exact path='/signup' component={SignupForm} />
+          <Route exact path='/campgrounds/:id' component={Campground} />
           <Route component={NoMatch} />
         </Switch>
       </Fragment>

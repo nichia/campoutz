@@ -1,39 +1,39 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import { getCampground } from '../actions/campgrounds';
-import { bindActionCreators } from 'redux';
-import { Card, Icon } from 'semantic-ui-react';
+import { NavLink, withRouter } from 'react-router-dom';
+import { Card, Icon, Dimmer, Loader, Image, Segment } from 'semantic-ui-react';
 
 class CampgroundsList extends Component {
   render() {
     console.log('%c campgroundsList ', 'color: green', this.props);
-    if (this.props.campgroundsData.allCampgrounds.length > 0) {
-      console.log(
-        this.props.campgroundsData.allCampgrounds[0].FacilityDescription
-      );
-      return (
-        <Fragment>
-          <Card.Group>
+    return (
+      <Fragment>
+        {this.props.loading ? (
+          <Segment>
+            <Dimmer active inverted>
+              <Loader inverted>Loading</Loader>
+            </Dimmer>
+            <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
+          </Segment>
+        ) : null}
+
+        {this.props.campgroundsData.allCampgrounds.length > 0 ? (
+          <Card.Group loading={this.props.loading}>
             {this.props.campgroundsData.allCampgrounds.map(campground => (
-              <Card
-                key={campground.FacilityID}
-                onClick={() => this.props.getCampground(campground)}
-              >
-                <Card.Content header={campground.FacilityName} />
-                {/* <Card.Content
-                    Style='word-wrap: break-word;'
-                    description={
-                      // campground.FacilityDescription.substring(0, 100) + '...'
-                      `${campground.FacilityDescription.substring(0, 100)}...`
-                    }
-                  /> */}
+              <Card key={campground.FacilityID}>
+                <NavLink to={`/campgrounds/${campground.FacilityID}`} exact>
+                  <Card.Content header={campground.FacilityName} />
+                </NavLink>
                 <Card.Content>
                   {/* fix(card): word-wrap overflowing card container with long
                     strings */}
                   <div className='description' Style='word-wrap: break-word;'>
                     <Card.Description>
-                      <div> {campground.FacilityDescription}</div>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: campground.FacilityDescription
+                        }}
+                      />
                     </Card.Description>
                   </div>
                 </Card.Content>
@@ -42,35 +42,20 @@ class CampgroundsList extends Component {
                 </Card.Content>
               </Card>
             ))}
-            ;
           </Card.Group>
-        </Fragment>
-      );
-    } else {
-      return <div>No Campgrounds Listing. Enter another search</div>;
-    }
+        ) : (
+          <div>No Campgrounds Listing. Select another search</div>
+        )}
+      </Fragment>
+    );
   }
 }
 
 const mapStateToProps = state => {
   return {
-    campgroundsData: state.campgrounds.campgroundsData,
-    currentCampground: state.campgrounds.currentCampground,
-    currentUser: state.user.currentUser
+    loading: state.campgrounds.loading,
+    campgroundsData: state.campgrounds.campgroundsData
   };
 };
 
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      getCampground
-    },
-    dispatch
-  );
-
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(CampgroundsList)
-);
+export default withRouter(connect(mapStateToProps)(CampgroundsList));

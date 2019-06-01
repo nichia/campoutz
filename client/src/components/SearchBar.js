@@ -66,7 +66,7 @@ class SearchBar extends Component {
 
   onSuggestionSelected = (event, { suggestion }) => {
     console.log(
-      '%c FetchCapgrounds: ',
+      '%c FetchCapgrounds onSuggestionsSelected: ',
       'color: green',
       event.target,
       suggestion

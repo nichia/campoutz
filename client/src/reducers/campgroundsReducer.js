@@ -13,7 +13,8 @@ const initialState = {
 
   currentCampground: {},
   error: null,
-  loading: false
+  loading: false,
+  campLoading: false
 };
 
 const getCampgroundsStart = (state, action) => {
@@ -62,6 +63,28 @@ const getCampground = (state, action) => {
   return updateObject(state, { currentCampground: action.payload });
 };
 
+const getCampgroundStart = (state, action) => {
+  console.log('%c Loading_campgrounds...', 'color: red');
+  return updateObject(state, { campLoading: true });
+};
+
+const getCampgroundSuccess = (state, action) => {
+  console.log('%c GetCampground_SUCCESS...', 'color: red', action.payload);
+
+  return updateObject(state, {
+    currentCampground: action.payload,
+    campLoading: false
+  });
+};
+
+const getCampgroundFail = (state, action) => {
+  console.log('%c GetCampground_FAIL: %s', 'color: red', action.payload);
+  return updateObject(state, {
+    error: action.payload,
+    campLoading: false
+  });
+};
+
 const campgroundsReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.GET_CAMPGROUNDS_START:
@@ -72,6 +95,12 @@ const campgroundsReducer = (state = initialState, action) => {
       return getCampgroundsFail(state, action);
     case actionTypes.GET_CAMPGROUND:
       return getCampground(state, action);
+    case actionTypes.GET_CAMPGROUND_START:
+      return getCampgroundStart(state, action);
+    case actionTypes.GET_CAMPGROUND_SUCCESS:
+      return getCampgroundSuccess(state, action);
+    case actionTypes.GET_CAMPGROUND_FAIL:
+      return getCampgroundFail(state, action);
     default:
       console.log(
         '%c Default campgrounds: %s',

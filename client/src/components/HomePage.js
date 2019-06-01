@@ -25,10 +25,9 @@ export class HomePage extends Component {
   }
 
   onSearchQuery(query) {
-    // console.log(event.target.value);
-    debugger;
+    // console.log(query);
     this.setState({ ...this.state, searchQurey: query['value'] });
-    this.props.fetchCampgrounds(this.state.searchQuery);
+    this.props.fetchCampgrounds(query['value']);
   }
 
   render() {
