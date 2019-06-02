@@ -83,7 +83,7 @@ export const fetchCampground = campgroundID => {
 export const fetchCampgrounds = query => {
   const RIDB_URL = `${process.env.REACT_APP_API_RIDB_ENDPOINT}/api/v1`;
   const RIDB_API_KEY = process.env.REACT_APP_RIDB_API_KEY;
-  const limit = 20;
+  const limit = 5;
   const offset = 0;
   const fullDetails = 'true';
 

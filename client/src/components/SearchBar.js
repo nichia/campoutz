@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Autosuggest from 'react-autosuggest';
 import { searchTerms } from '../data/searchTerms';
+import { Segment } from 'semantic-ui-react';
 
 // Teach Autosuggest how to calculate suggestions for any given input value.
 export const getSuggestions = value => {
@@ -87,16 +88,18 @@ class SearchBar extends Component {
 
     // Finally, render it!
     return (
-      <Autosuggest
-        suggestions={suggestions}
-        onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-        getSuggestionValue={getSuggestionValue}
-        highlightFirstSuggestion={true}
-        onSuggestionSelected={this.onSuggestionSelected}
-        renderSuggestion={renderSuggestion}
-        inputProps={inputProps}
-      />
+      <Segment>
+        <Autosuggest
+          suggestions={suggestions}
+          onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+          onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+          getSuggestionValue={getSuggestionValue}
+          highlightFirstSuggestion={true}
+          onSuggestionSelected={this.onSuggestionSelected}
+          renderSuggestion={renderSuggestion}
+          inputProps={inputProps}
+        />
+      </Segment>
     );
   }
 }

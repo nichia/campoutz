@@ -1,7 +1,7 @@
 import React from 'react';
+import LoadSpinner from './LoadSpinner';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react';
 
 const CampgroundView = props => {
   console.log('%c CampgroundView: ', 'color: brown', props);
@@ -9,12 +9,7 @@ const CampgroundView = props => {
   return (
     <div>
       {props.loading ? (
-        <Segment>
-          <Dimmer active inverted>
-            <Loader inverted>Loading</Loader>
-          </Dimmer>
-          <Image src='https://react.semantic-ui.com/images/wireframe/short-paragraph.png' />
-        </Segment>
+        <LoadSpinner>{props.loading}</LoadSpinner>
       ) : (
         <div
           dangerouslySetInnerHTML={{

@@ -7,7 +7,7 @@ import LoginForm from './components/loginForm';
 import SignupForm from './components/signupForm';
 import NoMatch from './components/noMatch';
 import Profile from './components/profile';
-import HomePage from './components/HomePage';
+import HomePage from './containers/HomePage';
 import Campground from './containers/CampgroundContainer';
 import { fetchCurrentUser } from './actions/user';
 

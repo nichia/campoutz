@@ -4,8 +4,8 @@ import { withRouter } from 'react-router-dom';
 import { fetchCampgrounds } from '../actions/campgrounds';
 import { bindActionCreators } from 'redux';
 
-import SearchBar from './SearchBar';
-import CampgroundsList from './CampgroundsList';
+import SearchBar from '../components/SearchBar';
+import CampgroundsContainer from './CampgroundsContainer';
 
 export class HomePage extends Component {
   constructor() {
@@ -37,7 +37,7 @@ export class HomePage extends Component {
           <SearchBar onSearchQuery={this.onSearchQuery} />
         </div>
         <div>
-          <CampgroundsList />
+          <CampgroundsContainer />
         </div>
       </Fragment>
     );
