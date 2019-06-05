@@ -4,7 +4,7 @@ const initialState = {
   currentUser: null,
   loggedIn: false,
   authenticatingUser: false,
-  failedLogin: false,
+  loginFailed: false,
   error: null
 };
 
@@ -33,7 +33,7 @@ const usersReducer = (state = initialState, action) => {
 
       return {
         ...state,
-        failedLogin: true,
+        loginFailed: true,
         error: action.payload,
         authenticatingUser: false
       };

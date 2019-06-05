@@ -25,16 +25,27 @@ class LoginForm extends Component {
     this.setState({ username: '', password: '' }); //reset form to initial state
   };
 
-  render() {
-    console.log('%c LOGIN FORM PROPS: ', 'color: purple', this.props);
-
+  formatError = () => {
     // if this.props.error is null (not true), propsError = null
-    // Else, if this.props.error is an array, join the error messages by ','
-    const propsError = this.props.error
-      ? Array.isArray(this.props.error)
-        ? this.props.error.join(', ')
-        : this.props.error
-      : null;
+    // Else, if this.props.error is an array, join the error messages by 'unordered list'
+    if (this.props.error) {
+      if (Array.isArray(this.props.error)) {
+        const listErrors = this.props.error.map((error, index) => (
+          <li key={index}>{error}</li>
+        ));
+        return <ul>{listErrors}</ul>;
+      } else {
+        return this.props.error;
+      }
+    } else {
+      return null;
+    }
+  };
+
+  render() {
+    const propsError = this.formatError;
+
+    console.log('%c LOGIN FORM PROPS: ', 'color: purple', this.props);
 
     return this.props.loggedIn ? (
       <Redirect to='/profile' />
@@ -45,12 +56,12 @@ class LoginForm extends Component {
           size='mini'
           key='mini'
           loading={this.props.authenticatingUser}
-          error={this.props.failedLogin}
+          error={this.props.loginFailed}
         >
-          <Message error header={this.props.failedLogin ? propsError : null} />
+          <Message error header={this.props.loginFailed ? propsError : null} />
           <Form.Group widths='equal'>
             <Form.Input
-              required='true'
+              required
               icon='user'
               iconPosition='left'
               label='Username:'
@@ -60,12 +71,13 @@ class LoginForm extends Component {
               value={this.state.username}
             />
             <Form.Input
-              required='true'
+              required
               icon='lock'
               iconPosition='left'
               label='Password:'
               placeholder='password'
               name='password'
+              type='password'
               onChange={this.handleChange}
               value={this.state.password}
             />
@@ -89,15 +101,15 @@ class LoginForm extends Component {
 // }
 
 // es6 shortcut: object destructuring - from redux store state, pull out user: object
-// from this object, pull out authenticatingUser, failedLogin, error, loggedIn.
+// from this object, pull out authenticatingUser, loginFailed, error, loggedIn.
 // arror function => without curly brackets, just wrapped in parentheses - implicit return
 const mapStateToProps = ({
-  user: { authenticatingUser, failedLogin, error, loggedIn }
+  user: { authenticatingUser, loginFailed, error, loggedIn }
 }) => ({
   // es6 shortcut: keys and values match up as (authenticatingUser: authenticatingUser),
   // can condense as below
   authenticatingUser,
-  failedLogin,
+  loginFailed,
   error,
   loggedIn
 });

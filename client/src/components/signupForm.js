@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Redirect, NavLink } from 'react-router-dom';
 import { signupUser, failedLogin } from '../actions/user';
-import { Button, Form, Segment, Message } from 'semantic-ui-react';
+import { Form, Segment, Message } from 'semantic-ui-react';
 
 class SignupForm extends Component {
   // constructor() {
@@ -17,21 +17,17 @@ class SignupForm extends Component {
   //   }
   // }
   state = {
-    user: {
-      username: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-      firstname: '',
-      lastname: '',
-      bio: '',
-      avatar: ''
-    },
-    ErrorLog: {
-      usernameError: false,
-      passwordError: false,
-      confirmPasswordError: false
-    }
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    firstname: '',
+    lastname: '',
+    bio: '',
+    avatar: '',
+    usernameError: false,
+    passwordError: false,
+    confirmPasswordError: false
   };
 
   // handleChange = (e, { name, value }) => this.setState({ [name]: value })
@@ -41,7 +37,7 @@ class SignupForm extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleLoginSubmit = e => {
+  handleSignupSubmit = e => {
     //semantic forms preventDefault for you
     // e.preventDefault()
 
@@ -71,51 +67,76 @@ class SignupForm extends Component {
     if (errorMsg.length !== 0) {
       this.props.failedLogin(errorMsg); //comes from mapDispatchToProps
     } else {
-      this.props.signupUser(this.state.user); //comes from mapDispatchToProps
+      const user = {
+        username: this.state.username,
+        email: this.state.email,
+        password: this.state.password,
+        confirmPassword: this.state.confirmPassword,
+        firstname: this.state.firstname,
+        lastname: this.state.lastname,
+        bio: this.state.bio,
+        avatar: this.state.avatar
+      };
+
+      this.props.signupUser(user); //comes from mapDispatchToProps
       this.setState({
-        user: {
-          username: '',
-          email: '',
-          password: '',
-          confirmPassword: '',
-          firstname: '',
-          lastname: '',
-          bio: '',
-          avatar: ''
-        },
-        ErrorLog: {
-          usernameError: false,
-          passwordError: false,
-          confirmPasswordError: false
-        }
+        username: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
+        firstname: '',
+        lastname: '',
+        bio: '',
+        avatar: '',
+        usernameError: false,
+        passwordError: false,
+        confirmPasswordError: false
       }); //reset form to initial state
     }
   };
 
-  render() {
-    console.log('%c SIGNUP FORM PROPS: ', 'color: purple', this.props);
+  formatError = () => {
+    // if this.props.error is null (not true), propsError = null
+    // Else, if this.props.error is an array, join the error messages by 'unordered list'
+    if (this.props.error) {
+      if (Array.isArray(this.props.error)) {
+        const listErrors = this.props.error.map((error, index) => (
+          <li key={index}>{error}</li>
+        ));
+        return <ul>{listErrors}</ul>;
+      } else {
+        return this.props.error;
+      }
+    } else {
+      return null;
+    }
+  };
 
-    const propsError = this.props.error
-      ? Array.isArray(this.props.error)
-        ? this.props.error.join(', ')
-        : this.props.error
-      : null;
+  render() {
+    const propsError = this.formatError;
+
+    console.log(
+      '%c SIGNUP FORM PROPS: ',
+      'color: purple',
+      this.props,
+      propsError
+    );
 
     return this.props.loggedIn ? (
       <Redirect to='/profile' />
     ) : (
       <Segment>
         <Form
-          onSubmit={this.handleLoginSubmit}
+          onSubmit={this.handleSignupSubmit}
           size='mini'
           key='mini'
           loading={this.props.authenticatingUser}
-          error={this.props.failedLogin}
+          error={this.props.loginFailed}
         >
-          <Message error header={this.props.failedLogin ? propsError : null} />
+          <Message error header={this.props.loginFailed ? propsError : null} />
           <Form.Group widths='equal'>
             <Form.Input
-              required='true'
+              required
               icon='user'
               iconPosition='left'
               label='Username:'
@@ -126,7 +147,7 @@ class SignupForm extends Component {
               error={this.state.usernameError}
             />
             <Form.Input
-              required='true'
+              required
               icon='envelope'
               iconPosition='left'
               label='Email:'
@@ -137,7 +158,7 @@ class SignupForm extends Component {
               value={this.state.email}
             />
             <Form.Input
-              required='true'
+              required
               icon='lock'
               iconPosition='left'
               label='Password:'
@@ -149,7 +170,7 @@ class SignupForm extends Component {
               error={this.state.passwordError}
             />
             <Form.Input
-              required='true'
+              required
               icon='lock'
               iconPosition='left'
               label='Confirm Password:'
@@ -162,7 +183,7 @@ class SignupForm extends Component {
             />
             <Form.Input
               label='Avatar:'
-              required='true'
+              required
               // icon='linkify'
               icon='image'
               iconPosition='left'
@@ -198,7 +219,8 @@ class SignupForm extends Component {
               value={this.state.bio}
             />
           </Form.Group>
-          <Button type='submit'>Signup</Button>
+          <Form.Button>Signup</Form.Button>
+
           <br />
           <NavLink to='/login'>Already a member? Log in</NavLink>
         </Form>
@@ -210,17 +232,17 @@ class SignupForm extends Component {
 // const mapStateToProps = (reduxStoreState) => {
 //   return {
 //     authenticatingUser: reduxStoreState.usersReducer.authenticatingUser,
-//     failedLogin: reduxStoreState.usersReducer.failedLogin,
+//     loginFailed: reduxStoreState.usersReducer.loginFailed,
 //     error: reduxStoreState.usersReducer.error,
 //     loggedIn: reduxStoreState.usersReducer.loggedIn
 //   }
 // }
 
 const mapStateToProps = ({
-  user: { authenticatingUser, failedLogin, error, loggedIn }
+  user: { authenticatingUser, loginFailed, error, loggedIn }
 }) => ({
   authenticatingUser,
-  failedLogin,
+  loginFailed,
   error,
   loggedIn
 });
