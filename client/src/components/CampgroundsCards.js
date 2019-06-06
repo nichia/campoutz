@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { Card, Icon } from 'semantic-ui-react';
+import { Card, Icon, Button } from 'semantic-ui-react';
 
 /* fix(card): word-wrap overflowing card container with longstrings */
 const divStyle = {
@@ -14,15 +14,15 @@ const extractDescription = description => {
   if (indexEnd > indexStart) {
     extractedDescription = description.substring(indexStart + 3, indexEnd);
   } else {
-    indexStart = description.indexOf('</h2>');
+    indexStart = description.indexOf('\n');
     if (indexStart !== '-1') {
-      indexEnd = description.indexOf('<h2>', indexStart + 1);
+      indexEnd = description.indexOf('\n', indexStart + 1);
       if (indexEnd > indexStart) {
-        extractedDescription = description.substring(indexStart + 5, indexEnd);
+        extractedDescription = description.substring(indexStart + 1, indexEnd);
       }
     }
   }
-  return extractedDescription;
+  return extractedDescription + '...';
 };
 
 const CampgroundsView = ({ children }) => {
@@ -36,14 +36,6 @@ const CampgroundsView = ({ children }) => {
             <Card.Content header={campground.FacilityName} />
           </NavLink>
           <Card.Content>
-            {/* fix(card): word-wrap overflowing card container with long
-                    strings */}
-            {/* <div
-              className='description'
-              Style='width: 200px; white-space: nowrape; overflow: hidden; text-overflow: ellipsis;'
-            > */}
-            {/* <div className='description' Style='word-wrap: break-word;'> */}
-            {/* <Card.Description Style='width: 200px; white-space: nowrape; overflow: hidden; text-overflow: ellipsis;'> */}
             <Card.Description>
               <div
                 style={divStyle}
@@ -51,13 +43,17 @@ const CampgroundsView = ({ children }) => {
                   __html: extractDescription(campground.FacilityDescription)
                 }}
               />
-              {/* // campground.FacilityDescription.substring(0, 100) + '...' // */}
-              {/* `${campground.FacilityDescription.substring(0, 100)}...` */}
             </Card.Description>
-            {/* </div> */}
           </Card.Content>
           <Card.Content extra>
-            <Icon name='user' />4 Friends
+            <NavLink to={`/campgrounds/${campground.FacilityID}`} exact>
+              <div className='ui right floated'>
+                <Button primary>
+                  <Icon name='eye' />
+                  View Details
+                </Button>
+              </div>
+            </NavLink>
           </Card.Content>
         </Card>
       ))}
