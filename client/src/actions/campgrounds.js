@@ -15,9 +15,9 @@ const getCampgroundsFail = error => {
   return { type: actionTypes.GET_CAMPGROUNDS_FAIL, payload: error };
 };
 
-export const getCampground = campgroundID => {
+export const getCampground = campground => {
   return dispatch => {
-    dispatch({ type: actionTypes.GET_CAMPGROUND, payload: campgroundID });
+    dispatch({ type: actionTypes.GET_CAMPGROUND, payload: campground });
   };
 };
 

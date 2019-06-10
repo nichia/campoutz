@@ -6,7 +6,7 @@ import CampgroundView from '../components/CampgroundView';
 
 export class Campground extends Component {
   constructor(props) {
-    super();
+    super(props);
     this.campgroundID = props.match.params.id;
   }
 
@@ -16,9 +16,12 @@ export class Campground extends Component {
       'color: orange',
       this.props
     );
-
-    this.props.fetchCampground(this.campgroundID);
+    if (this.campgroundID !== this.props.campground.FacilityID) {
+      // fetchCampground if currentCampground does not equal to requsted campgroundID
+      this.props.fetchCampground(this.campgroundID);
+    }
   }
+
   render() {
     return (
       <div>

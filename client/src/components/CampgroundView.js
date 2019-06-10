@@ -23,7 +23,7 @@ const CampgroundView = props => {
 
 const mapStateToProps = state => {
   return {
-    loading: state.campgrounds.campLoading,
+    loading: state.campgrounds.loadingCampground,
     campground: state.campgrounds.currentCampground
   };
 };

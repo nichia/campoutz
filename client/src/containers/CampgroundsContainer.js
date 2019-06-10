@@ -25,7 +25,7 @@ class CampgroundsContainer extends Component {
         ) : (
           <div>
             <h3>Search Results</h3>
-            <h3>No matching results found</h3>
+            <h3>No matching results found. Enter a new search above.</h3>
           </div>
         )}
       </Fragment>

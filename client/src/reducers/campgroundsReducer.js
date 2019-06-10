@@ -14,7 +14,7 @@ const initialState = {
   currentCampground: {},
   error: null,
   loading: false,
-  campLoading: false
+  loadingCampground: false
 };
 
 const getCampgroundsStart = (state, action) => {
@@ -60,7 +60,7 @@ const getCampground = (state, action) => {
 
 const getCampgroundStart = (state, action) => {
   console.log('%c Loading_campgrounds...', 'color: red');
-  return updateObject(state, { campLoading: true });
+  return updateObject(state, { loadingCampground: true });
 };
 
 const getCampgroundSuccess = (state, action) => {
@@ -68,7 +68,7 @@ const getCampgroundSuccess = (state, action) => {
 
   return updateObject(state, {
     currentCampground: action.payload,
-    campLoading: false
+    loadingCampground: false
   });
 };
 
@@ -76,7 +76,7 @@ const getCampgroundFail = (state, action) => {
   console.log('%c GetCampground_FAIL: %s', 'color: red', action.payload);
   return updateObject(state, {
     error: action.payload,
-    campLoading: false
+    loadingCampground: false
   });
 };
 
