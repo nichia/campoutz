@@ -23,7 +23,10 @@ class CampgroundsContainer extends Component {
             />
           </Fragment>
         ) : (
-          <div>No Campgrounds Listing. Search again...</div>
+          <div>
+            <h3>Search Results</h3>
+            <h3>No matching results found</h3>
+          </div>
         )}
       </Fragment>
     );

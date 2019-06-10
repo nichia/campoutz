@@ -7,6 +7,19 @@ const divStyle = {
   wordWrap: 'break-word'
 };
 
+const truncate = (str, n, useWordBoundary) => {
+  debugger;
+  if (str.length <= n) {
+    return str;
+  }
+  const subString = str.substr(0, n - 1);
+  return (
+    (useWordBoundary
+      ? subString.substr(0, subString.lastIndexOf(' '))
+      : subString) + '&hellip;'
+  );
+};
+
 const extractDescription = description => {
   let extractedDescription = description;
   let indexStart = description.indexOf('<p>');
@@ -28,7 +41,8 @@ const extractDescription = description => {
       }
     }
   }
-  return extractedDescription + '...';
+
+  return truncate(extractedDescription, 180, true);
 };
 
 const CampgroundsView = ({ children }) => {
