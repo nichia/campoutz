@@ -1,5 +1,11 @@
 import * as actionTypes from './actionTypes';
 
+export const updateSearchState = query => {
+  return dispatch => {
+    dispatch({ type: actionTypes.UPDATE_SEARCHSTATE, payload: query });
+  };
+};
+
 const getCampgroundsStart = () => {
   return { type: actionTypes.GET_CAMPGROUNDS_START };
 };
@@ -99,7 +105,6 @@ export const fetchCampgrounds = (query, page) => {
   const proxyurl = 'https://cors-anywhere.herokuapp.com/';
   const url = `${RIDB_URL}/facilities?limit=${limit}&offset=${offset}&full=${fullDetails}&state=${query}&activity=CAMPING&lastupdated=10-01-20181-2018`;
   // site that doesn’t send Access-Control-*
-
   return dispatch => {
     console.log(
       '%c fetchCampgrounds: ',

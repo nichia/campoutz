@@ -11,6 +11,7 @@ const initialState = {
     allCampgrounds: []
   },
 
+  searchState: '',
   currentCampground: {},
   error: null,
   loading: false,
@@ -80,6 +81,11 @@ const getCampgroundFail = (state, action) => {
   });
 };
 
+const updateSearchState = (state, action) => {
+  console.log('%c updateSearchState Reducer...', 'color: red', action.payload);
+  return updateObject(state, { searchState: action.payload });
+};
+
 const campgroundsReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.GET_CAMPGROUNDS_START:
@@ -96,6 +102,8 @@ const campgroundsReducer = (state = initialState, action) => {
       return getCampgroundSuccess(state, action);
     case actionTypes.GET_CAMPGROUND_FAIL:
       return getCampgroundFail(state, action);
+    case actionTypes.UPDATE_SEARCHSTATE:
+      return updateSearchState(state, action);
     default:
       console.log(
         '%c Default campgrounds: %s',

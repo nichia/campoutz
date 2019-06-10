@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { fetchCampgrounds } from '../actions/campgrounds';
+import { fetchCampgrounds, updateSearchState } from '../actions/campgrounds';
 import { bindActionCreators } from 'redux';
 
 import SearchBar from '../components/SearchBar';
@@ -11,7 +11,7 @@ export class HomePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchQuery: 'FL',
+      // searchQuery: 'FL',
       activePage:
         props.campgroundsData.searchParamsOffset > 0
           ? props.campgroundsData.searchParamsOffset /
@@ -29,7 +29,7 @@ export class HomePage extends Component {
     console.log('%c HOMEPAGE componentDidMount: ', 'color: teal', this.state);
     if (this.props.campgroundsData.allCampgrounds.length === 0) {
       this.props.fetchCampgrounds(
-        this.state.searchQuery,
+        this.props.searchState,
         this.state.activePage
       );
     }
@@ -45,13 +45,13 @@ export class HomePage extends Component {
       ' prevProps:',
       prevProps
     );
-
+    // debugger;
     if (
-      this.state.searchQuery !== prevState.searchQuery ||
+      this.props.searchState !== prevProps.searchState ||
       this.state.activePage !== prevState.activePage
     ) {
       this.props.fetchCampgrounds(
-        this.state.searchQuery,
+        this.props.searchState,
         this.state.activePage
       );
     }
@@ -61,13 +61,16 @@ export class HomePage extends Component {
   // implictly bind this base on the surrounding context by using arrow function
   // onSearchQuery = (query) => {
   onSearchQuery(query) {
-    this.setState({ searchQuery: query['value'], activePage: 1 });
-    console.log(
-      '%c HOMEPAGE onSearchQuery: ',
-      'color: teal',
-      this.state,
-      query['value']
-    );
+    if (query['value'] !== this.props.searchState) {
+      this.setState({ activePage: 1 });
+      this.props.updateSearchState(query['value']);
+      console.log(
+        '%c HOMEPAGE onSearchQuery: ',
+        'color: teal',
+        this.state,
+        query['value']
+      );
+    }
   }
 
   onPaginationChange = (e, { activePage }) => {
@@ -80,7 +83,6 @@ export class HomePage extends Component {
       <Fragment>
         <SearchBar onSearchQuery={this.onSearchQuery} />
         <CampgroundsContainer
-          searchQuery={this.state.searchQuery}
           activePage={this.state.activePage}
           handlePaginationChange={this.onPaginationChange}
         />
@@ -91,6 +93,7 @@ export class HomePage extends Component {
 
 const mapStateToProps = state => {
   return {
+    searchState: state.campgrounds.searchState,
     campgroundsData: state.campgrounds.campgroundsData
   };
 };
@@ -98,7 +101,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      fetchCampgrounds
+      fetchCampgrounds,
+      updateSearchState
     },
     dispatch
   );

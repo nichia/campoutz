@@ -17,7 +17,6 @@ class CampgroundsContainer extends Component {
           <Fragment>
             <CampgroundsCards>{this.props.campgroundsData}</CampgroundsCards>
             <CampgroundsPagination
-              searchQuery={this.props.searchQuery}
               activePage={this.props.activePage}
               handlePaginationChange={this.props.handlePaginationChange}
             />
