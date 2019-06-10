@@ -27,7 +27,12 @@ export class HomePage extends Component {
 
   componentDidMount() {
     console.log('%c HOMEPAGE componentDidMount: ', 'color: teal', this.state);
-    this.props.fetchCampgrounds(this.state.searchQuery, this.state.activePage);
+    if (this.props.campgroundsData.allCampgrounds.length === 0) {
+      this.props.fetchCampgrounds(
+        this.state.searchQuery,
+        this.state.activePage
+      );
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
