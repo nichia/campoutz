@@ -8,6 +8,7 @@ import { withRouter } from 'react-router-dom';
 class CampgroundsContainer extends Component {
   render() {
     console.log('%c CampgroundsContainer ', 'color: green', this.props);
+
     return (
       <Fragment>
         {this.props.loading ? (
@@ -15,10 +16,14 @@ class CampgroundsContainer extends Component {
         ) : this.props.campgroundsData.allCampgrounds.length > 0 ? (
           <Fragment>
             <CampgroundsCards>{this.props.campgroundsData}</CampgroundsCards>
-            <CampgroundsPagination searchQuery={this.props.searchQuery} />
+            <CampgroundsPagination
+              searchQuery={this.props.searchQuery}
+              activePage={this.props.activePage}
+              handlePaginationChange={this.props.handlePaginationChange}
+            />
           </Fragment>
         ) : (
-          <div>No Campgrounds Listing. Searh another state</div>
+          <div>No Campgrounds Listing. Search again...</div>
         )}
       </Fragment>
     );

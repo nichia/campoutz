@@ -56,7 +56,8 @@ export const fetchCampground = campgroundID => {
     console.log('%c fetchCampground: ', 'color: navy', `${RIDB_URL}`, `${url}`);
     dispatch(getCampgroundStart());
 
-    fetch(proxyurl + url, options) // https://cors-anywhere.herokuapp.com/https://...
+    fetch(proxyurl + url, options)
+      // https://cors-anywhere.herokuapp.com/https://...
       .then(response => {
         console.log('%c fetchCampground 1: ', 'color: navy', response);
         if (response.ok) {
@@ -96,8 +97,9 @@ export const fetchCampgrounds = (query, page) => {
   };
 
   const proxyurl = 'https://cors-anywhere.herokuapp.com/';
-  const url = `${RIDB_URL}/facilities?limit=${limit}&offset=${offset}&full=${fullDetails}&state=${query}&activity=CAMPING&lastupdated=10-01-20181-2018`; // site that doesn’t send Access-Control-*
-  debugger;
+  const url = `${RIDB_URL}/facilities?limit=${limit}&offset=${offset}&full=${fullDetails}&state=${query}&activity=CAMPING&lastupdated=10-01-20181-2018`;
+  // site that doesn’t send Access-Control-*
+
   return dispatch => {
     console.log(
       '%c fetchCampgrounds: ',
@@ -108,7 +110,8 @@ export const fetchCampgrounds = (query, page) => {
 
     dispatch(getCampgroundsStart());
 
-    fetch(proxyurl + url, options) // https://cors-anywhere.herokuapp.com/https://...
+    fetch(proxyurl + url, options)
+      // https://cors-anywhere.herokuapp.com/https://...
       .then(response => {
         console.log('%c fetchCampgrounds 1: ', 'color: navy', response);
         if (response.ok) {
