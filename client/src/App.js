@@ -23,6 +23,8 @@ class App extends Component {
   }
 
   render() {
+    console.log('%c APPs render: ', 'color: green');
+
     return (
       <Fragment>
         <Navbar />

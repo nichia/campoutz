@@ -11,12 +11,18 @@ const extractDescription = description => {
   let extractedDescription = description;
   let indexStart = description.indexOf('<p>');
   let indexEnd = description.indexOf('</p>');
+  let indexEnd2;
   if (indexEnd > indexStart) {
     extractedDescription = description.substring(indexStart + 3, indexEnd);
   } else {
     indexStart = description.indexOf('\n');
     if (indexStart !== '-1') {
       indexEnd = description.indexOf('\n', indexStart + 1);
+      indexEnd2 = description.indexOf('<h2>', indexStart + 1);
+      // For cases where the \n is not available before the next <h2> heading
+      if (indexEnd2 !== '-1' && indexEnd2 < indexEnd) {
+        indexEnd = indexEnd2;
+      }
       if (indexEnd > indexStart) {
         extractedDescription = description.substring(indexStart + 1, indexEnd);
       }
@@ -26,9 +32,9 @@ const extractDescription = description => {
 };
 
 const CampgroundsView = ({ children }) => {
-  console.log('%c CampgroundsView ', 'color: green', children);
+  console.log('%c CampgroundsCards', 'color: green', children);
 
-  return children.allCampgrounds.length > 0 ? (
+  return (
     <Card.Group>
       {children.allCampgrounds.map(campground => (
         <Card key={campground.FacilityID}>
@@ -58,8 +64,6 @@ const CampgroundsView = ({ children }) => {
         </Card>
       ))}
     </Card.Group>
-  ) : (
-    <div>No Campgrounds Listing. Select another search</div>
   );
 };
 

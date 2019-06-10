@@ -80,11 +80,11 @@ export const fetchCampground = campgroundID => {
   };
 };
 
-export const fetchCampgrounds = query => {
+export const fetchCampgrounds = (query, page) => {
   const RIDB_URL = `${process.env.REACT_APP_API_RIDB_ENDPOINT}/api/v1`;
   const RIDB_API_KEY = process.env.REACT_APP_RIDB_API_KEY;
   const limit = 5;
-  const offset = 0;
+  const offset = page > 1 ? (page - 1) * limit : 0;
   const fullDetails = 'true';
 
   const options = {
@@ -97,7 +97,7 @@ export const fetchCampgrounds = query => {
 
   const proxyurl = 'https://cors-anywhere.herokuapp.com/';
   const url = `${RIDB_URL}/facilities?limit=${limit}&offset=${offset}&full=${fullDetails}&state=${query}&activity=CAMPING&lastupdated=10-01-20181-2018`; // site that doesn’t send Access-Control-*
-
+  debugger;
   return dispatch => {
     console.log(
       '%c fetchCampgrounds: ',

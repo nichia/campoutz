@@ -26,12 +26,7 @@ const getCampgroundsSuccess = (state, action) => {
   console.log('%c GetCampground_SUCCESS...', 'color: red', action.payload);
 
   const data = {
-    currentCount: 0,
-    totalCount: 0,
-    searchParamsLimit: 20,
-    searchParamsOffset: 0,
-    searchParamsQuery: '',
-    allCampgrounds: []
+    ...initialState.campgroundsData
   };
 
   data.currentCount = action.payload.METADATA.RESULTS.CURRENT_COUNT;
