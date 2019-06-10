@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 const CampgroundView = props => {
-  console.log('%c CampgroundView: ', 'color: brown', props);
+  console.log('%c CampgroundView: ', 'color: orange', props);
 
   return (
     <div>

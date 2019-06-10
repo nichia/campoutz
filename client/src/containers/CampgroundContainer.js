@@ -25,7 +25,7 @@ export class Campground extends Component {
   render() {
     return (
       <div>
-        <CampgroundView campground={this.props.campground} />
+        <CampgroundView />
       </div>
     );
   }

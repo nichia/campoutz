@@ -41,45 +41,46 @@ const extractDescription = description => {
     }
   }
 
+  if (!extractedDescription.match(/[0-9a-z]/i)) {
+    // catches issues with empty string as some data have multiple of empty <p></p> tags
+    extractedDescription = description;
+  }
+
   return truncate(extractedDescription, 180, true);
 };
 
-const CampgroundsView = ({ children }) => {
-  console.log('%c CampgroundsCards', 'color: green', children);
+const CampgroundsCard = ({ campground }) => {
+  console.log('%c CampgroundsCard', 'color: green', campground);
 
   return (
-    <Card.Group>
-      {children.allCampgrounds.map(campground => (
-        <Card key={campground.FacilityID}>
-          <Card.Content>
-            <NavLink to={`/campgrounds/${campground.FacilityID}`} exact>
-              <Card.Header>{campground.FacilityName}</Card.Header>
-            </NavLink>
-          </Card.Content>
-          <Card.Content>
-            <Card.Description>
-              <div
-                style={divStyle}
-                dangerouslySetInnerHTML={{
-                  __html: extractDescription(campground.FacilityDescription)
-                }}
-              />
-            </Card.Description>
-          </Card.Content>
-          <Card.Content extra>
-            <NavLink to={`/campgrounds/${campground.FacilityID}`} exact>
-              <div className='ui right floated'>
-                <Button primary>
-                  <Icon name='eye' />
-                  View Details
-                </Button>
-              </div>
-            </NavLink>
-          </Card.Content>
-        </Card>
-      ))}
-    </Card.Group>
+    <Card>
+      <Card.Content>
+        <NavLink to={`/campgrounds/${campground.FacilityID}`} exact>
+          <Card.Header>{campground.FacilityName}</Card.Header>
+        </NavLink>
+      </Card.Content>
+      <Card.Content>
+        <Card.Description>
+          <div
+            style={divStyle}
+            dangerouslySetInnerHTML={{
+              __html: extractDescription(campground.FacilityDescription)
+            }}
+          />
+        </Card.Description>
+      </Card.Content>
+      <Card.Content extra>
+        <NavLink to={`/campgrounds/${campground.FacilityID}`} exact>
+          <div className='ui right floated'>
+            <Button primary>
+              <Icon name='eye' />
+              View Details
+            </Button>
+          </div>
+        </NavLink>
+      </Card.Content>
+    </Card>
   );
 };
 
-export default CampgroundsView;
+export default CampgroundsCard;

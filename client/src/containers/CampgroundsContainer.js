@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import LoadSpinner from '../components/LoadSpinner';
-import CampgroundsCards from '../components/CampgroundsCards';
+import CampgroundsList from '../components/CampgroundsList';
 import CampgroundsPagination from '../components/CampgroundsPagination';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -15,7 +15,7 @@ class CampgroundsContainer extends Component {
           <LoadSpinner>{this.props.loading}</LoadSpinner>
         ) : this.props.campgroundsData.allCampgrounds.length > 0 ? (
           <Fragment>
-            <CampgroundsCards>{this.props.campgroundsData}</CampgroundsCards>
+            <CampgroundsList campgrounds={this.props.campgroundsData} />
             <CampgroundsPagination
               activePage={this.props.activePage}
               handlePaginationChange={this.props.handlePaginationChange}
