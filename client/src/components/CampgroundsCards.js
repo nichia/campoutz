@@ -8,7 +8,6 @@ const divStyle = {
 };
 
 const truncate = (str, n, useWordBoundary) => {
-  debugger;
   if (str.length <= n) {
     return str;
   }
@@ -52,9 +51,11 @@ const CampgroundsView = ({ children }) => {
     <Card.Group>
       {children.allCampgrounds.map(campground => (
         <Card key={campground.FacilityID}>
-          <NavLink to={`/campgrounds/${campground.FacilityID}`} exact>
-            <Card.Content header={campground.FacilityName} />
-          </NavLink>
+          <Card.Content>
+            <NavLink to={`/campgrounds/${campground.FacilityID}`} exact>
+              <Card.Header>{campground.FacilityName}</Card.Header>
+            </NavLink>
+          </Card.Content>
           <Card.Content>
             <Card.Description>
               <div
