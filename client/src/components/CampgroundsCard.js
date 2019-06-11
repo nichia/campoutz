@@ -49,7 +49,7 @@ const extractDescription = description => {
   return truncate(extractedDescription, 180, true);
 };
 
-const CampgroundsCard = ({ campground }) => {
+const CampgroundsCard = ({ campground, getCampground }) => {
   console.log('%c CampgroundsCard', 'color: green', campground);
 
   return (
@@ -72,7 +72,7 @@ const CampgroundsCard = ({ campground }) => {
       <Card.Content extra>
         <NavLink to={`/campgrounds/${campground.FacilityID}`} exact>
           <div className='ui right floated'>
-            <Button primary>
+            <Button primary onClick={() => getCampground(campground)}>
               <Icon name='eye' />
               View Details
             </Button>

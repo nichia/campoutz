@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+import { getCampground } from '../actions/campgrounds';
+import { bindActionCreators } from 'redux';
 import LoadSpinner from '../components/LoadSpinner';
 import CampgroundsList from '../components/CampgroundsList';
 import CampgroundsPagination from '../components/CampgroundsPagination';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 class CampgroundsContainer extends Component {
   render() {
@@ -15,7 +17,10 @@ class CampgroundsContainer extends Component {
           <LoadSpinner>{this.props.loading}</LoadSpinner>
         ) : this.props.campgroundsData.allCampgrounds.length > 0 ? (
           <Fragment>
-            <CampgroundsList campgrounds={this.props.campgroundsData} />
+            <CampgroundsList
+              campgrounds={this.props.campgroundsData}
+              getCampground={this.props.getCampground}
+            />
             <CampgroundsPagination
               activePage={this.props.activePage}
               handlePaginationChange={this.props.handlePaginationChange}
@@ -39,4 +44,17 @@ const mapStateToProps = state => {
   };
 };
 
-export default withRouter(connect(mapStateToProps)(CampgroundsContainer));
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      getCampground
+    },
+    dispatch
+  );
+
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(CampgroundsContainer)
+);
