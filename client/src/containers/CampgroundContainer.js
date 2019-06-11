@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { fetchCampground } from '../actions/campgrounds';
 import { bindActionCreators } from 'redux';
 import CampgroundView from '../components/CampgroundView';
@@ -12,7 +13,7 @@ export class Campground extends Component {
 
   componentDidMount() {
     console.log(
-      '%c Campground componentDidMount: ',
+      '%c CampgroundContainer componentDidMount: ',
       'color: orange',
       this.props
     );
@@ -23,9 +24,13 @@ export class Campground extends Component {
   }
 
   render() {
+    console.log('%c CampgroundContainer render: ', 'color: orange', this.props);
     return (
       <div>
-        <CampgroundView />
+        <CampgroundView
+          loading={this.props.loading}
+          campground={this.props.campground}
+        />
       </div>
     );
   }
@@ -33,6 +38,7 @@ export class Campground extends Component {
 
 const mapStateToProps = state => {
   return {
+    loading: state.campgrounds.loadingCampground,
     campground: state.campgrounds.currentCampground
   };
 };
@@ -45,7 +51,9 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Campground);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(Campground)
+);

@@ -55,7 +55,11 @@ const CampgroundsCard = ({ campground, getCampground }) => {
   return (
     <Card>
       <Card.Content>
-        <NavLink to={`/campgrounds/${campground.FacilityID}`} exact>
+        <NavLink
+          to={`/campgrounds/${campground.FacilityID}`}
+          exact
+          onClick={() => getCampground(campground)}
+        >
           <Card.Header>{campground.FacilityName}</Card.Header>
         </NavLink>
       </Card.Content>
