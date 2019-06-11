@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import LoadSpinner from './LoadSpinner';
 import CampgroundDetail from './CampgroundDetail';
+import CampgroundSites from './CampgroundSites';
 
 const isEmpty = obj => {
   for (const key in obj) {
@@ -17,13 +18,10 @@ const CampgroundView = props => {
       {props.loading || isEmpty(props.campground) ? (
         <LoadSpinner>{props.loading}</LoadSpinner>
       ) : (
-        <CampgroundDetail campground={props.campground} />
-
-        // <div
-        //   dangerouslySetInnerHTML={{
-        //     __html: props.campground.FacilityDescription
-        //   }}
-        // />
+        <Fragment>
+          <CampgroundDetail campground={props.campground} />
+          <CampgroundSites campgroundID={props.campground.FacilityID} />
+        </Fragment>
       )}
     </div>
   );
