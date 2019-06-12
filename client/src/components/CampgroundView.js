@@ -19,7 +19,7 @@ const CampgroundView = props => {
         <LoadSpinner>{props.loading}</LoadSpinner>
       ) : (
         <Fragment>
-          <CampgroundDetail campground={props.campground} />
+          <CampgroundDetail campground={props.campground} user={props.user} />
           <CampgroundSites campgroundID={props.campground.FacilityID} />
         </Fragment>
       )}

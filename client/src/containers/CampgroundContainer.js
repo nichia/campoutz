@@ -30,6 +30,7 @@ export class Campground extends Component {
         <CampgroundView
           loading={this.props.loading}
           campground={this.props.campground}
+          user={this.props.user}
         />
       </div>
     );
@@ -39,7 +40,8 @@ export class Campground extends Component {
 const mapStateToProps = state => {
   return {
     loading: state.campgrounds.loadingCampground,
-    campground: state.campgrounds.currentCampground
+    campground: state.campgrounds.currentCampground,
+    user: state.user
   };
 };
 

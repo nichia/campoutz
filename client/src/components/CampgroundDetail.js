@@ -1,5 +1,6 @@
 import React from 'react';
-import { Header, Container, List, Grid, Image } from 'semantic-ui-react';
+
+import { Header, Container, List, Icon, Grid, Image } from 'semantic-ui-react';
 
 const titleCase = str => {
   return str
@@ -11,15 +12,50 @@ const titleCase = str => {
     .join(' ');
 };
 
+const saveCampground = (campground, user, addCampgroundToUserList) => {
+  if (user.loggedIn) {
+    return (
+      <Icon
+        name='heart outline'
+        // name='heart'
+        // color='red'
+        onClick={() => addCampgroundToUserList(campground, user.currentUser)}
+      />
+    );
+  } else {
+    return null;
+  }
+};
+
+const listRecAreas = recAreas => {
+  return (
+    <Header.Subheader>
+      {'Part of '}
+      <List bulleted horizontal>
+        {recAreas.map(recArea => (
+          <List.Item as='a' key={recArea.RecAreaID}>
+            <List.Content>{recArea.RecAreaName}</List.Content>
+          </List.Item>
+        ))}
+      </List>
+    </Header.Subheader>
+  );
+};
+
 const listActivities = activities => {
   return (
-    <List bulleted horizontal>
-      {activities.map(activity => (
-        <List.Item as='a' key={activity.ActivityID}>
-          {titleCase(activity.ActivityName)}
-        </List.Item>
-      ))}
-    </List>
+    <Container>
+      <Header as='h1'>Activities</Header>
+      <div className='ui divider' />
+      <List bulleted horizontal>
+        {activities.map(activity => (
+          <List.Item as='a' key={activity.ActivityID}>
+            {titleCase(activity.ActivityName)}
+          </List.Item>
+        ))}
+      </List>
+      <div className='ui divider' />
+    </Container>
   );
 };
 
@@ -38,59 +74,111 @@ const listgpsCoordinates = (latitude, longitude) => {
   );
 };
 
-const listMediaGallery = medias => {
+const listDirections = (directions, latitude, longitude) => {
+  let gpsCoordinates;
+  gpsCoordinates = listgpsCoordinates(latitude, longitude);
   return (
-    <Grid container columns={3}>
-      {medias.map(media => (
-        <Grid.Column key={media.EntityMediaID}>
-          <Image src={media.URL} />
-        </Grid.Column>
-      ))}
-    </Grid>
+    <Container>
+      <Header as='h1'>Directions</Header>
+      <div className='ui divider' />
+      <Container>
+        <div
+          dangerouslySetInnerHTML={{
+            __html: directions
+          }}
+        />
+        <Header as='h3'>GPS Coordinates:</Header>
+        <Container>{gpsCoordinates}</Container>
+      </Container>
+      <div className='ui divider' />
+    </Container>
   );
 };
 
-const listRecAreas = recAreas => {
+const listMediaGallery = medias => {
   return (
-    <List bulleted horizontal>
-      Part of
-      {recAreas.map(recArea => (
-        <List.Item as='a' key={recArea.RecAreaID}>
-          <List.Content>{recArea.RecAreaName}</List.Content>
-        </List.Item>
-      ))}
-    </List>
+    <Container>
+      <Header as='h1'>Media Gallery</Header>
+      <div className='ui divider' />
+      <Grid container columns={3}>
+        {medias.map(media => (
+          <Grid.Column key={media.EntityMediaID}>
+            <Image src={media.URL} />
+          </Grid.Column>
+        ))}
+      </Grid>
+      <div className='ui divider' />
+    </Container>
   );
 };
 
 const listOtherLinks = links => {
   return (
-    <List>
-      {links.map(link => (
-        <List.Item
-          key={link.EntityLinkID}
-          icon='linkify'
-          content={<a href={link.URL}>{link.Title}</a>}
-        />
-      ))}
-    </List>
+    <Container>
+      <Header as='h1'>Additional Information</Header>
+      <div className='ui divider' />
+      <List>
+        {links.map(link => (
+          <List.Item key={link.EntityLinkID}>
+            <Icon name='linkify' />{' '}
+            <List.Content>
+              {<a href={link.URL}>{link.Title}</a>} {link.LinkType}{' '}
+              {link.Description}
+            </List.Content>
+          </List.Item>
+        ))}
+      </List>
+      <div className='ui divider' />
+    </Container>
   );
 };
 
 const CampgroundDetail = props => {
-  const { campground } = props;
+  const { campground, user, addCampgroundToUserList } = props;
+  let activities;
+  let recAreas;
+  let directions;
 
-  console.log('%c CampgroundDetail: ', 'color: orange', campground);
+  let mediaGallery;
+  let otherLinks;
 
-  const title = titleCase(`${campground.FacilityName}`);
-  const activities = listActivities(campground.ACTIVITY);
-  const mediaGallery = listMediaGallery(campground.MEDIA);
-  const recAreas = listRecAreas(campground.RECAREA);
-  const otherLinks = listOtherLinks(campground.LINK);
-  const gpsCoordinates = listgpsCoordinates(
-    campground.FacilityLatitude,
-    campground.FacilityLongitude
+  console.log(
+    '%c CampgroundDetail: ',
+    'color: orange',
+    props,
+    ' user: ',
+    user,
+    ' campground: ',
+    campground
   );
+
+  const title = titleCase(campground.FacilityName);
+  const saveButton = saveCampground(campground, user, addCampgroundToUserList);
+
+  if (campground.ACTIVITY.length > 0) {
+    activities = listActivities(campground.ACTIVITY);
+  }
+  if (campground.MEDIA.length > 0) {
+    mediaGallery = listMediaGallery(campground.MEDIA);
+  }
+  if (campground.RECAREA.length > 0) {
+    recAreas = listRecAreas(campground.RECAREA);
+  }
+  if (campground.LINK.length > 0) {
+    otherLinks = listOtherLinks(campground.LINK);
+  }
+
+  if (
+    campground.FacilityDirections ||
+    campground.FacilityLatitude > 0 ||
+    campground.FacilityLongitude > 0
+  ) {
+    directions = listDirections(
+      campground.FacilityDirections,
+      campground.FacilityLatitude,
+      campground.FacilityLongitude
+    );
+  }
 
   return (
     <div>
@@ -99,44 +187,36 @@ const CampgroundDetail = props => {
       {/* {campground.FacilityDirections} */}
       {/* <Container>{listActivities(campground.ACTIVITY)}</Container> */}
       <Container>
-        <Header as='h1'>{title}</Header>
-        <Container>Part of {recAreas}</Container>
+        <div>
+          <Header as='h1' floated='right'>
+            {saveButton}
+          </Header>
+          <Header as='h1'>
+            <Header.Content>
+              {title}
+              {recAreas}
+            </Header.Content>
+          </Header>
+          <div className='ui divider' />
+        </div>
 
         <Container>
+          <br />
           <div
             dangerouslySetInnerHTML={{
               __html: campground.FacilityDescription
             }}
           />
+          <br />
+          <div className='ui divider' />
         </Container>
+        {activities}
 
-        <Header as='h1'>Activities</Header>
-        <div className='ui divider' />
-        <Container>{activities}</Container>
-        <div className='ui divider' />
+        {directions}
 
-        <Header as='h1'>Directions</Header>
-        <div className='ui divider' />
-        <Container>
-          <div
-            dangerouslySetInnerHTML={{
-              __html: campground.FacilityDirections
-            }}
-          />
+        {mediaGallery}
 
-          <Header as='h3'>GPS Coordinates:</Header>
-          <Container>{gpsCoordinates}</Container>
-        </Container>
-
-        <Header as='h1'>Media Gallery</Header>
-        <div className='ui divider' />
-        <Container>{mediaGallery}</Container>
-
-        <Header as='h1'>Additional Information</Header>
-        <div className='ui divider' />
-        <Container>{otherLinks}</Container>
-
-        <div className='ui divider' />
+        {otherLinks}
       </Container>
     </div>
   );
