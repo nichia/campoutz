@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Header, Container, List, Icon, Grid, Image } from 'semantic-ui-react';
+import { addFavoriteCampground } from '../actions/favoriteCampgrounds';
 
 const titleCase = str => {
   return str
@@ -12,14 +13,14 @@ const titleCase = str => {
     .join(' ');
 };
 
-const saveCampground = (campground, user, addCampgroundToUserList) => {
+const saveCampground = (campground, user, addCampgroundToUser) => {
   if (user.loggedIn) {
     return (
       <Icon
         name='heart outline'
         // name='heart'
         // color='red'
-        onClick={() => addCampgroundToUserList(campground, user.currentUser)}
+        onClick={() => addFavoriteCampground(campground)}
       />
     );
   } else {
@@ -134,11 +135,12 @@ const listOtherLinks = links => {
 };
 
 const CampgroundDetail = props => {
-  const { campground, user, addCampgroundToUserList } = props;
+  const { campground, user, addCampgroundToUser } = props;
+  const title = titleCase(campground.FacilityName);
+  const saveButton = saveCampground(campground, user, addCampgroundToUser);
   let activities;
   let recAreas;
   let directions;
-
   let mediaGallery;
   let otherLinks;
 
@@ -151,9 +153,6 @@ const CampgroundDetail = props => {
     ' campground: ',
     campground
   );
-
-  const title = titleCase(campground.FacilityName);
-  const saveButton = saveCampground(campground, user, addCampgroundToUserList);
 
   if (campground.ACTIVITY.length > 0) {
     activities = listActivities(campground.ACTIVITY);
@@ -182,8 +181,8 @@ const CampgroundDetail = props => {
 
   return (
     <div>
-      {/* <Header as='h1'>{titleCase(`${campground.FacilityName}`)}</Header>
-      <Header as='h1'>{titleCase(campground.FacilityName)}</Header> */}
+      {/* <Header as='h1'>{titleCase(`${campground.FacilityName}`)}</Header> */}
+      {/* <Header as='h1'>{titleCase(campground.FacilityName)}</Header> */}
       {/* {campground.FacilityDirections} */}
       {/* <Container>{listActivities(campground.ACTIVITY)}</Container> */}
       <Container>
@@ -210,6 +209,7 @@ const CampgroundDetail = props => {
           <br />
           <div className='ui divider' />
         </Container>
+
         {activities}
 
         {directions}

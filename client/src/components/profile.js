@@ -5,16 +5,19 @@ import withAuth from '../hocs/withAuth';
 
 // props: { currentUser: { avatar: 'url', username: 'Chandler Bing', bio: 'bio' } }
 // const Profile = ({ avatar, username, bio }) => (
-const Profile = ({ avatar, username, bio }) => (
-  <Card>
-    <Image src={avatar} />
-    <Card.Content>
-      <Card.Header>{username}</Card.Header>
+const Profile = ({ avatar, username, bio }) => {
+  console.log('%c PROFILE', 'color: green');
+  return (
+    <Card>
+      <Image src={avatar} />
+      <Card.Content>
+        <Card.Header>{username}</Card.Header>
 
-      <Card.Description>{bio}</Card.Description>
-    </Card.Content>
-  </Card>
-);
+        <Card.Description>{bio}</Card.Description>
+      </Card.Content>
+    </Card>
+  );
+};
 
 // const mapStateToProps = (reduxStoreState) => {
 //   return {

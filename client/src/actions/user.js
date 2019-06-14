@@ -27,7 +27,7 @@ export const logoutUser = () => {
   return { type: actionTypes.LOGOUT };
 };
 
-// async action createors //
+// async action creators //
 
 export const /*FUNCTION*/ signupUser = props => {
     const {
@@ -216,6 +216,9 @@ export const fetchCurrentUser = () => {
       })
       .catch(error => {
         console.log('%c fetCurrentUser ERR RESP: ', 'color: navy', error);
+        // TypeError is returned by fail fetch and will have error.message
+        const errorMsg = error instanceof TypeError ? error.message : error;
+        dispatch(failedLogin(errorMsg));
       });
   };
 };
