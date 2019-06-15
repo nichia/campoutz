@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { fetchCampground } from '../actions/campgrounds';
-import { addFavoriteCampground } from '../actions/favoriteCampgrounds';
+import {
+  addFavoriteCampground,
+  deleteFavoriteCampground
+} from '../actions/user';
 import { bindActionCreators } from 'redux';
 import CampgroundView from '../components/CampgroundView';
 
@@ -33,6 +36,7 @@ export class Campground extends Component {
           campground={this.props.campground}
           user={this.props.user}
           addFavoriteCampground={this.props.addFavoriteCampground}
+          deleteFavoriteCampground={this.props.deleteFavoriteCampground}
         />
       </div>
     );
@@ -51,7 +55,8 @@ const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       fetchCampground,
-      addFavoriteCampground
+      addFavoriteCampground,
+      deleteFavoriteCampground
     },
     dispatch
   );

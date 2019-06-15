@@ -197,6 +197,9 @@ export const fetchCurrentUser = () => {
     );
     dispatch(authenticatingUser()); //tells the app we are fetching
     fetch(url, options)
+      // fetch() won't reject HTTP error status such as 404 or 500,
+      // Instead, resolve normally (with ok status set to false) => so reason for logic below
+      // (only reject on network failure or anything prevenint the request from completing).
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -219,6 +222,149 @@ export const fetchCurrentUser = () => {
         // TypeError is returned by fail fetch and will have error.message
         const errorMsg = error instanceof TypeError ? error.message : error;
         dispatch(failedLogin(errorMsg));
+      });
+  };
+};
+
+///////////////////////////////
+
+// action creators //
+
+const add_to_favorites = campgroundData => {
+  return {
+    type: actionTypes.ADD_FAVORITE,
+    payload: campgroundData
+  };
+};
+
+const delete_from_favorites = campgroundId => {
+  return {
+    type: actionTypes.DELETE_FAVORITE,
+    payload: campgroundId
+  };
+};
+// async action creators //
+
+export const addFavoriteCampground = props => {
+  const { FacilityID, FacilityName, FacilityDescription } = props;
+  const url = `${BASE_URL}/favorite_campgrounds`;
+
+  const options = {
+    //TODO: move this to an adapter
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('jwt')}`
+    },
+    body: JSON.stringify({
+      campground: {
+        campground_ridb_id: FacilityID,
+        name: FacilityName,
+        description: FacilityDescription
+      }
+    })
+  };
+  return dispatch => {
+    console.log('%c addFavoriteCampground1: ', 'color: navy', url);
+    fetch(url, options)
+      // fetch() won't reject HTTP error status such as 404 or 500,
+      // Instead, resolve normally (with ok status set to false) => so reason for logic below
+      // (only reject on network failure or anything prevenint the request from completing).
+      // .then(response => response.json())
+      .then(response => {
+        if (response.ok) {
+          console.log(
+            '%c addFavoriteCampground response.ok: ',
+            'color: navy',
+            response
+          );
+          return response.json();
+        } else {
+          console.log(
+            '%c addFavoriteCampground !response.ok: ',
+            'color: navy',
+            response
+          );
+          // throw response;
+          throw new Error('Network response was not ok: ', response);
+        }
+      })
+      .then(JSONResponse => {
+        console.log(
+          '%c addFavoriteCampground2 Success: ',
+          'color: navy',
+          JSONResponse
+        );
+        dispatch(add_to_favorites(JSONResponse.campground));
+      })
+      .catch(error => {
+        // TypeError is returned by fail fetch and will have error.message
+        const errorMsg = error instanceof TypeError ? error.message : error;
+        // dispatch(failedLogin(errorMsg));
+        console.log(
+          '%c addFavoriteCampground2 ERR RESP: ',
+          'color: navy',
+          error,
+          errorMsg
+        );
+      });
+  };
+};
+
+export const deleteFavoriteCampground = campground_ridb_id => {
+  const url = `${BASE_URL}/favorite_campgrounds/${campground_ridb_id}`;
+
+  const options = {
+    //TODO: move this to an adapter
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${localStorage.getItem('jwt')}`
+    }
+  };
+  return dispatch => {
+    console.log('%c deleteFavoriteCampground1: ', 'color: navy', url);
+    fetch(url, options)
+      // fetch() won't reject HTTP error status such as 404 or 500,
+      // Instead, resolve normally (with ok status set to false) => so reason for logic below
+      // (only reject on network failure or anything prevenint the request from completing).
+      // .then(response => response.json())
+      .then(response => {
+        if (response.ok) {
+          console.log(
+            '%c deleteFavoriteCampground response.ok: ',
+            'color: navy',
+            response
+          );
+          return response.json();
+        } else {
+          console.log(
+            '%c deleteFavoriteCampground !response.ok: ',
+            'color: navy',
+            response
+          );
+          // throw response;
+          throw new Error('Network response was not ok: ', response);
+        }
+      })
+      .then(JSONResponse => {
+        console.log(
+          '%c deleteFavoriteCampground2 Success: ',
+          'color: navy',
+          JSONResponse
+        );
+        dispatch(delete_from_favorites(JSONResponse.campground_ridb_id));
+      })
+      .catch(error => {
+        // TypeError is returned by fail fetch and will have error.message
+        const errorMsg = error instanceof TypeError ? error.message : error;
+        // dispatch(failedLogin(errorMsg));
+        console.log(
+          '%c deleteFavoriteCampground2 ERR RESP: ',
+          'color: navy',
+          error,
+          errorMsg
+        );
       });
   };
 };

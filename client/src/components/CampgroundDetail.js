@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { Header, Container, List, Icon, Grid, Image } from 'semantic-ui-react';
-import { addFavoriteCampground } from '../actions/favoriteCampgrounds';
 
 const titleCase = str => {
   return str
@@ -13,16 +12,50 @@ const titleCase = str => {
     .join(' ');
 };
 
-const saveCampground = (campground, user, addCampgroundToUser) => {
-  if (user.loggedIn) {
-    return (
+const heartCampground = (
+  campground,
+  loggedIn,
+  favoriteCampgrounds,
+  addFavoriteCampground,
+  deleteFavoriteCampground
+) => {
+  console.log(
+    '%c heartCampground: ',
+    'color: orange',
+    ' campground: ',
+    campground,
+    ' user-loggedIn: ',
+    loggedIn,
+    ' favoriteCampgrounds: ',
+    favoriteCampgrounds
+  );
+
+  if (loggedIn) {
+    // check if campground is alreaded hearted by current_user
+    // const isHearted = favoriteCampgrounds.filter(favCamp => favCamp.campground_ridb_id === campground.FacilityID)
+    // const isHearted = favoriteCampgrounds.some(function(el) {
+    //   return el.campground_ridb_id === campground.FacilityID;
+    // });
+    const isHearted = favoriteCampgrounds.some(
+      favCamp => favCamp.campground_ridb_id === campground.FacilityID
+    );
+
+    let heartIcon = (
       <Icon
         name='heart outline'
-        // name='heart'
-        // color='red'
         onClick={() => addFavoriteCampground(campground)}
       />
     );
+    if (isHearted) {
+      heartIcon = (
+        <Icon
+          name='heart outline'
+          color='red'
+          onClick={() => deleteFavoriteCampground(campground.FacilityID)}
+        />
+      );
+    }
+    return heartIcon;
   } else {
     return null;
   }
@@ -135,9 +168,23 @@ const listOtherLinks = links => {
 };
 
 const CampgroundDetail = props => {
-  const { campground, user, addCampgroundToUser } = props;
+  const {
+    campground,
+    user: {
+      loggedIn,
+      currentUser: { favorite_campgrounds }
+    },
+    addFavoriteCampground,
+    deleteFavoriteCampground
+  } = props;
   const title = titleCase(campground.FacilityName);
-  const saveButton = saveCampground(campground, user, addCampgroundToUser);
+  const heartIcon = heartCampground(
+    campground,
+    loggedIn,
+    favorite_campgrounds,
+    addFavoriteCampground,
+    deleteFavoriteCampground
+  );
   let activities;
   let recAreas;
   let directions;
@@ -148,10 +195,12 @@ const CampgroundDetail = props => {
     '%c CampgroundDetail: ',
     'color: orange',
     props,
-    ' user: ',
-    user,
     ' campground: ',
-    campground
+    campground,
+    ' user-loggedIn: ',
+    loggedIn,
+    ' favorite_campgrounds: ',
+    favorite_campgrounds
   );
 
   if (campground.ACTIVITY.length > 0) {
@@ -188,7 +237,7 @@ const CampgroundDetail = props => {
       <Container>
         <div>
           <Header as='h1' floated='right'>
-            {saveButton}
+            {heartIcon}
           </Header>
           <Header as='h1'>
             <Header.Content>

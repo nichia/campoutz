@@ -1,4 +1,5 @@
 import * as actionTypes from '../actions/actionTypes';
+import { updateObject } from './utility';
 
 const initialState = {
   currentUser: null,
@@ -8,8 +9,29 @@ const initialState = {
   error: null
 };
 
+const addFavorite = (state, action) => {
+  console.log('%c addFavoriteCampgrounds...', 'color: red', action, state);
+  return updateObject(state, {
+    favorite_campgrounds: state.favorite_campgrouds.concat(action.payload)
+  });
+};
+
+const deleteFavorite = (state, action) => {
+  console.log('%c deleteFavoriteCampgrounds...', 'color: red', action, state);
+  const updatedFavorites = {
+    favorites: state.favorite_campgrounds.filter(
+      favorite => favorite.campground_ridb_id !== action.payload
+    )
+  };
+  return updateObject(state, { favorite_campgrounds: updatedFavorites });
+};
+
 const usersReducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.ADD_FAVORITE:
+      return addFavorite(state, action);
+    case actionTypes.DELETE_FAVORITE:
+      return deleteFavorite(state, action);
     case actionTypes.SET_CURRENT_USER:
       console.log('%c Set_current_user: %s', 'color: red', action.payload);
 

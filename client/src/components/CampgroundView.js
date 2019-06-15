@@ -23,6 +23,7 @@ const CampgroundView = props => {
             campground={props.campground}
             user={props.user}
             addFavoriteCampground={props.addFavoriteCampground}
+            deleteFavoriteCampground={props.deleteFavoriteCampground}
           />
           <CampgroundSites campgroundID={props.campground.FacilityID} />
         </Fragment>
