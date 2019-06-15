@@ -49,8 +49,36 @@ const extractDescription = description => {
   return truncate(extractedDescription, 180, true);
 };
 
-const CampgroundsCard = ({ campground, getCampground }) => {
-  console.log('%c CampgroundsCard', 'color: green', campground);
+const heartCampground = (campground, loggedIn, favoriteCampgrounds) => {
+  if (loggedIn) {
+    const isHearted = favoriteCampgrounds.some(
+      favCamp => favCamp.campground_ridb_id === campground.FacilityID
+    );
+
+    let heartIcon = <Icon name='heart outline' />;
+    if (isHearted) {
+      heartIcon = <Icon name='heart outline' color='red' />;
+    }
+    return heartIcon;
+  } else {
+    return null;
+  }
+};
+
+const CampgroundsCard = ({
+  campground,
+  loggedIn,
+  favorite_campgrounds,
+  getCampground
+}) => {
+  console.log(
+    '%c CampgroundsCard',
+    'color: green',
+    campground,
+    loggedIn,
+    favorite_campgrounds
+  );
+  const heartIcon = heartCampground(campground, loggedIn, favorite_campgrounds);
 
   return (
     <Card>
@@ -60,6 +88,7 @@ const CampgroundsCard = ({ campground, getCampground }) => {
           exact
           onClick={() => getCampground(campground)}
         >
+          <div className='ui right floated'>{heartIcon}</div>
           <Card.Header>{campground.FacilityName}</Card.Header>
         </NavLink>
       </Card.Content>

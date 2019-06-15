@@ -2,7 +2,7 @@ import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from './utility';
 
 const initialState = {
-  currentUser: null,
+  currentUser: [],
   loggedIn: false,
   authenticatingUser: false,
   loginFailed: false,
@@ -10,20 +10,42 @@ const initialState = {
 };
 
 const addFavorite = (state, action) => {
-  console.log('%c addFavoriteCampgrounds...', 'color: red', action, state);
+  const updatedFavorites = state.currentUser.favorite_campgrounds.concat(
+    action.payload
+  );
+  console.log(
+    '%c addFavoriteCampgrounds...',
+    'color: red',
+    action,
+    state,
+    updatedFavorites
+  );
   return updateObject(state, {
-    favorite_campgrounds: state.favorite_campgrouds.concat(action.payload)
+    currentUser: {
+      ...state.currentUser,
+      favorite_campgrounds: updatedFavorites
+    }
   });
 };
 
 const deleteFavorite = (state, action) => {
-  console.log('%c deleteFavoriteCampgrounds...', 'color: red', action, state);
-  const updatedFavorites = {
-    favorites: state.favorite_campgrounds.filter(
-      favorite => favorite.campground_ridb_id !== action.payload
-    )
-  };
-  return updateObject(state, { favorite_campgrounds: updatedFavorites });
+  const updatedFavorites = state.currentUser.favorite_campgrounds.filter(
+    favorite => favorite.campground_ridb_id !== action.payload
+  );
+
+  console.log(
+    '%c deleteFavoriteCampgrounds...',
+    'color: red',
+    action,
+    state,
+    updatedFavorites
+  );
+  return updateObject(state, {
+    currentUser: {
+      ...state.currentUser,
+      favorite_campgrounds: updatedFavorites
+    }
+  });
 };
 
 const usersReducer = (state = initialState, action) => {

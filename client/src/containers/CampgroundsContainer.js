@@ -19,6 +19,10 @@ class CampgroundsContainer extends Component {
           <Fragment>
             <CampgroundsList
               campgrounds={this.props.campgroundsData}
+              loggedIn={this.props.user.loggedIn}
+              favorite_campgrounds={
+                this.props.user.currentUser.favorite_campgrounds
+              }
               getCampground={this.props.getCampground}
             />
             <CampgroundsPagination
@@ -40,7 +44,8 @@ class CampgroundsContainer extends Component {
 const mapStateToProps = state => {
   return {
     loading: state.campgrounds.loading,
-    campgroundsData: state.campgrounds.campgroundsData
+    campgroundsData: state.campgrounds.campgroundsData,
+    user: state.user
   };
 };
 
