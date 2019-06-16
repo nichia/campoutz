@@ -71,16 +71,7 @@ export const signupUser = props => {
     console.log('%c signupUser: ', 'color: navy', props);
 
     fetch(url, options)
-      // fetch() won't reject HTTP error status such as 404 or 500,
-      // Instead, resolve normally (with ok status set to false) => so reason for logic below
-      // (only reject on network failure or anything prevenint the request from completing).
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Network response received (not ok): ', response);
-        }
-      })
+      .then(response => response.json())
       .then(JSONResponse => {
         if (JSONResponse.jwt) {
           localStorage.setItem('jwt', JSONResponse.jwt);
@@ -91,6 +82,7 @@ export const signupUser = props => {
       })
       .catch(error => {
         // TypeError is returned by api endpoint which contains error.message
+        // (such as 'Failed to fetch' when server is not running)
         console.log('%c signUP ERR RESP: ', 'color: navy', error);
         const errorMsg = error instanceof TypeError ? error.message : error;
         dispatch(failedLogin(errorMsg));
@@ -122,13 +114,7 @@ export const loginUser = props => {
     dispatch(authenticatingUser());
 
     fetch(url, options)
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Network response received (not ok): ', response);
-        }
-      })
+      .then(response => response.json())
       .then(JSONResponse => {
         if (JSONResponse.jwt) {
           localStorage.setItem('jwt', JSONResponse.jwt);
@@ -140,7 +126,8 @@ export const loginUser = props => {
       })
       .catch(error => {
         // TypeError is returned by api endpoint which contains error.message
-        console.log('%c signUP ERR RESP: ', 'color: navy', error);
+        // (such as 'Failed to fetch' when server is not running)
+        console.log('%c loginUser ERR RESP: ', 'color: navy', error);
         const errorMsg = error instanceof TypeError ? error.message : error;
         dispatch(failedLogin(errorMsg));
       });
@@ -162,6 +149,9 @@ export const fetchCurrentUser = () => {
     console.log('%c fetchCurrentUser: ', 'color: navy', options);
     dispatch(authenticatingUser()); //tells the app we are fetching
     fetch(url, options)
+      // fetch() won't reject HTTP error status such as 404 or 500,
+      // Instead, resolve normally (with ok status set to false) => so reason for logic below
+      // (only reject on network failure or anything prevenint the request from completing).
       .then(response => {
         if (response.ok) {
           return response.json();
@@ -175,6 +165,7 @@ export const fetchCurrentUser = () => {
       })
       .catch(error => {
         // TypeError is returned by api endpoint which contains error.message
+        // (such as 'Failed to fetch' when server is not running)
         console.log('%c fetCurrentUser ERR RESP: ', 'color: navy', error);
         const errorMsg = error instanceof TypeError ? error.message : error;
         dispatch(failedLogin(errorMsg));
@@ -217,8 +208,7 @@ export const addFavoriteCampground = props => {
             'color: navy',
             response
           );
-          // throw response;
-          throw new Error('Network response was not ok: ', response);
+          throw new Error('Network response received (not ok): ', response);
         }
       })
       .then(JSONResponse => {
@@ -231,6 +221,7 @@ export const addFavoriteCampground = props => {
       })
       .catch(error => {
         // TypeError is returned by api endpoint which contains error.message
+        // (such as 'Failed to fetch' when server is not running)
         const errorMsg = error instanceof TypeError ? error.message : error;
         // dispatch(failedLogin(errorMsg));
         console.log(
@@ -247,7 +238,6 @@ export const deleteFavoriteCampground = campground_ridb_id => {
   const url = `${BASE_URL}/favorite_campgrounds/${campground_ridb_id}`;
 
   const options = {
-    //TODO: move this to an adapter
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -271,7 +261,7 @@ export const deleteFavoriteCampground = campground_ridb_id => {
             'color: navy',
             response
           );
-          throw new Error('Network response was not ok: ', response);
+          throw new Error('Network response received (not ok): ', response);
         }
       })
       .then(JSONResponse => {
@@ -284,6 +274,7 @@ export const deleteFavoriteCampground = campground_ridb_id => {
       })
       .catch(error => {
         // TypeError is returned by api endpoint which contains error.message
+        // (such as 'Failed to fetch' when server is not running)
         const errorMsg = error instanceof TypeError ? error.message : error;
         console.log(
           '%c deleteFavoriteCampground2 ERR RESP: ',

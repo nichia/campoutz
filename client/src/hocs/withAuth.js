@@ -4,18 +4,17 @@ import { Redirect } from 'react-router';
 import { fetchCurrentUser } from '../actions/userActions';
 import { Loader } from 'semantic-ui-react';
 
-const withAuth = /*FUNCTION*/ WrappedComponent => {
+const withAuth = WrappedComponent => {
   class AuthorizedComponent extends Component {
     componentDidMount() {
-      console.log('%c INSIDE COMPONENT DID MOUNT FOR AUTH HOC', 'color: green');
-      // POTENTIAL SECURITY FLAW!!! my tokens don't expire
+      console.log('%c AUTH HOC componentDidMount', 'color: green');
+      // if i have a token but don't know who it belongs to, ask the server for that user's data
       if (localStorage.getItem('jwt') && !this.props.loggedIn)
         this.props.fetchCurrentUser();
-      // if i have a token but don't know who it belongs to, ask the server for that user's data
     }
 
     render() {
-      console.log('%c INSIDE RENDER FOR HOC', 'color: green');
+      console.log('%c AUTH HOC render', 'color: green');
       if (localStorage.getItem('jwt') && this.props.loggedIn) {
         //i have a token and i'm logged in
         // wrapped component in our case is Profile
@@ -33,22 +32,18 @@ const withAuth = /*FUNCTION*/ WrappedComponent => {
     }
   }
 
-  const mapStateToProps = /*FUNCTION*/ reduxStoreState => {
+  const mapStateToProps = state => {
     return {
-      loggedIn: reduxStoreState.user.loggedIn,
-      authenticatingUser: reduxStoreState.user.authenticatingUser
+      loggedIn: state.user.loggedIn,
+      authenticatingUser: state.user.authenticatingUser
     };
   };
 
-  const mapDispatchToProps = /*FUNCTION*/ dispatch => {
+  const mapDispatchToProps = dispatch => {
     return {
       fetchCurrentUser: () => dispatch(fetchCurrentUser()) //dispatch is automagically provided by redux
     };
   };
-  //
-  // const connectedToReduxHOC = connect(mapStateToProps, mapDispatchToProps)
-  // const connectedAuthorizedComponent = connectedToReduxHOC(AuthorizedComponent)
-  // return connectedAuthorizedComponent
 
   return connect(
     mapStateToProps,
