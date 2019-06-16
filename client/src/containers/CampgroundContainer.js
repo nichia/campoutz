@@ -7,7 +7,7 @@ import {
   deleteFavoriteCampground
 } from '../actions/userActions';
 import { bindActionCreators } from 'redux';
-import CampgroundView from '../components/CampgroundView';
+import CampgroundView from '../components/campgrounds/CampgroundView';
 
 export class Campground extends Component {
   constructor(props) {

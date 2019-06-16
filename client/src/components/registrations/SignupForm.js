@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter, Redirect, NavLink } from 'react-router-dom';
-import { signupUser, failedLogin } from '../actions/userActions';
+import { signupUser, failedLogin } from '../../actions/userActions';
 import { Form, Segment, Message } from 'semantic-ui-react';
 
 class SignupForm extends Component {

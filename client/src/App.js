@@ -2,11 +2,11 @@ import React, { Component, Fragment } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchCurrentUser } from './actions/userActions';
-import Navbar from './components/navbar';
-import LoginForm from './components/loginForm';
-import SignupForm from './components/signupForm';
-import NoMatch from './components/noMatch';
-import Profile from './components/profile';
+import Navbar from './components/Navbar';
+import LoginForm from './components/registrations/LoginForm';
+import SignupForm from './components/registrations/SignupForm';
+import NoMatch from './components/NoMatch';
+import Profile from './components/Profile';
 import HomePage from './containers/HomePage';
 import Campground from './containers/CampgroundContainer';
 
@@ -28,7 +28,6 @@ class App extends Component {
       <Fragment>
         <Navbar />
         <Switch>
-          {/* <Route exact path="/" render={() => <Redirect to="/profile" />} /> */}
           <Route exact path='/' component={HomePage} />
           <Route exact path='/profile' component={Profile} />
           <Route exact path='/login' component={LoginForm} />

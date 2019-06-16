@@ -4,8 +4,8 @@ import { withRouter } from 'react-router-dom';
 import { getCampground } from '../actions/campgroundActions';
 import { bindActionCreators } from 'redux';
 import LoadSpinner from '../components/LoadSpinner';
-import CampgroundsList from '../components/CampgroundsList';
-import CampgroundsPagination from '../components/CampgroundsPagination';
+import CampgroundsList from '../components/campgrounds/CampgroundsList';
+import CampgroundsPagination from '../components/campgrounds/CampgroundsPagination';
 
 class CampgroundsContainer extends Component {
   render() {

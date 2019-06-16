@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import LoadSpinner from './LoadSpinner';
+import LoadSpinner from '../LoadSpinner';
 import CampgroundDetail from './CampgroundDetail';
 // import CampgroundSites from './CampgroundSites';
 
