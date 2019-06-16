@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import LoadSpinner from './LoadSpinner';
 import CampgroundDetail from './CampgroundDetail';
-import CampgroundSites from './CampgroundSites';
+// import CampgroundSites from './CampgroundSites';
 
 const isEmpty = obj => {
   for (const key in obj) {
@@ -25,7 +25,7 @@ const CampgroundView = props => {
             addFavoriteCampground={props.addFavoriteCampground}
             deleteFavoriteCampground={props.deleteFavoriteCampground}
           />
-          <CampgroundSites campgroundID={props.campground.FacilityID} />
+          {/* <CampgroundSites campgroundID={props.campground.FacilityID} /> */}
         </Fragment>
       )}
     </div>

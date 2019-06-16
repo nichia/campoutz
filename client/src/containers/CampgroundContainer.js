@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { fetchCampground } from '../actions/campgrounds';
+import { fetchCampground } from '../actions/campgroundActions';
 import {
   addFavoriteCampground,
   deleteFavoriteCampground
-} from '../actions/user';
+} from '../actions/userActions';
 import { bindActionCreators } from 'redux';
 import CampgroundView from '../components/CampgroundView';
 

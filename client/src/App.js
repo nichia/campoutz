@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-
+import { fetchCurrentUser } from './actions/userActions';
 import Navbar from './components/navbar';
 import LoginForm from './components/loginForm';
 import SignupForm from './components/signupForm';
@@ -9,7 +9,6 @@ import NoMatch from './components/noMatch';
 import Profile from './components/profile';
 import HomePage from './containers/HomePage';
 import Campground from './containers/CampgroundContainer';
-import { fetchCurrentUser } from './actions/user';
 
 import './App.css';
 

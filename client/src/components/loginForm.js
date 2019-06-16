@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-// import { bindActionCreators } from 'redux'
 import { withRouter, Redirect, NavLink } from 'react-router-dom';
-import { loginUser } from '../actions/user';
+import { loginUser } from '../actions/userActions';
 import { Button, Form, Segment, Message } from 'semantic-ui-react';
 
 class LoginForm extends Component {

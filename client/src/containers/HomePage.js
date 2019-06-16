@@ -1,9 +1,11 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { fetchCampgrounds, updateSearchState } from '../actions/campgrounds';
+import {
+  fetchCampgrounds,
+  updateSearchState
+} from '../actions/campgroundActions';
 import { bindActionCreators } from 'redux';
-
 import SearchBar from '../components/SearchBar';
 import CampgroundsContainer from './CampgroundsContainer';
 

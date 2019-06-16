@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router';
-import { fetchCurrentUser } from '../actions/user';
+import { fetchCurrentUser } from '../actions/userActions';
 import { Loader } from 'semantic-ui-react';
 
 const withAuth = /*FUNCTION*/ WrappedComponent => {

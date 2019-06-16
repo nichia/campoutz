@@ -2,9 +2,7 @@ import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { NavLink, withRouter } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
-import { logoutUser } from '../actions/user';
-// import { bindActionCreators } from 'redux';
-// import * as actionTypes from '../actions/actionTypes';
+import { logoutUser } from '../actions/userActions';
 
 const Navbar = ({ logoutUser, user: { loggedIn }, location: { pathname } }) => {
   return (
