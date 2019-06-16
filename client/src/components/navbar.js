@@ -17,8 +17,10 @@ const Navbar = ({ logoutUser, user: { loggedIn }, location: { pathname } }) => {
           />
           <Menu.Menu position='right'>
             <Menu.Item
+              as={NavLink}
+              to='/'
               name='Logout'
-              // onClick={logoutUser} //comes from mapDispatchToProps
+              active={pathname === '/'}
               onClick={() => {
                 logoutUser(); //comes from mapDispatchToProps
               }}

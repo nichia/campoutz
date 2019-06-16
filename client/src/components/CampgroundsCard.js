@@ -57,7 +57,7 @@ const heartCampground = (campground, loggedIn, favoriteCampgrounds) => {
 
     let heartIcon = <Icon name='heart outline' />;
     if (isHearted) {
-      heartIcon = <Icon name='heart outline' color='red' />;
+      heartIcon = <Icon name='heart' color='red' />;
     }
     return heartIcon;
   } else {

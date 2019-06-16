@@ -49,7 +49,7 @@ const heartCampground = (
     if (isHearted) {
       heartIcon = (
         <Icon
-          name='heart outline'
+          name='heart'
           color='red'
           onClick={() => deleteFavoriteCampground(campground.FacilityID)}
         />

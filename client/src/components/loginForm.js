@@ -47,7 +47,7 @@ class LoginForm extends Component {
     console.log('%c LOGIN FORM PROPS: ', 'color: purple', this.props);
 
     return this.props.loggedIn ? (
-      <Redirect to='/profile' />
+      <Redirect to='/' />
     ) : (
       <Segment>
         <Form

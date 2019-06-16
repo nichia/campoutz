@@ -11,7 +11,6 @@ const setCurrentUser = useroptions => ({
 
 export const failedLogin = errorMsg => {
   console.log('%c failedLogin', 'color: navy', errorMsg);
-
   return { type: actionTypes.FAILED_LOGIN, payload: errorMsg };
 };
 

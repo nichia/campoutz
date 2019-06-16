@@ -9,6 +9,35 @@ const initialState = {
   error: null
 };
 
+const setCurrentUser = (state, action) => {
+  console.log('%c Set_current_user: %s', 'color: red', action.payload);
+  return updateObject(state, {
+    currentUser: action.payload,
+    loggedIn: true,
+    authenticatingUser: false
+  });
+};
+
+const authenticatingUser = (state, action) => {
+  //tells the app we're fetching
+  console.log('%c Authenticating_user...', 'color: red');
+  return updateObject(state, { authenticatingUser: true });
+};
+
+const authenticatedUser = (state, action) => {
+  console.log('%c Authenticated_user: ', 'color: red');
+  return updateObject(state, { authenticatingUser: false });
+};
+
+const failedLogin = (state, action) => {
+  console.log('%c Failed_login: %s', 'color: red', action.payload);
+  return updateObject(state, {
+    loginFailed: true,
+    error: action.payload,
+    authenticatingUser: false
+  });
+};
+
 const addFavorite = (state, action) => {
   const updatedFavorites = state.currentUser.favorite_campgrounds.concat(
     action.payload
@@ -20,6 +49,7 @@ const addFavorite = (state, action) => {
     state,
     updatedFavorites
   );
+
   return updateObject(state, {
     currentUser: {
       ...state.currentUser,
@@ -50,41 +80,21 @@ const deleteFavorite = (state, action) => {
 
 const usersReducer = (state = initialState, action) => {
   switch (action.type) {
+    case actionTypes.SET_CURRENT_USER:
+      return setCurrentUser(state, action);
+    case actionTypes.AUTHENTICATING_USER:
+      return authenticatingUser(state, action);
+    case actionTypes.AUTHENTICATED_USER:
+      return authenticatedUser(state, action);
+    case actionTypes.FAILED_LOGIN:
+      return failedLogin(state, action);
+    case actionTypes.LOGOUT:
+      console.log('%c Logout: %s', 'color: red', state.currentUser);
+      return initialState;
     case actionTypes.ADD_FAVORITE:
       return addFavorite(state, action);
     case actionTypes.DELETE_FAVORITE:
       return deleteFavorite(state, action);
-    case actionTypes.SET_CURRENT_USER:
-      console.log('%c Set_current_user: %s', 'color: red', action.payload);
-
-      //action.payload { username: 'Chandler Bing', bio: 'my user bio', avatar: 'some image url' }
-      return {
-        ...state,
-        currentUser: action.payload,
-        loggedIn: true,
-        authenticatingUser: false
-      };
-    case actionTypes.AUTHENTICATING_USER: //tells the app we're fetching
-      console.log('%c Authenticating_user...', 'color: red');
-
-      return { ...state, authenticatingUser: true };
-    case actionTypes.AUTHENTICATED_USER:
-      console.log('%c Authenticated_user: ', 'color: red');
-
-      return { ...state, authenticatingUser: false };
-    case actionTypes.FAILED_LOGIN: //for error handling
-      console.log('%c Failed_login: %s', 'color: red', action.payload);
-
-      return {
-        ...state,
-        loginFailed: true,
-        error: action.payload,
-        authenticatingUser: false
-      };
-    case actionTypes.LOGOUT:
-      console.log('%c Logout: %s', 'color: red', state.currentUser);
-
-      return initialState;
     default:
       console.log('%c Initial user: %s', 'color: red', state.currentUser);
       return state;
