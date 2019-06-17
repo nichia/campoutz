@@ -16,9 +16,9 @@ ActiveRecord::Schema.define(version: 2019_06_14_023200) do
   enable_extension "plpgsql"
 
   create_table "campgrounds", force: :cascade do |t|
-    t.string "campground_ridb_id"
-    t.string "name"
-    t.text "description"
+    t.string "FacilityID"
+    t.string "FacilityName"
+    t.text "FacilityDescription"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

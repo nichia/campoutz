@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Card, Icon, Button } from 'semantic-ui-react';
 
 /* fix(card): word-wrap overflowing card container with longstrings */
@@ -52,7 +53,7 @@ const extractDescription = description => {
 const heartCampground = (campground, loggedIn, favoriteCampgrounds) => {
   if (loggedIn) {
     const isHearted = favoriteCampgrounds.some(
-      favCamp => favCamp.campground_ridb_id === campground.FacilityID
+      favCamp => favCamp.FacilityID === campground.FacilityID
     );
 
     let heartIcon = <Icon name='heart outline' />;
@@ -69,16 +70,29 @@ const CampgroundsCard = ({
   campground,
   loggedIn,
   favorite_campgrounds,
-  getCampground
+  getCampground,
+  location: { pathname }
 }) => {
   console.log(
     '%c CampgroundsCard',
     'color: green',
     campground,
     loggedIn,
-    favorite_campgrounds
+    favorite_campgrounds,
+    pathname
   );
   const heartIcon = heartCampground(campground, loggedIn, favorite_campgrounds);
+
+  const handleItemClick = () => {
+    if (pathname !== '/favorites') {
+      // get currentCamground using campgroundsCard data so we
+      // don't need to do another fetch api to get the currentCampground.
+      // But for favorite campgrounds, we only have a subset of the
+      // fields, so we don't want to get currentCampground, instead let
+      // CampgroundContainer do the fetch api of currentCampground
+      getCampground(campground);
+    }
+  };
 
   return (
     <Card>
@@ -86,7 +100,7 @@ const CampgroundsCard = ({
         <NavLink
           to={`/campgrounds/${campground.FacilityID}`}
           exact
-          onClick={() => getCampground(campground)}
+          onClick={handleItemClick}
         >
           <div className='ui right floated'>{heartIcon}</div>
           <Card.Header>{campground.FacilityName}</Card.Header>
@@ -105,7 +119,7 @@ const CampgroundsCard = ({
       <Card.Content extra>
         <NavLink to={`/campgrounds/${campground.FacilityID}`} exact>
           <div className='ui right floated'>
-            <Button primary onClick={() => getCampground(campground)}>
+            <Button primary onClick={handleItemClick}>
               <Icon name='eye' />
               View Details
             </Button>
@@ -116,4 +130,4 @@ const CampgroundsCard = ({
   );
 };
 
-export default CampgroundsCard;
+export default withRouter(CampgroundsCard);

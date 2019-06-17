@@ -1,8 +1,8 @@
 class Api::V1::FavoriteCampgroundsController < ApplicationController
 
   def create
-    # Find the first campground matching ":campground_ridb_id" or create a new one with the given campgrond_params attributes
-    @campground = Campground.create_with(campground_params).find_or_create_by(campground_ridb_id: params[:campground][:campground_ridb_id])
+    # Find the first campground matching ":FacilityID" or create a new one with the given campgrond_params attributes
+    @campground = Campground.create_with(campground_params).find_or_create_by(FacilityID: params[:campground][:FacilityID])
     
     # byebug
     # Set attributes from campground_params and save the record if the attribute is different (ensure always have latest api info)
@@ -12,7 +12,7 @@ class Api::V1::FavoriteCampgroundsController < ApplicationController
     end
 
     if current_user.favorite_campgrounds.detect{ |c| c.id == @campground.id}
-      render json: {error: "You have already favorited this campground id " + @campground.campground_ridb_id}, status: :not_acceptable
+      render json: {error: "You have already favorited this campground id " + @campground.FacilityID}, status: :not_acceptable
     else
       if Favorite.create(favorited: @campground, user: current_user)
         render json: { campground: CampgroundSerializer.new(@campground) }, status: :created
@@ -23,10 +23,10 @@ class Api::V1::FavoriteCampgroundsController < ApplicationController
   end
 
   def destroy
-    @campground = Campground.find_by(campground_ridb_id: params[:id])
+    @campground = Campground.find_by(FacilityID: params[:id])
     if @campground 
       current_user.favorite_campgrounds.delete(@campground)
-      render json: { campground_ridb_id: params[:id]}, status: :ok
+      render json: { FacilityID: params[:id]}, status: :ok
     else
       render json: {error: "Campground cannot be removed from favorite"}, status: :not_acceptable
     end
@@ -36,9 +36,9 @@ class Api::V1::FavoriteCampgroundsController < ApplicationController
 
   def campground_params
     params.require(:campground).permit(
-      :campground_ridb_id,
-      :name,
-      :description
+      :FacilityID,
+      :FacilityName,
+      :FacilityDescription
     )
   end
 end

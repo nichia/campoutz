@@ -7,6 +7,7 @@ import LoginForm from './components/registrations/LoginForm';
 import SignupForm from './components/registrations/SignupForm';
 import NoMatch from './components/NoMatch';
 import Profile from './components/Profile';
+import FavoritesContainer from './containers/FavoritesContainer';
 import HomePage from './containers/HomePage';
 import Campground from './containers/CampgroundContainer';
 
@@ -30,6 +31,7 @@ class App extends Component {
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route exact path='/profile' component={Profile} />
+          <Route exact path='/favorites' component={FavoritesContainer} />
           <Route exact path='/login' component={LoginForm} />
           <Route exact path='/signup' component={SignupForm} />
           <Route exact path='/campgrounds/:id' component={Campground} />

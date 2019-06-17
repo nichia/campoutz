@@ -184,9 +184,9 @@ export const addFavoriteCampground = props => {
     },
     body: JSON.stringify({
       campground: {
-        campground_ridb_id: FacilityID,
-        name: FacilityName,
-        description: FacilityDescription
+        FacilityID: FacilityID,
+        FacilityName: FacilityName,
+        FacilityDescription: FacilityDescription
       }
     })
   };
@@ -233,8 +233,8 @@ export const addFavoriteCampground = props => {
   };
 };
 
-export const deleteFavoriteCampground = campground_ridb_id => {
-  const url = `${BASE_URL}/favorite_campgrounds/${campground_ridb_id}`;
+export const deleteFavoriteCampground = FacilityID => {
+  const url = `${BASE_URL}/favorite_campgrounds/${FacilityID}`;
 
   const options = {
     method: 'DELETE',
@@ -269,7 +269,7 @@ export const deleteFavoriteCampground = campground_ridb_id => {
           'color: navy',
           JSONResponse
         );
-        dispatch(delete_from_favorites(JSONResponse.campground_ridb_id));
+        dispatch(delete_from_favorites(JSONResponse.FacilityID));
       })
       .catch(error => {
         // TypeError is returned by api endpoint which contains error.message

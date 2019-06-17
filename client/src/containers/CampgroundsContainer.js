@@ -18,7 +18,7 @@ class CampgroundsContainer extends Component {
         ) : this.props.campgroundsData.allCampgrounds.length > 0 ? (
           <Fragment>
             <CampgroundsList
-              campgrounds={this.props.campgroundsData}
+              campgrounds={this.props.campgroundsData.allCampgrounds}
               loggedIn={this.props.user.loggedIn}
               favorite_campgrounds={
                 this.props.user.currentUser.favorite_campgrounds

@@ -60,7 +60,7 @@ const addFavorite = (state, action) => {
 
 const deleteFavorite = (state, action) => {
   const updatedFavorites = state.currentUser.favorite_campgrounds.filter(
-    favorite => favorite.campground_ridb_id !== action.payload
+    favorite => favorite.FacilityID !== action.payload
   );
 
   console.log(

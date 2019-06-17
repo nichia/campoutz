@@ -7,11 +7,11 @@ import { logoutUser } from '../actions/userActions';
 class Navbar extends Component {
   state = { activeItem: 'campoutz' };
 
-  // handleItemClick = (e, { name }) => this.setState({ activeItem: name });
   handleItemClick = (e, { name, url }) => {
     this.setState({ activeItem: name });
     this.props.history.push(url);
   };
+
   handleClickLogout = (e, { name, url }) => {
     this.setState({ activeItem: name });
     this.props.logoutUser(); //comes from mapDispatchToProps
@@ -35,13 +35,19 @@ class Navbar extends Component {
           />
           {loggedIn ? (
             <Fragment>
-              <Menu.Item
-                name='profile'
-                active={activeItem === 'profile'}
-                url='/profile'
-                onClick={this.handleItemClick}
-              />
               <Menu.Menu position='right'>
+                <Menu.Item
+                  name='favorites'
+                  active={activeItem === 'favorites'}
+                  url='/favorites'
+                  onClick={this.handleItemClick}
+                />
+                <Menu.Item
+                  name='profile'
+                  active={activeItem === 'profile'}
+                  url='/profile'
+                  onClick={this.handleItemClick}
+                />
                 <Menu.Item
                   name='logout'
                   active={activeItem === 'logout'}
@@ -74,40 +80,6 @@ class Navbar extends Component {
     );
   }
 }
-// const Navbar = ({ logoutUser, user: { loggedIn }, location: { pathname } }) => {
-//   return (
-//     <Menu pointing secondary>
-//       {loggedIn ? (
-//         <Fragment>
-//           <Menu.Item
-//             as={NavLink}
-//             to='/profile'
-//             name='Profile'
-//             active={pathname === '/profile'}
-//           />
-//           <Menu.Menu position='right'>
-//             <Menu.Item
-//               as={NavLink}
-//               to='/'
-//               name='Logout'
-//               onClick={() => {
-//                 logoutUser(); //comes from mapDispatchToProps
-//               }}
-//             />
-//           </Menu.Menu>
-//         </Fragment>
-//       ) : (
-//         <Menu.Menu position='right'>
-//           {pathname === '/login' ? (
-//             <Menu.Item as={NavLink} to='/signup' name='Signup' />
-//           ) : (
-//             <Menu.Item as={NavLink} to='/login' name='Login' />
-//           )}
-//         </Menu.Menu>
-//       )}
-//     </Menu>
-//   );
-// };
 
 const mapStateToProps = ({ user }) => ({ user });
 

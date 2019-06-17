@@ -1,3 +1,3 @@
 class CampgroundSerializer < ActiveModel::Serializer
-  attributes :campground_ridb_id, :name, :description
+  attributes :FacilityID, :FacilityName, :FacilityDescription
 end

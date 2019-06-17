@@ -32,12 +32,8 @@ const heartCampground = (
 
   if (loggedIn) {
     // check if campground is alreaded hearted by current_user
-    // const isHearted = favoriteCampgrounds.filter(favCamp => favCamp.campground_ridb_id === campground.FacilityID)
-    // const isHearted = favoriteCampgrounds.some(function(el) {
-    //   return el.campground_ridb_id === campground.FacilityID;
-    // });
     const isHearted = favoriteCampgrounds.some(
-      favCamp => favCamp.campground_ridb_id === campground.FacilityID
+      favCamp => favCamp.FacilityID === campground.FacilityID
     );
 
     let heartIcon = (

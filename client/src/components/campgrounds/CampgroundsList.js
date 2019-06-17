@@ -17,7 +17,7 @@ const CampgroundsList = ({
   );
   return (
     <Card.Group>
-      {campgrounds.allCampgrounds.map(campground => (
+      {campgrounds.map(campground => (
         <CampgroundsCard
           campground={campground}
           loggedIn={loggedIn}
