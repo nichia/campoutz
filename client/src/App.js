@@ -3,6 +3,7 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchCurrentUser } from './actions/userActions';
 import Navbar from './components/Navbar';
+import AppHeader from './components/AppHeader';
 import LoginForm from './components/registrations/LoginForm';
 import SignupForm from './components/registrations/SignupForm';
 import NoMatch from './components/NoMatch';
@@ -28,6 +29,7 @@ class App extends Component {
     return (
       <Fragment>
         <Navbar />
+        <AppHeader />
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route exact path='/profile' component={Profile} />
