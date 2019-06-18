@@ -6,7 +6,7 @@ import {
   updateSearchState
 } from '../actions/campgroundActions';
 import { bindActionCreators } from 'redux';
-import SearchBar from '../components/SearchBar';
+import SearchQuery from '../components/SearchQuery';
 import CampgroundsContainer from './CampgroundsContainer';
 
 export class HomePage extends Component {
@@ -61,16 +61,16 @@ export class HomePage extends Component {
 
   // arrow function automatically binds 'this'
   // implictly bind this base on the surrounding context by using arrow function
-  // onSearchQuery = (query) => {
-  onSearchQuery(query) {
-    if (query['value'] !== this.props.searchState) {
+  // onSearchQuery = (queryValue) => {
+  onSearchQuery(queryValue) {
+    if (queryValue !== this.props.searchState) {
       this.setState({ activePage: 1 });
-      this.props.updateSearchState(query['value']);
+      this.props.updateSearchState(queryValue);
       console.log(
         '%c HOMEPAGE onSearchQuery: ',
         'color: teal',
         this.state,
-        query['value']
+        queryValue
       );
     }
   }
@@ -83,7 +83,7 @@ export class HomePage extends Component {
     console.log('%c HOMEPAGE render: ', 'color: teal');
     return (
       <Fragment>
-        <SearchBar onSearchQuery={this.onSearchQuery} />
+        <SearchQuery onSearchQuery={this.onSearchQuery} />
         <CampgroundsContainer
           activePage={this.state.activePage}
           handlePaginationChange={this.onPaginationChange}
