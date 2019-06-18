@@ -1,5 +1,8 @@
 import * as actionTypes from './actionTypes';
 
+const RIDB_URL = `${process.env.REACT_APP_API_RIDB_ENDPOINT}/api/v1`;
+const RIDB_API_KEY = process.env.REACT_APP_RIDB_API_KEY;
+
 export const updateSearchState = query => {
   return dispatch => {
     dispatch({ type: actionTypes.UPDATE_SEARCHSTATE, payload: query });
@@ -43,8 +46,6 @@ const getCampgroundFail = error => {
 };
 
 export const fetchCampground = campgroundID => {
-  const RIDB_URL = `${process.env.REACT_APP_API_RIDB_ENDPOINT}/api/v1`;
-  const RIDB_API_KEY = process.env.REACT_APP_RIDB_API_KEY;
   const fullDetails = 'true';
 
   const options = {
@@ -88,8 +89,6 @@ export const fetchCampground = campgroundID => {
 };
 
 export const fetchCampgrounds = (query, page) => {
-  const RIDB_URL = `${process.env.REACT_APP_API_RIDB_ENDPOINT}/api/v1`;
-  const RIDB_API_KEY = process.env.REACT_APP_RIDB_API_KEY;
   const limit = 5;
   const offset = page > 1 ? (page - 1) * limit : 0;
   const fullDetails = 'true';

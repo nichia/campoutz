@@ -38,6 +38,11 @@ const failedLogin = (state, action) => {
   });
 };
 
+const resetLoginError = (state, action) => {
+  console.log('%c resetLoginError: ', 'color: red');
+  return updateObject(state, { loginFailed: false, error: null });
+};
+
 const addFavorite = (state, action) => {
   const updatedFavorites = state.currentUser.favorite_campgrounds.concat(
     action.payload
@@ -89,8 +94,9 @@ const usersReducer = (state = initialState, action) => {
     case actionTypes.FAILED_LOGIN:
       return failedLogin(state, action);
     case actionTypes.LOGOUT:
-      console.log('%c Logout: %s', 'color: red', state.currentUser);
       return initialState;
+    case actionTypes.RESET_LOGIN_ERROR:
+      return resetLoginError(state, action);
     case actionTypes.ADD_FAVORITE:
       return addFavorite(state, action);
     case actionTypes.DELETE_FAVORITE:

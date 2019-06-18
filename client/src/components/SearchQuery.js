@@ -24,7 +24,7 @@ class SearchQuery extends Component {
       <Dropdown
         fluid
         options={searchStateOptions}
-        placeholder='Select the State'
+        placeholder='Select the State you want to explore'
         search
         selection
         value={value}

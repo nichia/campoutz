@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, NavLink } from 'react-router-dom';
 import { signupUser, failedLogin } from '../../actions/userActions';
+import { formatError } from './FormatError';
 import { Form, Segment, Message } from 'semantic-ui-react';
 
 class SignupForm extends Component {
@@ -95,25 +96,8 @@ class SignupForm extends Component {
     }
   };
 
-  formatError = () => {
-    // if this.props.error is null (not true), propsError = null
-    // Else, if this.props.error is an array, join the error messages by 'unordered list'
-    if (this.props.error) {
-      if (Array.isArray(this.props.error)) {
-        const listErrors = this.props.error.map((error, index) => (
-          <li key={index}>{error}</li>
-        ));
-        return <ul>{listErrors}</ul>;
-      } else {
-        return this.props.error;
-      }
-    } else {
-      return null;
-    }
-  };
-
   render() {
-    const propsError = this.formatError;
+    const propsError = formatError(this.props.error);
 
     console.log(
       '%c SIGNUP FORM PROPS: ',
@@ -134,91 +118,90 @@ class SignupForm extends Component {
           error={this.props.loginFailed}
         >
           <Message error header={this.props.loginFailed ? propsError : null} />
-          <Form.Group widths='equal'>
-            <Form.Input
-              required
-              icon='user'
-              iconPosition='left'
-              label='Username:'
-              placeholder='Username'
-              name='username'
-              onChange={this.handleChange}
-              value={this.state.username}
-              error={this.state.usernameError}
-            />
-            <Form.Input
-              required
-              icon='envelope'
-              iconPosition='left'
-              label='Email:'
-              placeholder='Email'
-              name='email'
-              type='email'
-              onChange={this.handleChange}
-              value={this.state.email}
-            />
-            <Form.Input
-              required
-              icon='lock'
-              iconPosition='left'
-              label='Password:'
-              placeholder='Create a password'
-              name='password'
-              type='password'
-              onChange={this.handleChange}
-              value={this.state.password}
-              error={this.state.passwordError}
-            />
-            <Form.Input
-              required
-              icon='lock'
-              iconPosition='left'
-              label='Confirm Password:'
-              placeholder='Confirm password'
-              name='confirmPassword'
-              type='password'
-              onChange={this.handleChange}
-              value={this.state.confirmPassword}
-              error={this.state.confirmPasswordError}
-            />
-            <Form.Input
-              label='Avatar:'
-              required
-              // icon='linkify'
-              icon='image'
-              iconPosition='left'
-              placeholder='Avatar url'
-              name='avatar'
-              type='url'
-              onChange={this.handleChange}
-              value={this.state.avatar}
-            />
-            <Form.Input
-              label='First Name:'
-              icon='user'
-              iconPosition='left'
-              placeholder='First name'
-              name='firstname'
-              onChange={this.handleChange}
-              value={this.state.firstname}
-            />
-            <Form.Input
-              label='Last Name:'
-              icon='user'
-              iconPosition='left'
-              placeholder='Last name'
-              name='lastname'
-              onChange={this.handleChange}
-              value={this.state.lastname}
-            />
-            <Form.TextArea
-              label='About:'
-              placeholder='Tell us more about you...'
-              name='bio'
-              onChange={this.handleChange}
-              value={this.state.bio}
-            />
-          </Form.Group>
+          <Form.Input
+            required
+            icon='user'
+            iconPosition='left'
+            label='Username:'
+            placeholder='Username'
+            name='username'
+            onChange={this.handleChange}
+            value={this.state.username}
+            error={this.state.usernameError}
+          />
+          <Form.Input
+            required
+            icon='envelope'
+            iconPosition='left'
+            label='Email:'
+            placeholder='Email'
+            name='email'
+            type='email'
+            onChange={this.handleChange}
+            value={this.state.email}
+          />
+          <Form.Input
+            required
+            icon='lock'
+            iconPosition='left'
+            label='Password:'
+            placeholder='Create a password'
+            name='password'
+            type='password'
+            onChange={this.handleChange}
+            value={this.state.password}
+            error={this.state.passwordError}
+          />
+          <Form.Input
+            required
+            icon='lock'
+            iconPosition='left'
+            label='Confirm Password:'
+            placeholder='Confirm password'
+            name='confirmPassword'
+            type='password'
+            onChange={this.handleChange}
+            value={this.state.confirmPassword}
+            error={this.state.confirmPasswordError}
+          />
+          <Form.Input
+            label='Avatar:'
+            required
+            // icon='linkify'
+            icon='image'
+            iconPosition='left'
+            placeholder='Avatar url'
+            name='avatar'
+            type='url'
+            onChange={this.handleChange}
+            value={this.state.avatar}
+          />
+          <Form.Input
+            label='First Name:'
+            icon='user'
+            iconPosition='left'
+            placeholder='First name'
+            name='firstname'
+            onChange={this.handleChange}
+            value={this.state.firstname}
+          />
+          <Form.Input
+            label='Last Name:'
+            icon='user'
+            iconPosition='left'
+            placeholder='Last name'
+            name='lastname'
+            onChange={this.handleChange}
+            value={this.state.lastname}
+          />
+          <Form.TextArea
+            label='About:'
+            placeholder='Tell us more about you...'
+            name='bio'
+            onChange={this.handleChange}
+            value={this.state.bio}
+          />
+
           <Form.Button>Signup</Form.Button>
 
           <br />

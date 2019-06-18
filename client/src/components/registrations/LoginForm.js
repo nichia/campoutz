@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect, NavLink } from 'react-router-dom';
 import { loginUser } from '../../actions/userActions';
+import { formatError } from './FormatError';
 import { Button, Form, Segment, Message } from 'semantic-ui-react';
 
 class LoginForm extends Component {
@@ -24,25 +25,8 @@ class LoginForm extends Component {
     this.setState({ username: '', password: '' }); //reset form to initial state
   };
 
-  formatError = () => {
-    // if this.props.error is null (not true), propsError = null
-    // Else, if this.props.error is an array, join the error messages by 'unordered list'
-    if (this.props.error) {
-      if (Array.isArray(this.props.error)) {
-        const listErrors = this.props.error.map((error, index) => (
-          <li key={index}>{error}</li>
-        ));
-        return <ul>{listErrors}</ul>;
-      } else {
-        return this.props.error;
-      }
-    } else {
-      return null;
-    }
-  };
-
   render() {
-    const propsError = this.formatError;
+    const propsError = formatError(this.props.error);
 
     console.log('%c LOGIN FORM PROPS: ', 'color: purple', this.props);
 
@@ -58,29 +42,27 @@ class LoginForm extends Component {
           error={this.props.loginFailed}
         >
           <Message error header={this.props.loginFailed ? propsError : null} />
-          <Form.Group widths='equal'>
-            <Form.Input
-              required
-              icon='user'
-              iconPosition='left'
-              label='Username:'
-              placeholder='username'
-              name='username'
-              onChange={this.handleChange}
-              value={this.state.username}
-            />
-            <Form.Input
-              required
-              icon='lock'
-              iconPosition='left'
-              label='Password:'
-              placeholder='password'
-              name='password'
-              type='password'
-              onChange={this.handleChange}
-              value={this.state.password}
-            />
-          </Form.Group>
+          <Form.Input
+            required
+            icon='user'
+            iconPosition='left'
+            label='Username:'
+            placeholder='username'
+            name='username'
+            onChange={this.handleChange}
+            value={this.state.username}
+          />
+          <Form.Input
+            required
+            icon='lock'
+            iconPosition='left'
+            label='Password:'
+            placeholder='password'
+            name='password'
+            type='password'
+            onChange={this.handleChange}
+            value={this.state.password}
+          />
           <Button type='submit'>Login</Button>
           <br />
           <NavLink to='/signup'>Not on Campoutz yet? Sign up</NavLink>

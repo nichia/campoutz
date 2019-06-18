@@ -2,13 +2,14 @@ import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
-import { logoutUser } from '../actions/userActions';
+import { resetLoginError, logoutUser } from '../actions/userActions';
 
 class Navbar extends Component {
   state = { activeItem: 'campoutz' };
 
   handleItemClick = (e, { name, url }) => {
     this.setState({ activeItem: name });
+    this.props.resetLoginError(); //comes from mapDispatchToProps
     this.props.history.push(url);
   };
 
@@ -58,21 +59,37 @@ class Navbar extends Component {
             </Fragment>
           ) : (
             <Menu.Menu position='right'>
-              {pathname === '/login' ? (
+              {(pathname === '/login' && (
                 <Menu.Item
                   name='signup'
                   active={activeItem === 'signup'}
                   url='/signup'
                   onClick={this.handleItemClick}
                 />
-              ) : (
-                <Menu.Item
-                  name='login'
-                  active={activeItem === 'login'}
-                  url='login'
-                  onClick={this.handleItemClick}
-                />
-              )}
+              )) ||
+                (pathname === '/signup' && (
+                  <Menu.Item
+                    name='login'
+                    active={activeItem === 'login'}
+                    url='login'
+                    onClick={this.handleItemClick}
+                  />
+                )) || (
+                  <Fragment>
+                    <Menu.Item
+                      name='login'
+                      active={activeItem === 'login'}
+                      url='login'
+                      onClick={this.handleItemClick}
+                    />
+                    <Menu.Item
+                      name='signup'
+                      active={activeItem === 'signup'}
+                      url='/signup'
+                      onClick={this.handleItemClick}
+                    />
+                  </Fragment>
+                )}
             </Menu.Menu>
           )}
         </Menu>
@@ -85,6 +102,7 @@ const mapStateToProps = ({ user }) => ({ user });
 
 const mapDispatchToProps = dispatch => {
   return {
+    resetLoginError: () => dispatch(resetLoginError()),
     logoutUser: () => dispatch(logoutUser()) // comes from user actions
   };
 };

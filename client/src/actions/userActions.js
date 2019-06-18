@@ -14,6 +14,11 @@ export const failedLogin = errorMsg => {
   return { type: actionTypes.FAILED_LOGIN, payload: errorMsg };
 };
 
+export const resetLoginError = () => {
+  console.log('%c resetLoginError', 'color: navy');
+  return { type: actionTypes.RESET_LOGIN_ERROR };
+};
+
 // tell our app we're currently fetching
 const authenticatingUser = () => {
   console.log('%c INSIDE authenticatingUser action/user', 'color: navy');
