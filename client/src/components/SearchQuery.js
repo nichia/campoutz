@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { searchStateOptions } from '../data/searchStateOptions';
-import { Dropdown, icon } from 'semantic-ui-react';
+import { Dropdown } from 'semantic-ui-react';
 
 class SearchQuery extends Component {
   state = { value: '' };

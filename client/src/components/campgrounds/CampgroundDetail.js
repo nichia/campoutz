@@ -1,16 +1,7 @@
 import React from 'react';
+import * as format from './TextFormating';
 
 import { Header, Container, List, Icon, Grid, Image } from 'semantic-ui-react';
-
-const titleCase = str => {
-  return str
-    .toLowerCase()
-    .split(' ')
-    .map(function(word) {
-      return word.replace(word[0], word[0].toUpperCase());
-    })
-    .join(' ');
-};
 
 const heartCampground = (
   campground,
@@ -57,7 +48,7 @@ const heartCampground = (
   }
 };
 
-const listRecAreas = recAreas => {
+const listRecAreas = (type, recAreas, organization) => {
   return (
     <Header.Subheader>
       {'Part of '}
@@ -68,6 +59,17 @@ const listRecAreas = recAreas => {
           </List.Item>
         ))}
       </List>
+      {/* <br />
+      {type} {' of '}
+      <List bulleted horizontal>
+        {organization.map(org => (
+          <List.Item key={org.OrgID}>
+            <List.Content>
+              {<a href={org.OrgURLAddress}>{org.OrgName}</a>}
+            </List.Content>
+          </List.Item>
+        ))}
+      </List> */}
     </Header.Subheader>
   );
 };
@@ -79,8 +81,8 @@ const listActivities = activities => {
       <div className='ui divider' />
       <List bulleted horizontal>
         {activities.map(activity => (
-          <List.Item as='a' key={activity.ActivityID}>
-            {titleCase(activity.ActivityName)}
+          <List.Item key={activity.ActivityID}>
+            {format.titleCase(activity.ActivityName)}
           </List.Item>
         ))}
       </List>
@@ -151,10 +153,7 @@ const listOtherLinks = links => {
         {links.map(link => (
           <List.Item key={link.EntityLinkID}>
             <Icon name='linkify' />{' '}
-            <List.Content>
-              {<a href={link.URL}>{link.Title}</a>} {link.LinkType}{' '}
-              {link.Description}
-            </List.Content>
+            <List.Content>{<a href={link.URL}>{link.Title}</a>}</List.Content>
           </List.Item>
         ))}
       </List>
@@ -173,7 +172,8 @@ const CampgroundDetail = props => {
     addFavoriteCampground,
     deleteFavoriteCampground
   } = props;
-  const title = titleCase(campground.FacilityName);
+
+  const title = format.titleCase(campground.FacilityName);
   const heartIcon = heartCampground(
     campground,
     loggedIn,
@@ -206,7 +206,11 @@ const CampgroundDetail = props => {
     mediaGallery = listMediaGallery(campground.MEDIA);
   }
   if (campground.RECAREA.length > 0) {
-    recAreas = listRecAreas(campground.RECAREA);
+    recAreas = listRecAreas(
+      campground.FacilityTypeDescription,
+      campground.RECAREA,
+      campground.ORGANIZATION
+    );
   }
   if (campground.LINK.length > 0) {
     otherLinks = listOtherLinks(campground.LINK);
@@ -243,7 +247,18 @@ const CampgroundDetail = props => {
           </Header>
           <div className='ui divider' />
         </div>
-
+        <Container>
+          {campground.FacilityTypeDescription} {' of '}
+          <List bulleted horizontal>
+            {campground.ORGANIZATION.map(org => (
+              <List.Item key={org.OrgID}>
+                <List.Content>
+                  {<a href={org.OrgURLAddress}>{org.OrgName}</a>}
+                </List.Content>
+              </List.Item>
+            ))}
+          </List>
+        </Container>
         <Container>
           <br />
           <div
@@ -254,13 +269,9 @@ const CampgroundDetail = props => {
           <br />
           <div className='ui divider' />
         </Container>
-
         {activities}
-
         {directions}
-
         {mediaGallery}
-
         {otherLinks}
       </Container>
     </div>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Redirect, NavLink } from 'react-router-dom';
+import { Redirect, NavLink } from 'react-router-dom';
 import { loginUser } from '../../actions/userActions';
 import { Button, Form, Segment, Message } from 'semantic-ui-react';
 
@@ -131,10 +131,8 @@ const mapDispatchToProps = dispatch => ({
 //
 // export default connectedToReduxHOCWithRouterLoginForm
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-    // { loginUser }  // implicit
-  )(LoginForm)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+  // { loginUser }  // implicit
+)(LoginForm);

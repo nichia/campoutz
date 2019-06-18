@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { fetchCampground } from '../actions/campgroundActions';
 import {
   addFavoriteCampground,
@@ -61,9 +60,7 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(Campground)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Campground);

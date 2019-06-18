@@ -1,4 +1,5 @@
 import React from 'react';
+import * as format from './TextFormating';
 import { NavLink } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
 import { Card, Icon, Button } from 'semantic-ui-react';
@@ -81,6 +82,7 @@ const CampgroundsCard = ({
     favorite_campgrounds,
     pathname
   );
+
   const heartIcon = heartCampground(campground, loggedIn, favorite_campgrounds);
 
   const handleItemClick = () => {
@@ -103,7 +105,7 @@ const CampgroundsCard = ({
           onClick={handleItemClick}
         >
           <div className='ui right floated'>{heartIcon}</div>
-          <Card.Header>{campground.FacilityName}</Card.Header>
+          <Card.Header>{format.titleCase(campground.FacilityName)}</Card.Header>
         </NavLink>
       </Card.Content>
       <Card.Content>

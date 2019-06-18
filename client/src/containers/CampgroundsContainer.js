@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 import { getCampground } from '../actions/campgroundActions';
 import { bindActionCreators } from 'redux';
 import LoadSpinner from '../components/LoadSpinner';
@@ -69,9 +68,7 @@ const mapDispatchToProps = dispatch =>
     dispatch
   );
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(CampgroundsContainer)
-);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CampgroundsContainer);

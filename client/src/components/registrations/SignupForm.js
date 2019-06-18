@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter, Redirect, NavLink } from 'react-router-dom';
+import { Redirect, NavLink } from 'react-router-dom';
 import { signupUser, failedLogin } from '../../actions/userActions';
 import { Form, Segment, Message } from 'semantic-ui-react';
 
@@ -260,9 +260,7 @@ const mapStateToProps = ({
 // export default connectedToReduxHOCWithRouterSignupForm
 
 // to gain access to redux store
-export default withRouter(
-  connect(
-    mapStateToProps,
-    { signupUser, failedLogin } // comes from user actions
-  )(SignupForm)
-);
+export default connect(
+  mapStateToProps,
+  { signupUser, failedLogin } // comes from user actions
+)(SignupForm);
