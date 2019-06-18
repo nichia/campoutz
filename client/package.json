@@ -6,7 +6,6 @@
   "dependencies": {
     "google-maps-react": "^2.0.2",
     "react": "^16.8.6",
-    "react-autosuggest": "^9.4.3",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.0",
