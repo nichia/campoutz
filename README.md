@@ -2,7 +2,7 @@
 
 # Campoutz
 
-Looking for campgrounds for your next camping trip? Explore Campoutz to find public campgrounds across the US.
+Looking for a camping location for your next camping trip? Explore Campoutz to find public campgrounds across the US. Signup and login to search for campgrounds by State. You can then save to your favorites the campgrounds that you would like to visit.
 
 ## Installation
 
@@ -29,9 +29,9 @@ Open up a web browser and copy/paste the IP server address into the web browser 
 
 ## Technical Information
 
-    Front-end: Built using React, Redux, React Router and styled using Semantic UI compoenents and intgrated google maps API components to display maps of the campgrounds.
-    Back-end: RESTful JSON API built with Ruby on Rails, using PostgreSQL database
-    External API: [Recreation Informatin Database (RIDB) API](https://ridb.recreation.gov/docs)
+Front-end: Built using React, Redux, React Router and styled using Semantic UI components. Also intgrated with google maps API components to display maps of the campgrounds.
+Back-end: RESTful JSON API built with Ruby on Rails, using PostgreSQL database
+External API: [Recreation Informatin Database (RIDB) API](https://ridb.recreation.gov/docs)
 
 ## Contributing
 
