@@ -11,8 +11,6 @@ Follow the below terminal commands to start using the application.
 
     $ git clone git@github.com:nichia/campoutz.git
     $ cd campoutz
-    Configuration:
-      $ mv .env.bak .env  (edit the .env file to fill in secret keys)
     Setup server:
       $ rvm --default use 2.6.1  (set default Ruby version 2.6.1)
       $ bundle install
@@ -20,6 +18,7 @@ Follow the below terminal commands to start using the application.
       $ rake db:migrate
     Setup client:
       $ cd client
+      $ mv .env.bak .env  (edit the .env file to fill in secret keys)
       $ npm install
     Start application:
     $ rake start
