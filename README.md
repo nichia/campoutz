@@ -29,9 +29,9 @@ Open up a web browser and copy/paste the IP server address into the web browser 
 
 ## Technical Information
 
-    Front-end: Built using React, Redux, React Router and styled using Semantic UI components. Also intgrated with google maps API components to display maps of the campgrounds.
-    Back-end: RESTful JSON API built with Ruby on Rails, using PostgreSQL database
-    External API: [Recreation Informatin Database (RIDB) API](https://ridb.recreation.gov/docs)
+* Front-end: Built using React, Redux, React Router and styled using Semantic UI components. Also intgrated with google maps API components to display maps of the campgrounds.
+* Back-end: RESTful JSON API built with Ruby on Rails, using PostgreSQL database
+* External API: [Recreation Informatin Database (RIDB) API](https://ridb.recreation.gov/docs)
 
 ## Contributing
 
