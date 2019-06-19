@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import * as format from '../components/campgrounds/TextFormating';
 import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 
 const MAP_API_KEY = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
@@ -28,7 +29,9 @@ class MapContainer extends Component {
         const coords = this.props.campgrounds[i].GEOJSON.COORDINATES;
         newArr.push({
           FacilityID: this.props.campgrounds[i].FacilityID,
-          FacilityName: this.props.campgrounds[i].FacilityName,
+          FacilityName: format.titleCase(
+            this.props.campgrounds[i].FacilityName
+          ),
           latLng: { lat: coords[1], lng: coords[0] }
         });
       }
