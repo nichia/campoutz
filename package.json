@@ -2,7 +2,7 @@
   "name": "campoutz",
   "version": "1.0.0",
   "engines": {
-    "node": "10.16.0"
+    "node": "10.15.3"
   },
   "description": "react campoutz app",
   "scripts": {
