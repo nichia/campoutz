@@ -1,0 +1,31 @@
+{
+  "name": "campoutz",
+  "version": "1.0.0",
+  "engines": {
+    "node": "10.16.0"
+  },
+  "description": "react campoutz app",
+  "scripts": {
+    "build": "cd client && npm install && npm run build && cd ..",
+    "deploy": "cp -a client/build/. public/",
+    "postinstall": "npm run build && npm run deploy && echo 'Client built!'"
+  },
+  "keywords": [
+    "campground",
+    "campsite",
+    "camping",
+    "react",
+    "rails",
+    "ridb"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nichia/campoutz.git"
+  },
+  "author": "Ni Chia",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nichia/campoutz/issues"
+  },
+  "homepage": "https://github.com/nichia/campoutz#readme"
+}
