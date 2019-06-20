@@ -2,12 +2,12 @@
 
 # Campoutz
 
-Looking for a camping location for your next camping trip? Explore Campoutz to find public campgrounds across the US. Signup and login to search for campgrounds by State. You can then save to your favorites the campgrounds that you would like to visit.
+Looking for a camping location for your next camping trip? Explore Campoutz to find public campgrounds across the US. Signup and login to search for campgrounds by State. After login, you have the option to save campgrounds to your favorites for visiting later.
 
 ## Installation
 
 Follow the below terminal commands to start using the application.
-(Requirements: Ruby, Rails and Node.js installed)
+(Requirements: Ruby, Rails 5 and Node.js installed)
 
     $ git clone git@github.com:nichia/campoutz.git
     $ cd campoutz
@@ -21,7 +21,7 @@ Follow the below terminal commands to start using the application.
       $ mv .env.bak .env  (edit the .env file to fill in secret keys)
       $ npm install
     Start application:
-    $ rake start
+      $ rake start
 
 ## Usage
 
@@ -29,9 +29,11 @@ Open up a web browser and copy/paste the IP server address into the web browser 
 
 ## Technical Information
 
-* Front-end: Built using React, Redux, React Router and styled using Semantic UI components. Also intgrated with google maps API components to display maps of the campgrounds.
-* Back-end: RESTful JSON API built with Ruby on Rails, using PostgreSQL database
-* External API: [Recreation Informatin Database (RIDB) API](https://ridb.recreation.gov/docs)
+- Front-end: Built using React, Redux, React Router and styled using Semantic UI components. Also integrated with google maps API components to display maps of the campgrounds.
+- Back-end: RESTful JSON API built with Ruby on Rails, using PostgreSQL database
+- External API:
+  - [Recreation Informatin Database (RIDB) API](https://ridb.recreation.gov/docs)
+  - [Google Maps React API](https://www.npmjs.com/package/google-maps-react)
 
 ## Contributing
 
