@@ -5,9 +5,9 @@ import './index.css';
 import App from './App';
 import store from './store';
 import * as serviceWorker from './serviceWorker';
-
 import { Provider } from 'react-redux';
 import 'semantic-ui-css/semantic.min.css';
+require('dotenv').config();
 
 ReactDOM.render(
   <Provider store={store}>
