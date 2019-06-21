@@ -1,4 +1,4 @@
-class Api::V1::FavoriteCampgroundsController < ApplicationController
+class Api::V1::FavoriteCampgroundsController < ApiController
 
   def create
     # Find the first campground matching ":FacilityID" or create a new one with the given campgrond_params attributes
