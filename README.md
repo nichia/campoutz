@@ -2,7 +2,7 @@
 
 # Campoutz
 
-Looking for a camping location for your next camping trip? Explore Campoutz to find public campgrounds across the US. Signup and login to search for campgrounds by State. After login, you have the option to save campgrounds to your favorites for visiting later.
+Looking for a place for your next camping trip? Explore Campoutz to find public campgrounds across the US. Signup and login to search for campgrounds by State. After login, you have the option to save campgrounds to your favorites for visiting later.
 
 ## Demo
 
@@ -11,7 +11,7 @@ Visit [https://campoutz.herokuapp.com/](https://campoutz.herokuapp.com/) to expl
     $ Username: lorem
     $ Password: password
 
-## Installation
+## Installation: Local
 
 Follow the below terminal commands to start using the application.
 (Requirements: Ruby, Rails 5 and Node.js installed)
@@ -19,19 +19,22 @@ Follow the below terminal commands to start using the application.
     $ git clone git@github.com:nichia/campoutz.git
     $ cd campoutz
     Setup server:
-      $ rvm --default use 2.6.1  (set default Ruby version 2.6.1)
+      $ rvm --default use 2.6.1  <sub><sup>(*set default Ruby version 2.6.1)</sup></sub>
       $ bundle install
       $ rake db:create
       $ rake db:migrate
       $ rake db:seed
+      $ cd config
+      $ mv application.yml.bak application.yml  <sub><sup>(*edit the .application.yml file to fill in jwt_secret used by figaro)</sup></sub>
+      $ cd ..  <sub><sup>(*move back to campoutz directory)</sup></sub>
     Setup client:
       $ cd client
-      $ mv .env.bak .env  (edit the .env file to fill in secret keys)
+      $ mv .env.bak .env  <sub><sup>(*edit the .env file to fill in secret keys)</sup></sub>
       $ npm install
     Start application:
       $ rake start
 
-## Usage
+## Usage: Local
 
 Open up a web browser and copy/paste the IP server address into the web browser URL (usually http://localhost:3000) to use the application.
 Sign up and login to save your favorites, or use this pre-made account to login:
