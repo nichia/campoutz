@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import * as format from './TextFormating';
 import { NavLink } from 'react-router-dom';
 import { withRouter } from 'react-router-dom';
@@ -67,69 +67,91 @@ const heartCampground = (campground, loggedIn, favoriteCampgrounds) => {
   }
 };
 
-const CampgroundsCard = ({
-  campground,
-  loggedIn,
-  favorite_campgrounds,
-  getCampground,
-  location: { pathname }
-}) => {
-  console.log(
-    '%c CampgroundsCard',
-    'color: green',
-    campground,
-    loggedIn,
-    favorite_campgrounds,
-    pathname
-  );
+class CampgroundsCard extends Component {
+  state = { counter: 0 };
 
-  const heartIcon = heartCampground(campground, loggedIn, favorite_campgrounds);
+  render() {
+    const {
+      campground,
+      loggedIn,
+      favorite_campgrounds,
+      getCampground,
+      location: { pathname }
+    } = this.props;
 
-  const handleItemClick = () => {
-    if (pathname !== '/favorites') {
-      // get currentCamground using campgroundsCard data so we
-      // don't need to do another fetch api to get the currentCampground.
-      // But for favorite campgrounds, we only have a subset of the
-      // fields, so we don't want to get currentCampground, instead let
-      // CampgroundContainer do the fetch api of currentCampground
-      getCampground(campground);
-    }
-  };
+    console.log(
+      '%c CampgroundsCard',
+      'color: green',
+      campground,
+      loggedIn,
+      favorite_campgrounds,
+      pathname
+    );
 
-  return (
-    <Card>
-      <Card.Content>
-        <NavLink
-          to={`/campgrounds/${campground.FacilityID}`}
-          exact
-          onClick={handleItemClick}
-        >
-          <div className='ui right floated'>{heartIcon}</div>
-          <Card.Header>{format.titleCase(campground.FacilityName)}</Card.Header>
-        </NavLink>
-      </Card.Content>
-      <Card.Content>
-        <Card.Description>
-          <div
-            style={divStyle}
-            dangerouslySetInnerHTML={{
-              __html: extractDescription(campground.FacilityDescription)
-            }}
-          />
-        </Card.Description>
-      </Card.Content>
-      <Card.Content extra>
-        <NavLink to={`/campgrounds/${campground.FacilityID}`} exact>
-          <div className='ui right floated'>
-            <Button primary onClick={handleItemClick}>
-              <Icon name='eye' />
-              View Details
+    const heartIcon = heartCampground(
+      campground,
+      loggedIn,
+      favorite_campgrounds
+    );
+
+    const handleItemClick = () => {
+      if (pathname !== '/favorites') {
+        // get currentCamground using campgroundsCard data so we
+        // don't need to do another fetch api to get the currentCampground.
+        // But for favorite campgrounds, we only have a subset of the
+        // fields, so we don't want to get currentCampground, instead let
+        // CampgroundContainer do the fetch api of currentCampground
+        getCampground(campground);
+      }
+    };
+
+    const handleVoteClick = () => {
+      const newCounter = this.state.counter + 1;
+      this.setState({ counter: newCounter });
+    };
+
+    return (
+      <Card>
+        <Card.Content>
+          <NavLink
+            to={`/campgrounds/${campground.FacilityID}`}
+            exact
+            onClick={handleItemClick}
+          >
+            <div className='ui right floated'>{heartIcon}</div>
+            <Card.Header>
+              {format.titleCase(campground.FacilityName)}
+            </Card.Header>
+          </NavLink>
+        </Card.Content>
+        <Card.Content>
+          <Card.Description>
+            <div
+              style={divStyle}
+              dangerouslySetInnerHTML={{
+                __html: extractDescription(campground.FacilityDescription)
+              }}
+            />
+          </Card.Description>
+        </Card.Content>
+        <Card.Content extra>
+          <div className='ui left floated'>
+            <Button primary onClick={handleVoteClick}>
+              Vote
             </Button>
+            <Button primary>{this.state.counter}</Button>
           </div>
-        </NavLink>
-      </Card.Content>
-    </Card>
-  );
-};
+          <NavLink to={`/campgrounds/${campground.FacilityID}`} exact>
+            <div className='ui right floated'>
+              <Button primary onClick={handleItemClick}>
+                View Details
+              </Button>
+            </div>
+          </NavLink>
+        </Card.Content>
+      </Card>
+    );
+  }
+}
 
 export default withRouter(CampgroundsCard);
