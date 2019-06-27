@@ -1,41 +1,39 @@
-import React from 'react';
-import { withRouter } from 'react-router-dom';
-import { Header, Segment } from 'semantic-ui-react';
+import React from "react";
+import { withRouter } from "react-router-dom";
+import { Header, Segment } from "semantic-ui-react";
 
 const heading = pathname => {
   switch (pathname) {
-    case '/profile':
+    case "/profile":
       return (
         <Segment>
-          <Header as='h1'>Profile</Header>
+          <Header as="h1">Profile</Header>
         </Segment>
       );
-    case '/favorites':
+    case "/favorites":
       return (
         <Segment>
-          <Header as='h1'>My Favorites</Header>
+          <Header as="h1">My Favorites</Header>
         </Segment>
       );
-    case '/login':
+    case "/login":
       return (
         <Segment>
-          <Header as='h1'>Login</Header>
+          <Header as="h1">Login</Header>
         </Segment>
       );
-    case '/signup':
+    case "/signup":
       return (
         <Segment>
-          <Header as='h1'>Signup</Header>
+          <Header as="h1">Signup</Header>
         </Segment>
       );
     default:
-      return '';
+      return "";
   }
 };
 
 const AppHeader = ({ location: { pathname } }) => {
-  console.log('%c AppHeader: ', 'color: brown', pathname, heading());
-
   return <div>{heading(pathname)}</div>;
 };
 

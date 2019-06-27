@@ -1,7 +1,7 @@
-import React from 'react';
-import * as format from './TextFormating';
+import React from "react";
+import * as format from "./TextFormating";
 
-import { Header, Container, List, Icon, Grid, Image } from 'semantic-ui-react';
+import { Header, Container, List, Icon, Grid, Image } from "semantic-ui-react";
 
 const heartCampground = (
   campground,
@@ -10,17 +10,6 @@ const heartCampground = (
   addFavoriteCampground,
   deleteFavoriteCampground
 ) => {
-  console.log(
-    '%c heartCampground: ',
-    'color: orange',
-    ' campground: ',
-    campground,
-    ' user-loggedIn: ',
-    loggedIn,
-    ' favoriteCampgrounds: ',
-    favoriteCampgrounds
-  );
-
   if (loggedIn) {
     // check if campground is alreaded hearted by current_user
     const isHearted = favoriteCampgrounds.some(
@@ -29,15 +18,15 @@ const heartCampground = (
 
     let heartIcon = (
       <Icon
-        name='heart outline'
+        name="heart outline"
         onClick={() => addFavoriteCampground(campground)}
       />
     );
     if (isHearted) {
       heartIcon = (
         <Icon
-          name='heart'
-          color='red'
+          name="heart"
+          color="red"
           onClick={() => deleteFavoriteCampground(campground.FacilityID)}
         />
       );
@@ -51,25 +40,14 @@ const heartCampground = (
 const listRecAreas = (type, recAreas, organization) => {
   return (
     <Header.Subheader>
-      {'Part of '}
+      {"Part of "}
       <List bulleted horizontal>
         {recAreas.map(recArea => (
-          <List.Item as='a' key={recArea.RecAreaID}>
+          <List.Item as="a" key={recArea.RecAreaID}>
             <List.Content>{recArea.RecAreaName}</List.Content>
           </List.Item>
         ))}
       </List>
-      {/* <br />
-      {type} {' of '}
-      <List bulleted horizontal>
-        {organization.map(org => (
-          <List.Item key={org.OrgID}>
-            <List.Content>
-              {<a href={org.OrgURLAddress}>{org.OrgName}</a>}
-            </List.Content>
-          </List.Item>
-        ))}
-      </List> */}
     </Header.Subheader>
   );
 };
@@ -77,8 +55,8 @@ const listRecAreas = (type, recAreas, organization) => {
 const listActivities = activities => {
   return (
     <Container>
-      <Header as='h1'>Activities</Header>
-      <div className='ui divider' />
+      <Header as="h1">Activities</Header>
+      <div className="ui divider" />
       <List bulleted horizontal>
         {activities.map(activity => (
           <List.Item key={activity.ActivityID}>
@@ -86,7 +64,7 @@ const listActivities = activities => {
           </List.Item>
         ))}
       </List>
-      <div className='ui divider' />
+      <div className="ui divider" />
     </Container>
   );
 };
@@ -111,18 +89,18 @@ const listDirections = (directions, latitude, longitude) => {
   gpsCoordinates = listgpsCoordinates(latitude, longitude);
   return (
     <Container>
-      <Header as='h1'>Directions</Header>
-      <div className='ui divider' />
+      <Header as="h1">Directions</Header>
+      <div className="ui divider" />
       <Container>
         <div
           dangerouslySetInnerHTML={{
             __html: directions
           }}
         />
-        <Header as='h3'>GPS Coordinates:</Header>
+        <Header as="h3">GPS Coordinates:</Header>
         <Container>{gpsCoordinates}</Container>
       </Container>
-      <div className='ui divider' />
+      <div className="ui divider" />
     </Container>
   );
 };
@@ -130,8 +108,8 @@ const listDirections = (directions, latitude, longitude) => {
 const listMediaGallery = medias => {
   return (
     <Container>
-      <Header as='h1'>Media Gallery</Header>
-      <div className='ui divider' />
+      <Header as="h1">Media Gallery</Header>
+      <div className="ui divider" />
       <Grid container columns={3}>
         {medias.map(media => (
           <Grid.Column key={media.EntityMediaID}>
@@ -139,7 +117,7 @@ const listMediaGallery = medias => {
           </Grid.Column>
         ))}
       </Grid>
-      <div className='ui divider' />
+      <div className="ui divider" />
     </Container>
   );
 };
@@ -147,17 +125,17 @@ const listMediaGallery = medias => {
 const listOtherLinks = links => {
   return (
     <Container>
-      <Header as='h1'>Additional Information</Header>
-      <div className='ui divider' />
+      <Header as="h1">Additional Information</Header>
+      <div className="ui divider" />
       <List>
         {links.map(link => (
           <List.Item key={link.EntityLinkID}>
-            <Icon name='linkify' />{' '}
+            <Icon name="linkify" />{" "}
             <List.Content>{<a href={link.URL}>{link.Title}</a>}</List.Content>
           </List.Item>
         ))}
       </List>
-      <div className='ui divider' />
+      <div className="ui divider" />
     </Container>
   );
 };
@@ -186,18 +164,6 @@ const CampgroundDetail = props => {
   let directions;
   let mediaGallery;
   let otherLinks;
-
-  console.log(
-    '%c CampgroundDetail: ',
-    'color: orange',
-    props,
-    ' campground: ',
-    campground,
-    ' user-loggedIn: ',
-    loggedIn,
-    ' favorite_campgrounds: ',
-    favorite_campgrounds
-  );
 
   if (campground.ACTIVITY.length > 0) {
     activities = listActivities(campground.ACTIVITY);
@@ -230,25 +196,21 @@ const CampgroundDetail = props => {
 
   return (
     <div>
-      {/* <Header as='h1'>{titleCase(`${campground.FacilityName}`)}</Header> */}
-      {/* <Header as='h1'>{titleCase(campground.FacilityName)}</Header> */}
-      {/* {campground.FacilityDirections} */}
-      {/* <Container>{listActivities(campground.ACTIVITY)}</Container> */}
       <Container>
         <div>
-          <Header as='h1' floated='right'>
+          <Header as="h1" floated="right">
             {heartIcon}
           </Header>
-          <Header as='h1'>
+          <Header as="h1">
             <Header.Content>
               {title}
               {recAreas}
             </Header.Content>
           </Header>
-          <div className='ui divider' />
+          <div className="ui divider" />
         </div>
         <Container>
-          {campground.FacilityTypeDescription} {' of '}
+          {campground.FacilityTypeDescription} {" of "}
           <List bulleted horizontal>
             {campground.ORGANIZATION.map(org => (
               <List.Item key={org.OrgID}>
@@ -267,7 +229,7 @@ const CampgroundDetail = props => {
             }}
           />
           <br />
-          <div className='ui divider' />
+          <div className="ui divider" />
         </Container>
         {activities}
         {directions}

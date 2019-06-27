@@ -1,12 +1,12 @@
-import React from 'react';
-import * as format from './TextFormating';
-import { NavLink } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
-import { Card, Icon, Button } from 'semantic-ui-react';
+import React from "react";
+import * as format from "./TextFormating";
+import { NavLink } from "react-router-dom";
+import { withRouter } from "react-router-dom";
+import { Card, Icon, Button } from "semantic-ui-react";
 
 /* fix(card): word-wrap overflowing card container with longstrings */
 const divStyle = {
-  wordWrap: 'break-word'
+  wordWrap: "break-word"
 };
 
 const truncate = (str, n, useWordBoundary) => {
@@ -16,25 +16,25 @@ const truncate = (str, n, useWordBoundary) => {
   const subString = str.substr(0, n - 1);
   return (
     (useWordBoundary
-      ? subString.substr(0, subString.lastIndexOf(' '))
-      : subString) + '&hellip;'
+      ? subString.substr(0, subString.lastIndexOf(" "))
+      : subString) + "&hellip;"
   );
 };
 
 const extractDescription = description => {
   let extractedDescription = description;
-  let indexStart = description.indexOf('<p>');
-  let indexEnd = description.indexOf('</p>');
+  let indexStart = description.indexOf("<p>");
+  let indexEnd = description.indexOf("</p>");
   let indexEnd2;
   if (indexEnd > indexStart) {
     extractedDescription = description.substring(indexStart + 3, indexEnd);
   } else {
-    indexStart = description.indexOf('\n');
-    if (indexStart !== '-1') {
-      indexEnd = description.indexOf('\n', indexStart + 1);
-      indexEnd2 = description.indexOf('<h2>', indexStart + 1);
+    indexStart = description.indexOf("\n");
+    if (indexStart !== "-1") {
+      indexEnd = description.indexOf("\n", indexStart + 1);
+      indexEnd2 = description.indexOf("<h2>", indexStart + 1);
       // For cases where the \n is not available before the next <h2> heading
-      if (indexEnd2 !== '-1' && indexEnd2 < indexEnd) {
+      if (indexEnd2 !== "-1" && indexEnd2 < indexEnd) {
         indexEnd = indexEnd2;
       }
       if (indexEnd > indexStart) {
@@ -57,9 +57,9 @@ const heartCampground = (campground, loggedIn, favoriteCampgrounds) => {
       favCamp => favCamp.FacilityID === campground.FacilityID
     );
 
-    let heartIcon = <Icon name='heart outline' />;
+    let heartIcon = <Icon name="heart outline" />;
     if (isHearted) {
-      heartIcon = <Icon name='heart' color='red' />;
+      heartIcon = <Icon name="heart" color="red" />;
     }
     return heartIcon;
   } else {
@@ -74,19 +74,10 @@ const CampgroundsCard = ({
   getCampground,
   location: { pathname }
 }) => {
-  console.log(
-    '%c CampgroundsCard',
-    'color: green',
-    campground,
-    loggedIn,
-    favorite_campgrounds,
-    pathname
-  );
-
   const heartIcon = heartCampground(campground, loggedIn, favorite_campgrounds);
 
   const handleItemClick = () => {
-    if (pathname !== '/favorites') {
+    if (pathname !== "/favorites") {
       // get currentCamground using campgroundsCard data so we
       // don't need to do another fetch api to get the currentCampground.
       // But for favorite campgrounds, we only have a subset of the
@@ -104,7 +95,7 @@ const CampgroundsCard = ({
           exact
           onClick={handleItemClick}
         >
-          <div className='ui right floated'>{heartIcon}</div>
+          <div className="ui right floated">{heartIcon}</div>
           <Card.Header>{format.titleCase(campground.FacilityName)}</Card.Header>
         </NavLink>
       </Card.Content>
@@ -120,9 +111,9 @@ const CampgroundsCard = ({
       </Card.Content>
       <Card.Content extra>
         <NavLink to={`/campgrounds/${campground.FacilityID}`} exact>
-          <div className='ui right floated'>
+          <div className="ui right floated">
             <Button primary onClick={handleItemClick}>
-              <Icon name='eye' />
+              <Icon name="eye" />
               View Details
             </Button>
           </div>

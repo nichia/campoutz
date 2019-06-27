@@ -1,12 +1,11 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { getCampground } from '../actions/campgroundActions';
-import { bindActionCreators } from 'redux';
-import CampgroundsList from '../components/campgrounds/CampgroundsList';
+import React from "react";
+import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { getCampground } from "../actions/campgroundActions";
+import { bindActionCreators } from "redux";
+import CampgroundsList from "../components/campgrounds/CampgroundsList";
 
 const FavoritesContainer = props => {
-  console.log('%c FavoritesContainer', 'color: orange', props);
   if (props.loggedIn) {
     if (props.currentUser.favorite_campgrounds.length > 0) {
       return (
@@ -28,7 +27,7 @@ const FavoritesContainer = props => {
       );
     }
   } else {
-    return <Redirect to='/' />;
+    return <Redirect to="/" />;
   }
 };
 

@@ -1,4 +1,4 @@
-import * as actionTypes from './actionTypes';
+import * as actionTypes from "./actionTypes";
 
 const BASE_URL = `/api/v1`;
 
@@ -10,24 +10,20 @@ const setCurrentUser = useroptions => ({
 });
 
 export const failedLogin = errorMsg => {
-  console.log('%c failedLogin', 'color: navy', errorMsg);
   return { type: actionTypes.FAILED_LOGIN, payload: errorMsg };
 };
 
 export const resetLoginError = () => {
-  console.log('%c resetLoginError', 'color: navy');
   return { type: actionTypes.RESET_LOGIN_ERROR };
 };
 
 // tell our app we're currently fetching
 const authenticatingUser = () => {
-  console.log('%c INSIDE authenticatingUser action/user', 'color: navy');
   return { type: actionTypes.AUTHENTICATING_USER };
 };
 
 export const logoutUser = () => {
-  console.log('%c INSIDE LOGOUT action/user', 'color: navy');
-  localStorage.removeItem('jwt');
+  localStorage.removeItem("jwt");
   return { type: actionTypes.LOGOUT };
 };
 
@@ -53,10 +49,10 @@ export const signupUser = props => {
   const url = `${BASE_URL}/users`;
 
   const options = {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json'
+      "Content-Type": "application/json",
+      Accept: "application/json"
     },
     body: JSON.stringify({
       user: {
@@ -72,13 +68,11 @@ export const signupUser = props => {
   };
 
   return dispatch => {
-    console.log('%c signupUser: ', 'color: navy', props);
-
     fetch(url, options)
       .then(response => response.json())
       .then(JSONResponse => {
         if (JSONResponse.jwt) {
-          localStorage.setItem('jwt', JSONResponse.jwt);
+          localStorage.setItem("jwt", JSONResponse.jwt);
           dispatch(setCurrentUser(JSONResponse.user));
         } else {
           throw JSONResponse.error;
@@ -87,7 +81,6 @@ export const signupUser = props => {
       .catch(error => {
         // TypeError is returned by api endpoint which contains error.message
         // (such as 'Failed to fetch' when server is not running)
-        console.log('%c signUP ERR RESP: ', 'color: navy', error);
         const errorMsg = error instanceof TypeError ? error.message : error;
         dispatch(failedLogin(errorMsg));
       });
@@ -100,10 +93,10 @@ export const loginUser = props => {
   const url = `${BASE_URL}/login`;
 
   const options = {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json'
+      "Content-Type": "application/json",
+      Accept: "application/json"
     },
     body: JSON.stringify({
       user: {
@@ -114,24 +107,21 @@ export const loginUser = props => {
   };
 
   return dispatch => {
-    console.log('%c loginUser: ', 'color: navy', props);
     dispatch(authenticatingUser());
 
     fetch(url, options)
       .then(response => response.json())
       .then(JSONResponse => {
         if (JSONResponse.jwt) {
-          localStorage.setItem('jwt', JSONResponse.jwt);
+          localStorage.setItem("jwt", JSONResponse.jwt);
           dispatch(setCurrentUser(JSONResponse.user));
         } else {
-          console.log('%c loginUser JWT RESP: ', 'color: navy', JSONResponse);
           throw JSONResponse.error;
         }
       })
       .catch(error => {
         // TypeError is returned by api endpoint which contains error.message
         // (such as 'Failed to fetch' when server is not running)
-        console.log('%c loginUser ERR RESP: ', 'color: navy', error);
         const errorMsg = error instanceof TypeError ? error.message : error;
         dispatch(failedLogin(errorMsg));
       });
@@ -143,14 +133,13 @@ export const fetchCurrentUser = () => {
 
   // takes the token in localStorage and finds out who it belongs to
   const options = {
-    method: 'GET',
+    method: "GET",
     headers: {
-      Authorization: `Bearer ${localStorage.getItem('jwt')}`
+      Authorization: `Bearer ${localStorage.getItem("jwt")}`
     }
   };
 
   return dispatch => {
-    console.log('%c fetchCurrentUser: ', 'color: navy', options);
     dispatch(authenticatingUser()); //tells the app we are fetching
     fetch(url, options)
       // fetch() won't reject HTTP error status such as 404 or 500,
@@ -160,17 +149,15 @@ export const fetchCurrentUser = () => {
         if (response.ok) {
           return response.json();
         } else {
-          throw new Error('Network response received (not ok): ', response);
+          throw new Error("Network response received (not ok): ", response);
         }
       })
       .then(JSONResponse => {
-        console.log('%c fetCurrentUser: ', 'color: navy', JSONResponse.user);
         dispatch(setCurrentUser(JSONResponse.user));
       })
       .catch(error => {
         // TypeError is returned by api endpoint which contains error.message
         // (such as 'Failed to fetch' when server is not running)
-        console.log('%c fetCurrentUser ERR RESP: ', 'color: navy', error);
         const errorMsg = error instanceof TypeError ? error.message : error;
         dispatch(failedLogin(errorMsg));
       });
@@ -182,10 +169,10 @@ export const addFavoriteCampground = props => {
   const url = `${BASE_URL}/favorite_campgrounds`;
 
   const options = {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('jwt')}`
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("jwt")}`
     },
     body: JSON.stringify({
       campground: {
@@ -196,31 +183,15 @@ export const addFavoriteCampground = props => {
     })
   };
   return dispatch => {
-    console.log('%c addFavoriteCampground1: ', 'color: navy', props);
     fetch(url, options)
       .then(response => {
         if (response.ok) {
-          console.log(
-            '%c addFavoriteCampground response.ok: ',
-            'color: navy',
-            response
-          );
           return response.json();
         } else {
-          console.log(
-            '%c addFavoriteCampground !response.ok: ',
-            'color: navy',
-            response
-          );
-          throw new Error('Network response received (not ok): ', response);
+          throw new Error("Network response received (not ok): ", response);
         }
       })
       .then(JSONResponse => {
-        console.log(
-          '%c addFavoriteCampground2 Success: ',
-          'color: navy',
-          JSONResponse
-        );
         dispatch(add_to_favorites(JSONResponse.campground));
       })
       .catch(error => {
@@ -229,8 +200,8 @@ export const addFavoriteCampground = props => {
         const errorMsg = error instanceof TypeError ? error.message : error;
         // dispatch(failedLogin(errorMsg));
         console.log(
-          '%c addFavoriteCampground2 ERR RESP: ',
-          'color: navy',
+          "%c addFavoriteCampground ERR RESP: ",
+          "color: navy",
           error,
           errorMsg
         );
@@ -242,38 +213,22 @@ export const deleteFavoriteCampground = FacilityID => {
   const url = `${BASE_URL}/favorite_campgrounds/${FacilityID}`;
 
   const options = {
-    method: 'DELETE',
+    method: "DELETE",
     headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${localStorage.getItem('jwt')}`
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("jwt")}`
     }
   };
   return dispatch => {
-    console.log('%c deleteFavoriteCampground1: ', 'color: navy', url);
     fetch(url, options)
       .then(response => {
         if (response.ok) {
-          console.log(
-            '%c deleteFavoriteCampground response.ok: ',
-            'color: navy',
-            response
-          );
           return response.json();
         } else {
-          console.log(
-            '%c deleteFavoriteCampground !response.ok: ',
-            'color: navy',
-            response
-          );
-          throw new Error('Network response received (not ok): ', response);
+          throw new Error("Network response received (not ok): ", response);
         }
       })
       .then(JSONResponse => {
-        console.log(
-          '%c deleteFavoriteCampground2 Success: ',
-          'color: navy',
-          JSONResponse
-        );
         dispatch(delete_from_favorites(JSONResponse.FacilityID));
       })
       .catch(error => {
@@ -281,8 +236,8 @@ export const deleteFavoriteCampground = FacilityID => {
         // (such as 'Failed to fetch' when server is not running)
         const errorMsg = error instanceof TypeError ? error.message : error;
         console.log(
-          '%c deleteFavoriteCampground2 ERR RESP: ',
-          'color: navy',
+          "%c deleteFavoriteCampground2 ERR RESP: ",
+          "color: navy",
           error,
           errorMsg
         );

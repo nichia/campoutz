@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Grid, Pagination } from 'semantic-ui-react';
-import { connect } from 'react-redux';
+import React, { Component } from "react";
+import { Grid, Pagination } from "semantic-ui-react";
+import { connect } from "react-redux";
 
 class CampgroundsPagination extends Component {
   render() {
@@ -12,16 +12,9 @@ class CampgroundsPagination extends Component {
           )
         : 0;
 
-    console.log(
-      '%c Pagination render: ',
-      'color: orange',
-      this.props,
-      totalPages
-    );
-
     return (
       <Grid columns={1}>
-        <Grid.Column textAlign='center'>
+        <Grid.Column textAlign="center">
           <Pagination
             boundaryRange={1}
             activePage={this.props.activePage}

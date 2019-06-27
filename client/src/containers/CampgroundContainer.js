@@ -1,12 +1,12 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { fetchCampground } from '../actions/campgroundActions';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { fetchCampground } from "../actions/campgroundActions";
 import {
   addFavoriteCampground,
   deleteFavoriteCampground
-} from '../actions/userActions';
-import { bindActionCreators } from 'redux';
-import CampgroundView from '../components/campgrounds/CampgroundView';
+} from "../actions/userActions";
+import { bindActionCreators } from "redux";
+import CampgroundView from "../components/campgrounds/CampgroundView";
 
 export class Campground extends Component {
   constructor(props) {
@@ -15,11 +15,6 @@ export class Campground extends Component {
   }
 
   componentDidMount() {
-    console.log(
-      '%c CampgroundContainer componentDidMount: ',
-      'color: orange',
-      this.props
-    );
     if (this.campgroundID !== this.props.campground.FacilityID) {
       // fetchCampground if currentCampground does not equal to requsted campgroundID
       this.props.fetchCampground(this.campgroundID);
@@ -27,7 +22,6 @@ export class Campground extends Component {
   }
 
   render() {
-    console.log('%c CampgroundContainer render: ', 'color: orange', this.props);
     return (
       <div>
         <CampgroundView

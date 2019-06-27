@@ -1,17 +1,15 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import { getCampground } from '../actions/campgroundActions';
-import { bindActionCreators } from 'redux';
-import LoadSpinner from '../components/LoadSpinner';
-import CampgroundsList from '../components/campgrounds/CampgroundsList';
-import CampgroundsPagination from '../components/campgrounds/CampgroundsPagination';
-import CampgroundsMap from './MapContainer';
-import { Grid, Segment } from 'semantic-ui-react';
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import { getCampground } from "../actions/campgroundActions";
+import { bindActionCreators } from "redux";
+import LoadSpinner from "../components/LoadSpinner";
+import CampgroundsList from "../components/campgrounds/CampgroundsList";
+import CampgroundsPagination from "../components/campgrounds/CampgroundsPagination";
+import CampgroundsMap from "./MapContainer";
+import { Grid, Segment } from "semantic-ui-react";
 
 class CampgroundsContainer extends Component {
   render() {
-    console.log('%c CampgroundsContainer ', 'color: green', this.props);
-
     return (
       <Fragment>
         {this.props.loading ? (

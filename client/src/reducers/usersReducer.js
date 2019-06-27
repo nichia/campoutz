@@ -1,5 +1,5 @@
-import * as actionTypes from '../actions/actionTypes';
-import { updateObject } from './utility';
+import * as actionTypes from "../actions/actionTypes";
+import { updateObject } from "./utility";
 
 const initialState = {
   currentUser: [],
@@ -10,7 +10,6 @@ const initialState = {
 };
 
 const setCurrentUser = (state, action) => {
-  console.log('%c Set_current_user: %s', 'color: red', action.payload);
   return updateObject(state, {
     currentUser: action.payload,
     loggedIn: true,
@@ -20,17 +19,14 @@ const setCurrentUser = (state, action) => {
 
 const authenticatingUser = (state, action) => {
   //tells the app we're fetching
-  console.log('%c Authenticating_user...', 'color: red');
   return updateObject(state, { authenticatingUser: true });
 };
 
 const authenticatedUser = (state, action) => {
-  console.log('%c Authenticated_user: ', 'color: red');
   return updateObject(state, { authenticatingUser: false });
 };
 
 const failedLogin = (state, action) => {
-  console.log('%c Failed_login: %s', 'color: red', action.payload);
   return updateObject(state, {
     loginFailed: true,
     error: action.payload,
@@ -39,7 +35,6 @@ const failedLogin = (state, action) => {
 };
 
 const resetLoginError = (state, action) => {
-  console.log('%c resetLoginError: ', 'color: red');
   return updateObject(state, { loginFailed: false, error: null });
 };
 
@@ -47,14 +42,6 @@ const addFavorite = (state, action) => {
   const updatedFavorites = state.currentUser.favorite_campgrounds.concat(
     action.payload
   );
-  console.log(
-    '%c addFavoriteCampgrounds...',
-    'color: red',
-    action,
-    state,
-    updatedFavorites
-  );
-
   return updateObject(state, {
     currentUser: {
       ...state.currentUser,
@@ -66,14 +53,6 @@ const addFavorite = (state, action) => {
 const deleteFavorite = (state, action) => {
   const updatedFavorites = state.currentUser.favorite_campgrounds.filter(
     favorite => favorite.FacilityID !== action.payload
-  );
-
-  console.log(
-    '%c deleteFavoriteCampgrounds...',
-    'color: red',
-    action,
-    state,
-    updatedFavorites
   );
   return updateObject(state, {
     currentUser: {
@@ -102,7 +81,6 @@ const usersReducer = (state = initialState, action) => {
     case actionTypes.DELETE_FAVORITE:
       return deleteFavorite(state, action);
     default:
-      console.log('%c Initial user: %s', 'color: red', state.currentUser);
       return state;
   }
 };

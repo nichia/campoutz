@@ -1,8 +1,8 @@
-import React, { Fragment } from 'react';
-import { withRouter } from 'react-router-dom';
-import LoadSpinner from '../LoadSpinner';
-import CampgroundDetail from './CampgroundDetail';
-import { Container, Header, Icon, Button } from 'semantic-ui-react';
+import React, { Fragment } from "react";
+import { withRouter } from "react-router-dom";
+import LoadSpinner from "../LoadSpinner";
+import CampgroundDetail from "./CampgroundDetail";
+import { Container, Header, Icon, Button } from "semantic-ui-react";
 
 const isEmpty = obj => {
   for (const key in obj) {
@@ -12,10 +12,8 @@ const isEmpty = obj => {
 };
 
 const CampgroundView = props => {
-  console.log('%c CampgroundView: ', 'color: orange', props);
-
   const isLoading = props.loading || isEmpty(props.campground);
-  const noCampgroundFound = props.campground.FacilityID === '';
+  const noCampgroundFound = props.campground.FacilityID === "";
 
   return (
     <div>
@@ -23,14 +21,14 @@ const CampgroundView = props => {
         (noCampgroundFound && (
           <Container>
             <br />
-            <Header as='h3' icon textAlign='center'>
-              <Icon name='question' />
+            <Header as="h3" icon textAlign="center">
+              <Icon name="question" />
             </Header>
-            <Header as='h3' icon textAlign='center'>
+            <Header as="h3" icon textAlign="center">
               This campground could not be found
             </Header>
-            <Header as='h2' icon textAlign='center'>
-              <Button color='blue' onClick={() => props.history.push('/')}>
+            <Header as="h2" icon textAlign="center">
+              <Button color="blue" onClick={() => props.history.push("/")}>
                 Go Home
               </Button>
             </Header>

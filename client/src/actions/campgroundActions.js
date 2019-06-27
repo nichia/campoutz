@@ -1,4 +1,4 @@
-import * as actionTypes from './actionTypes';
+import * as actionTypes from "./actionTypes";
 
 const RIDB_URL = `${process.env.REACT_APP_API_RIDB_ENDPOINT}/api/v1`;
 const RIDB_API_KEY = process.env.REACT_APP_RIDB_API_KEY;
@@ -47,27 +47,25 @@ const getCampgroundFail = error => {
 };
 
 export const fetchCampground = campgroundID => {
-  const fullDetails = 'true';
+  const fullDetails = "true";
 
   const options = {
-    method: 'GET',
+    method: "GET",
     headers: {
       apikey: `${RIDB_API_KEY}`,
-      accept: 'application/json'
+      accept: "application/json"
     }
   };
 
-  const proxyurl = 'https://cors-anywhere.herokuapp.com/';
+  const proxyurl = "https://cors-anywhere.herokuapp.com/";
   const url = `${RIDB_URL}/facilities/${campgroundID}?full=${fullDetails}`;
 
   return dispatch => {
-    console.log('%c fetchCampground: ', 'color: navy', `${RIDB_URL}`, `${url}`);
     dispatch(getCampgroundStart());
 
     fetch(proxyurl + url, options)
       // https://cors-anywhere.herokuapp.com/https://...
       .then(response => {
-        console.log('%c fetchCampground 1: ', 'color: navy', response);
         if (response.ok) {
           return response.json();
         } else {
@@ -79,11 +77,9 @@ export const fetchCampground = campgroundID => {
         }
       })
       .then(JSONResponse => {
-        console.log('%c fetchCampground 2: ', 'color: navy', JSONResponse);
         return dispatch(getCampgroundSuccess(JSONResponse));
       })
       .catch(error => {
-        console.log('%c fetchCampground ERR RESP: ', 'color: navy', error);
         return dispatch(getCampgroundFail(error));
       });
   };
@@ -91,33 +87,25 @@ export const fetchCampground = campgroundID => {
 
 export const fetchCampgrounds = (query, page) => {
   const offset = page > 1 ? (page - 1) * LIMIT : 0;
-  const fullDetails = 'true';
+  const fullDetails = "true";
 
   const options = {
-    method: 'GET',
+    method: "GET",
     headers: {
       apikey: `${RIDB_API_KEY}`,
-      accept: 'application/json'
+      accept: "application/json"
     }
   };
 
-  const proxyurl = 'https://cors-anywhere.herokuapp.com/';
+  const proxyurl = "https://cors-anywhere.herokuapp.com/";
   const url = `${RIDB_URL}/facilities?limit=${LIMIT}&offset=${offset}&full=${fullDetails}&state=${query}&activity=CAMPING`;
   // site that doesn’t send Access-Control-*
   return dispatch => {
-    console.log(
-      '%c fetchCampgrounds: ',
-      'color: navy',
-      `${RIDB_URL}`,
-      `${url}`
-    );
-
     dispatch(getCampgroundsStart());
 
     fetch(proxyurl + url, options)
       // https://cors-anywhere.herokuapp.com/https://...
       .then(response => {
-        console.log('%c fetchCampgrounds 1: ', 'color: navy', response);
         if (response.ok) {
           return response.json();
         } else {
@@ -129,11 +117,9 @@ export const fetchCampgrounds = (query, page) => {
         }
       })
       .then(JSONResponse => {
-        console.log('%c fetchCampgrounds 2: ', 'color: navy', JSONResponse);
         return dispatch(getCampgroundsSuccess(JSONResponse));
       })
       .catch(error => {
-        console.log('%c fetchCampgrounds ERR RESP: ', 'color: navy', error);
         return dispatch(getCampgroundsFail(error));
       });
   };

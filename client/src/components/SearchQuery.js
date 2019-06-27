@@ -1,18 +1,11 @@
-import React, { Component } from 'react';
-import { searchStateOptions } from '../data/searchStateOptions';
-import { Dropdown } from 'semantic-ui-react';
+import React, { Component } from "react";
+import { searchStateOptions } from "../data/searchStateOptions";
+import { Dropdown } from "semantic-ui-react";
 
 class SearchQuery extends Component {
-  state = { value: '' };
+  state = { value: "" };
 
   handleChange = (e, { value }) => {
-    console.log(
-      '%c FetchCapgrounds handleChange: ',
-      'color: green',
-      e,
-      ' value:',
-      value
-    );
     this.props.onSearchQuery(value);
     this.setState({ value });
   };
@@ -24,7 +17,7 @@ class SearchQuery extends Component {
       <Dropdown
         fluid
         options={searchStateOptions}
-        placeholder='Select the State you want to explore'
+        placeholder="Select the State you want to explore"
         search
         selection
         value={value}

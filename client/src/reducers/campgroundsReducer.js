@@ -1,5 +1,5 @@
-import * as actionTypes from '../actions/actionTypes';
-import { updateObject } from './utility';
+import * as actionTypes from "../actions/actionTypes";
+import { updateObject } from "./utility";
 
 const initialState = {
   campgroundsData: {
@@ -7,11 +7,11 @@ const initialState = {
     totalCount: 0,
     searchParamsLimit: 20,
     searchParamsOffset: 0,
-    searchParamsQuery: '',
+    searchParamsQuery: "",
     allCampgrounds: []
   },
 
-  searchState: '',
+  searchState: "",
   currentCampground: {},
   error: null,
   loading: false,
@@ -19,13 +19,10 @@ const initialState = {
 };
 
 const getCampgroundsStart = (state, action) => {
-  console.log('%c Loading_campgrounds...', 'color: red');
   return updateObject(state, { loading: true });
 };
 
 const getCampgroundsSuccess = (state, action) => {
-  console.log('%c GetCampground_SUCCESS...', 'color: red', action.payload);
-
   const data = {
     ...initialState.campgroundsData
   };
@@ -44,7 +41,6 @@ const getCampgroundsSuccess = (state, action) => {
 };
 
 const getCampgroundsFail = (state, action) => {
-  console.log('%c GetCampground_FAIL: %s', 'color: red', action.payload);
   return updateObject(state, {
     error: action.payload,
     loading: false
@@ -52,21 +48,14 @@ const getCampgroundsFail = (state, action) => {
 };
 
 const getCampground = (state, action) => {
-  console.log(
-    '%c getCampground set currentCampground Reducer...',
-    'color: red'
-  );
   return updateObject(state, { currentCampground: action.payload });
 };
 
 const getCampgroundStart = (state, action) => {
-  console.log('%c Loading_campgrounds...', 'color: red');
   return updateObject(state, { loadingCampground: true });
 };
 
 const getCampgroundSuccess = (state, action) => {
-  console.log('%c GetCampground_SUCCESS...', 'color: red', action.payload);
-
   return updateObject(state, {
     currentCampground: action.payload,
     loadingCampground: false
@@ -74,7 +63,6 @@ const getCampgroundSuccess = (state, action) => {
 };
 
 const getCampgroundFail = (state, action) => {
-  console.log('%c GetCampground_FAIL: %s', 'color: red', action.payload);
   return updateObject(state, {
     error: action.payload,
     loadingCampground: false
@@ -82,7 +70,6 @@ const getCampgroundFail = (state, action) => {
 };
 
 const updateSearchState = (state, action) => {
-  console.log('%c updateSearchState Reducer...', 'color: red', action.payload);
   return updateObject(state, { searchState: action.payload });
 };
 
@@ -105,11 +92,6 @@ const campgroundsReducer = (state = initialState, action) => {
     case actionTypes.UPDATE_SEARCHSTATE:
       return updateSearchState(state, action);
     default:
-      console.log(
-        '%c Default campgrounds: %s',
-        'color: red',
-        state.campgrounds
-      );
       return state;
   }
 };
